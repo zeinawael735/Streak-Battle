@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "812612591512",
+    "project_id": "streak-battle",
+    "storage_bucket": "streak-battle.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812612591512:android:e1b5e5eb1912f863f6d5ed",
+        "android_client_info": {
+          "package_name": "com.example.streak_battle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812612591512-bepdkfhqbqg23mljgj03e27gci6ll003.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuMMbe2SnZ2ZA3up_KF8YHSwC4AyCo50w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812612591512-bepdkfhqbqg23mljgj03e27gci6ll003.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
