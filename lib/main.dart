@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:streak_battle/core/constants/app_routes.dart';
+import 'package:streak_battle/core/routes/app_routes.dart';
 import 'package:streak_battle/features/app_section/view/screens/app_section.dart';
 import 'package:streak_battle/features/create_battle/view/screens/create_battle_screen.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 import '../../../../core/constants/app_assets.dart';
-import '../../../../core/constants/app_routes.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../battles/view/screens/battles_screen.dart';
 import '../../../home/view/screens/home_screen.dart';
 import '../../../leaderboard/view/screens/ranking_screen.dart';
