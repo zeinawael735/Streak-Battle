@@ -14,9 +14,9 @@ void main() async {
     );
   } catch (e) {
     if (e.toString().contains('duplicate-app')) {
-      print('✅ Firebase already initialized');
+      print(' Firebase already initialized');
     } else {
-      print('❌ Firebase init error: $e');
+      print(' Firebase init error: $e');
       rethrow;
     }
   }
