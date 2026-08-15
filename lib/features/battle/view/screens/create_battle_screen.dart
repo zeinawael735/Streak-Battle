@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_color_style.dart';
+import '../../../history/view/widgets/custom_stepper.dart';
 class CreateBattleScreen extends StatelessWidget {
   const CreateBattleScreen({super.key});
 
@@ -18,12 +19,11 @@ class CreateBattleScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: const Center(
-        child: Text(
-          'Create Battle Screen',
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-      ),
+      body: Column(
+        children: [
+          CustomStepperHeader(currentStep: 0),
+        ],
+      )
     );
   }
 }
