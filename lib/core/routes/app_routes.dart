@@ -5,9 +5,9 @@ class AppRoutes {
   static const String ranking = '/leaderboard';
   static const String profile = '/profile';
 
-  static const String createBattle = '/create-create_battle';
-  static const String joinBattle = '/join-create_battle';
-  static const String battleDetails = '/create_battle-details';
+  static const String createBattle = '/create-battle';
+  static const String joinBattle = '/join-battle';
+  static const String battleDetails = '/battle-details';
   static const String checkIn = '/check-in';
 
   static const String login = '/login';

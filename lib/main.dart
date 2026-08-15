@@ -2,8 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/routes/app_routes.dart';
 import 'package:streak_battle/features/app_section/view/screens/app_section.dart';
-import 'package:streak_battle/features/create_battle/view/screens/create_battle_screen.dart';
 
+import 'features/battle/view/screens/create_battle_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -35,7 +35,7 @@ class BattleStreakApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color(0xFF131313),
       ),
-      initialRoute: AppRoutes.appSection,
+      initialRoute: AppRoutes.createBattle,
       routes: {
         AppRoutes.appSection: (context) => const AppSection(),
         AppRoutes.createBattle: (context) => const CreateBattleScreen(),
