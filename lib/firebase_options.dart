@@ -47,9 +47,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyD8A8NeTRLTnKg_ZfoNbKHf4ullQNMmrV4',
     appId: '1:812612591512:web:0865d80899f4b6e3f6d5ed',
     messagingSenderId: '812612591512',
-    projectId: 'streak-create_battle',
-    authDomain: 'streak-create_battle.firebaseapp.com',
-    storageBucket: 'streak-create_battle.firebasestorage.app',
+    projectId: 'streak-battle',
+    authDomain: 'streak-battle.firebaseapp.com',
+    storageBucket: 'streak-battle.firebasestorage.app',
     measurementId: 'G-D1J3D12DPG',
   );
 
@@ -57,16 +57,16 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyCuMMbe2SnZ2ZA3up_KF8YHSwC4AyCo50w',
     appId: '1:812612591512:android:e1b5e5eb1912f863f6d5ed',
     messagingSenderId: '812612591512',
-    projectId: 'streak-create_battle',
-    storageBucket: 'streak-create_battle.firebasestorage.app',
+    projectId: 'streak-battle',
+    storageBucket: 'streak-battle.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDaA_55PFtotGbcpyPzoBBKp824OBDK6HY',
     appId: '1:812612591512:ios:a8db87d639463c2ef6d5ed',
     messagingSenderId: '812612591512',
-    projectId: 'streak-create_battle',
-    storageBucket: 'streak-create_battle.firebasestorage.app',
+    projectId: 'streak-battle',
+    storageBucket: 'streak-battle.firebasestorage.app',
     iosClientId: '812612591512-02bhilt2a2jll7hjd8e39ltgtt1bq6et.apps.googleusercontent.com',
     iosBundleId: 'com.example.streakBattle',
   );
@@ -75,9 +75,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyD8A8NeTRLTnKg_ZfoNbKHf4ullQNMmrV4',
     appId: '1:812612591512:web:268eebd2c9ab29d7f6d5ed',
     messagingSenderId: '812612591512',
-    projectId: 'streak-create_battle',
-    authDomain: 'streak-create_battle.firebaseapp.com',
-    storageBucket: 'streak-create_battle.firebasestorage.app',
+    projectId: 'streak-battle',
+    authDomain: 'streak-battle.firebaseapp.com',
+    storageBucket: 'streak-battle.firebasestorage.app',
     measurementId: 'G-V8Y575Y4G9',
   );
 }
