@@ -18,12 +18,11 @@ class NavIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // تحويل الـ currentIndex (0-3) إلى navIndex (0,1,3,4)
     final Map<int, int> screenToNav = {
-      0: 0, // Home
-      1: 1, // Battles
-      2: 3, // Ranking
-      3: 4, // Profile
+      0: 0,
+      1: 1,
+      2: 3,
+      3: 4,
     };
 
     final navIndex = screenToNav[currentIndex] ?? 0;
@@ -37,7 +36,7 @@ class NavIcon extends StatelessWidget {
           height: 24,
           width: 24,
           colorFilter: ColorFilter.mode(
-            isActive ? AppColorStyle.primaryGreen : AppColorStyle.inactiveGrey,
+            isActive ? AppColorStyle.primaryViolet : AppColorStyle.inactiveGrey,
             BlendMode.srcIn,
           ),
         ),
@@ -46,7 +45,7 @@ class NavIcon extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: isActive ? 15 : 12,
-            color: isActive ? AppColorStyle.primaryGreen : AppColorStyle.inactiveGrey,
+            color: isActive ? AppColorStyle.primaryViolet : AppColorStyle.inactiveGrey,
             fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
           ),
         ),

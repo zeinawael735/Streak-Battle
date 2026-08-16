@@ -1,24 +1,21 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import 'package:streak_battle/core/routes/app_routes.dart';
 import 'package:streak_battle/features/app_section/view/screens/app_section.dart';
-import 'package:streak_battle/features/create_battle/view/screens/create_battle_screen.dart';
-
-import 'firebase_options.dart';
+import 'package:streak_battle/features/battle/view/screens/create_battle_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
+
+  if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
+      options: defaultTargetPlatform == TargetPlatform.android
+          ? null
+          : DefaultFirebaseOptions.currentPlatform,
     );
-  } catch (e) {
-    if (e.toString().contains('duplicate-app')) {
-      print(' Firebase already initialized');
-    } else {
-      print(' Firebase init error: $e');
-      rethrow;
-    }
   }
 
   runApp(const BattleStreakApp());
