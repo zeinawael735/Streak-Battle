@@ -1,14 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:streak_battle/core/routes/app_routes.dart';
 import 'package:streak_battle/features/app_section/view/screens/app_section.dart';
 import 'package:streak_battle/features/auth/login/view/screens/login_screen.dart';
 import 'package:streak_battle/features/auth/signup/view/screens/signup_screen.dart';
 import 'package:streak_battle/features/battle/view/screens/create_battle_screen.dart';
 
+import 'core/helper/auth_helper.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,34 +21,7 @@ void main() async {
     );
   }
 
-  const storage = FlutterSecureStorage();
-  String? token = await storage.read(key: 'auth_token');
-  User? currentUser = FirebaseAuth.instance.currentUser;
-
-  String initialRoute = AppRoutes.login;
-
-  if (token != null && token.isNotEmpty && currentUser != null) {
-    try {
-      await currentUser.reload();
-      currentUser = FirebaseAuth.instance.currentUser;
-
-      if (currentUser != null) {
-        initialRoute = AppRoutes.appSection;
-      } else {
-        await storage.deleteAll();
-      }
-    } on FirebaseAuthException catch (_) {
-      await FirebaseAuth.instance.signOut();
-      await storage.deleteAll();
-      initialRoute = AppRoutes.login;
-    } catch (_) {
-      await storage.deleteAll();
-      initialRoute = AppRoutes.login;
-    }
-  } else {
-    await storage.deleteAll();
-    initialRoute = AppRoutes.login;
-  }
+  final String initialRoute = await AuthHelper.getInitialRoute();
 
   runApp(BattleStreakApp(initialRoute: initialRoute));
 }
