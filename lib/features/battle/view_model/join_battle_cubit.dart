@@ -31,35 +31,31 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
     try {
       final query = await _firestore
           .collection('battles')
-          .where('code', isEqualTo: code.toUpperCase())
+          .where('battleCode', isEqualTo: 'BAT-${code.toUpperCase()}')
           .limit(1)
           .get();
 
-      if (query.docs.isEmpty) {
+      final docs = query.docs.isNotEmpty
+          ? query.docs
+          : (await _firestore
+          .collection('battles')
+          .where('battleCode', isEqualTo: code.toUpperCase())
+          .limit(1)
+          .get())
+          .docs;
+
+      if (docs.isEmpty) {
         emit(JoinBattleInvalid());
         return;
       }
 
-      final doc = query.docs.first;
+      final doc = docs.first;
       final battle = BattleEntity.fromFirestore(doc.id, doc.data());
 
-      if (battle.status != 'active') {
-        emit(JoinBattleExpired());
-        return;
-      }
-
       final userId = _auth.currentUser?.uid;
-      if (userId != null) {
-        final participantDoc = await _firestore
-            .collection('battles')
-            .doc(battle.id)
-            .collection('participants')
-            .doc(userId)
-            .get();
-        if (participantDoc.exists) {
-          emit(JoinBattleAlreadyJoined());
-          return;
-        }
+      if (userId != null && battle.members.contains(userId)) {
+        emit(JoinBattleAlreadyJoined());
+        return;
       }
 
       _foundBattle = battle;
@@ -76,20 +72,8 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
 
     emit(JoinBattleLoading());
     try {
-      await _firestore
-          .collection('battles')
-          .doc(battle.id)
-          .collection('participants')
-          .doc(userId)
-          .set({
-        'userId': userId,
-        'joinedAt': FieldValue.serverTimestamp(),
-        'streak': 0,
-        'points': 0,
-      });
-
       await _firestore.collection('battles').doc(battle.id).update({
-        'participantsCount': FieldValue.increment(1),
+        'members': FieldValue.arrayUnion([userId]),
       });
 
       emit(JoinBattleJoined(battle.id));

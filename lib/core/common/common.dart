@@ -4,38 +4,38 @@ import '../theme/theme.dart';
 // ============ Battle Entity ============
 class BattleEntity {
   final String id;
-  final String code;
-  final String name;
-  final String hostName;
-  final int participantsCount;
+  final String battleCode;
+  final String title;
+  final String description;
   final String category;
   final int durationDays;
   final String dailyGoal;
-  final String status;
+  final List<String> members;
+  final String startDate;
 
   const BattleEntity({
     required this.id,
-    required this.code,
-    required this.name,
-    required this.hostName,
-    required this.participantsCount,
+    required this.battleCode,
+    required this.title,
+    required this.description,
     required this.category,
     required this.durationDays,
     required this.dailyGoal,
-    required this.status,
+    required this.members,
+    required this.startDate,
   });
 
   factory BattleEntity.fromFirestore(String id, Map<String, dynamic> data) {
     return BattleEntity(
       id: id,
-      code: data['code'] ?? '',
-      name: data['name'] ?? '',
-      hostName: data['hostName'] ?? '',
-      participantsCount: data['participantsCount'] ?? 0,
+      battleCode: data['battleCode'] ?? '',
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
       category: data['category'] ?? '',
       durationDays: data['durationDays'] ?? 0,
       dailyGoal: data['dailyGoal'] ?? '',
-      status: data['status'] ?? 'active',
+      members: List<String>.from(data['members'] ?? []),
+      startDate: data['startDate'] ?? '',
     );
   }
 }
@@ -62,7 +62,7 @@ class CustomButton extends StatelessWidget {
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          disabledBackgroundColor: AppColors.primary.withOpacity(0.5),
+          disabledBackgroundColor: AppColors.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),

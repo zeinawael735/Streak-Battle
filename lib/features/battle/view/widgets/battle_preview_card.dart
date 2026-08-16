@@ -35,13 +35,13 @@ class BattlePreviewCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Text(battle.name,
+          Text(battle.title,
               style: const TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 18,
                   fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          Text('Hosted by ${battle.hostName} • ${battle.participantsCount} players',
+          Text('${battle.members.length} players joined',
               style: const TextStyle(color: AppColors.textSecondary, fontSize: 13)),
           const SizedBox(height: 12),
           Container(
