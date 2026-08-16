@@ -98,11 +98,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           horizontal: 13,
           vertical: 14,
         ),
-        border: outlineInputBorder(color: Colors.grey, width: 1),
-        enabledBorder: outlineInputBorder(color: Colors.grey, width: 1),
-        focusedBorder: outlineInputBorder(color: Colors.black, width: 1),
+        border: outlineInputBorder(color:Color(0xFF6B11A1), width: 1),
+        enabledBorder: outlineInputBorder(color: Color(0xFF6B11A1) , width: 1),
+        focusedBorder: outlineInputBorder(color: Color(0xFF6B11A1), width: 1),
         errorBorder: outlineInputBorder(color: Colors.red, width: 1),
-        focusedErrorBorder: outlineInputBorder(color: Colors.red, width: 1),
+        focusedErrorBorder: outlineInputBorder(color: Color(0XFF610094), width: 1.5),
       ),
     );
   }
