@@ -1,7 +1,7 @@
 class AppRoutes {
   static const String appSection = '/app_section';
   static const String home = '/home';
-  static const String battles = '/battles';
+  static const String battles = '/history';
   static const String ranking = '/leaderboard';
   static const String profile = '/profile';
 
