@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/features/battle/view/widgets/step2_rules_widget.dart';
 import 'package:streak_battle/features/battle/view/widgets/step3_invite_widget.dart';
 import '../../../../core/constants/app_color_style.dart';
+
 import '../../../../core/helper/code_generator.dart';
 import '../../view_model/battle_entity.dart';
 import '../../view_model/create_battle_cubit.dart';
@@ -12,7 +13,6 @@ import '../widgets/step1_info_widget.dart';
 
 class CreateBattleScreen extends StatefulWidget {
   const CreateBattleScreen({super.key});
-
   @override
   State<CreateBattleScreen> createState() => _CreateBattleScreenState();
 }
