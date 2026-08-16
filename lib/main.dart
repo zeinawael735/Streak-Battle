@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:streak_battle/features/auth/signup/view/screens/signup_screen.dart';
 import 'firebase_options.dart';
 
 import 'package:streak_battle/core/routes/app_routes.dart';
@@ -32,10 +33,11 @@ class BattleStreakApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color(0xFF131313),
       ),
-      initialRoute: AppRoutes.appSection,
+      initialRoute: AppRoutes.signUp,
       routes: {
         AppRoutes.appSection: (context) => const AppSection(),
         AppRoutes.createBattle: (context) => const CreateBattleScreen(),
+        AppRoutes.signUp: (context) => const SignupScreen()
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
