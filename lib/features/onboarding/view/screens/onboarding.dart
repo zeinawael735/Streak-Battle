@@ -17,6 +17,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
 
+  Future<void> _navigateToSignUp() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isFirstTime', false);
+
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, AppRoutes.signUp);
+  }
+
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isFirstTime', false);
@@ -86,7 +94,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       curve: Curves.easeInOut,
                     );
                   } else {
-                    _completeOnboarding();
+                    _navigateToSignUp();
                   }
                 },
               ),

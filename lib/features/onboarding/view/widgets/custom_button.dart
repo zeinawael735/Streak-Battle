@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:streak_battle/features/onboarding/view_model/onboarding_model.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
