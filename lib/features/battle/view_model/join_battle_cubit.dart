@@ -17,39 +17,42 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
   void onCodeChanged(String code) {
     if (code.isEmpty) {
       emit(JoinBattleEmpty());
-    } else if (code.length < 6) {
+    } else if (code.length < 7) {
       emit(JoinBattlePartial());
     }
   }
 
   Future<void> findBattle(String code) async {
-    if (code.length != 6) {
+    if (code.length != 7) {
       emit(JoinBattleInvalid());
       return;
     }
     emit(JoinBattleLoading());
     try {
-      final query = await _firestore
+      final normalizedCode = code.toUpperCase();
+
+      // Try exact match first
+      var query = await _firestore
           .collection('battles')
-          .where('battleCode', isEqualTo: 'BAT-${code.toUpperCase()}')
+          .where('battleCode', isEqualTo: normalizedCode)
           .limit(1)
           .get();
 
-      final docs = query.docs.isNotEmpty
-          ? query.docs
-          : (await _firestore
-          .collection('battles')
-          .where('battleCode', isEqualTo: code.toUpperCase())
-          .limit(1)
-          .get())
-          .docs;
+      // Fallback: try with "BAT-" prefix
+      if (query.docs.isEmpty) {
+        query = await _firestore
+            .collection('battles')
+            .where('battleCode', isEqualTo: 'BAT-$normalizedCode')
+            .limit(1)
+            .get();
+      }
 
-      if (docs.isEmpty) {
+      if (query.docs.isEmpty) {
         emit(JoinBattleInvalid());
         return;
       }
 
-      final doc = docs.first;
+      final doc = query.docs.first;
       final battle = BattleEntity.fromFirestore(doc.id, doc.data());
 
       final userId = _auth.currentUser?.uid;
