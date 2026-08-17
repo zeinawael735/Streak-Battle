@@ -17,13 +17,13 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
   void onCodeChanged(String code) {
     if (code.isEmpty) {
       emit(JoinBattleEmpty());
-    } else if (code.length < 7) {
+    } else if (code.length < 8) {
       emit(JoinBattlePartial());
     }
   }
 
   Future<void> findBattle(String code) async {
-    if (code.length != 7) {
+    if (code.length != 8) {
       emit(JoinBattleInvalid());
       return;
     }
