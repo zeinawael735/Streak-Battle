@@ -7,24 +7,23 @@ import 'package:streak_battle/features/auth/login/view/screens/login_screen.dart
 import 'package:streak_battle/features/auth/signup/view/screens/signup_screen.dart';
 import 'package:streak_battle/features/battle/view/screens/create_battle_screen.dart';
 
+import 'features/battle/view/screens/create_battle_screen.dart';
 import 'core/helper/auth_helper.dart';
+import 'features/battle/view/screens/create_battle_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
   if (Firebase.apps.isEmpty) {
-    await Firebase.initializeApp(
       options: defaultTargetPlatform == TargetPlatform.android
           ? null
-          : DefaultFirebaseOptions.currentPlatform,
-    );
-  }
-
+          : DefaultFirebaseOptions.currentPlatform;
   final String initialRoute = await AuthHelper.getInitialRoute();
 
   runApp(BattleStreakApp(initialRoute: initialRoute));
-}
+}}
 
 class BattleStreakApp extends StatelessWidget {
   final String initialRoute;
