@@ -6,4 +6,7 @@ abstract class AppAssets {
   static const String fireIconSvg = 'assets/icons/fire.svg';
   static const String bookIconSvg = 'assets/icons/book.svg';
   static const String fitnessIconSvg = 'assets/icons/fitness.svg';
+  static const String swordIconSvg = 'assets/icons/sword.svg';
+  static const String appIconSvg = 'assets/icons/app_icon.svg';
+  static const String googleIconSvg = 'assets/icons/google_icon.svg';
 }
