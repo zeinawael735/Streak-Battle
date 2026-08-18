@@ -1,29 +1,30 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:streak_battle/core/routes/app_routes.dart';
-import 'package:streak_battle/features/app_section/view/screens/app_section.dart';
-import 'package:streak_battle/features/auth/login/view/screens/login_screen.dart';
-import 'package:streak_battle/features/auth/signup/view/screens/signup_screen.dart';
-import 'package:streak_battle/features/battle/view/screens/create_battle_screen.dart';
 
-import 'features/battle/view/screens/create_battle_screen.dart';
 import 'core/helper/auth_helper.dart';
+import 'core/routes/app_routes.dart';
+import 'features/app_section/view/screens/app_section.dart';
+import 'features/auth/login/view/screens/login_screen.dart';
+import 'features/auth/signup/view/screens/signup_screen.dart';
 import 'features/battle/view/screens/create_battle_screen.dart';
+import 'features/notification/view_model/notification_services.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-
+  await NotificationService.init();
+  //await NotificationService.testScheduledNotification();
   if (Firebase.apps.isEmpty) {
-      options: defaultTargetPlatform == TargetPlatform.android
-          ? null
-          : DefaultFirebaseOptions.currentPlatform;
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
   final String initialRoute = await AuthHelper.getInitialRoute();
 
   runApp(BattleStreakApp(initialRoute: initialRoute));
-}}
+}
 
 class BattleStreakApp extends StatelessWidget {
   final String initialRoute;
