@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:streak_battle/features/history/view/widgets/history_battle_card.dart';
 import 'package:streak_battle/features/home/view/widgets/home_card.dart';
 
 import '../../../../core/constants/app_color_style.dart';
@@ -15,62 +16,39 @@ class BattlesScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
+            spacing: 16,
             crossAxisAlignment: .start,
             children: [
               Text("August 2026",style: TextStyle(fontSize: 20,color: AppColorStyle.primaryText),),
-              HomeCard(
-                  child: Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: Column(
-                      spacing: 14,
-                      crossAxisAlignment: .start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: .spaceBetween,
-                          children: [
-                            CircleAvatar(
-                              radius:25,
-                              backgroundColor: Color(0xFF2E263F),
-                              child: Icon(Icons.self_improvement,color: AppColorStyle.primaryGreen,size: 30,),
-                            ),
-                            Column(
-                              crossAxisAlignment: .start,
-                              children: [
-                                Text("Morning Yoga",style: TextStyle(color: AppColorStyle.primaryText,fontSize: 22,fontWeight: .bold),),
-                                Text("Jun 3 - Jun 24",style: TextStyle(color: AppColorStyle.primaryText,fontSize: 15),),
-                              ],
-                            ),
-                            Container(
-                              width: 75,
-                              height: 34,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(color: AppColorStyle.primaryText,width: 0.15),
-                                color: Color(0xFF2E263F),
-                              ),
-                              child: Center(child: Text("Rank #1",style: TextStyle(color: AppColorStyle.primaryGreen),)),
-                            )
-                          ],
-                        ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: LinearProgressIndicator(
-                            value: 94*(1/100),
-                            minHeight: 6,
-                            backgroundColor: AppColorStyle.progressIndicatorBackgroundColor,
-                            valueColor:  AlwaysStoppedAnimation<Color>(
-                                AppColorStyle.progressIndicatorColor
-                            ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: .end,
-                            children: [Text("94%",style: TextStyle(color: AppColorStyle.primaryGreen),)]
-                        )
-                      ],
-                    ),
-                  )
-              )
+              HistoryBattleCard(
+                  title: "Reading sprint",
+                  duration: "Jul 10 - Aug 8",
+                  symbol: Icons.book_outlined,
+                  progress: 94,
+                  rank: 1
+              ),
+              HistoryBattleCard(
+                  title: "Hydration Crew",
+                  duration: "Jul 1 - Jul 21",
+                  symbol: Icons.water_drop_outlined,
+                  progress: 86,
+                  rank: 3
+              ),
+              HistoryBattleCard(
+                  title: "Morning Yoga",
+                  duration: "Jun 3 - Jun 24",
+                  symbol: Icons.self_improvement,
+                  progress: 94,
+                  rank: 1
+              ),
+              HistoryBattleCard(
+                  title: "Code Every Day",
+                  duration: "May 1 - May 30",
+                  symbol: Icons.code_outlined,
+                  progress: 78,
+                  rank: 5
+              ),
+
             ],
           ),
         ),
