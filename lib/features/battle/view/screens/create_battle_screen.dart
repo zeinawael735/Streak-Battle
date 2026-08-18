@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/features/battle/view/widgets/step2_rules_widget.dart';
 import 'package:streak_battle/features/battle/view/widgets/step3_invite_widget.dart';
 import '../../../../core/constants/app_color_style.dart';
-
 import '../../../../core/helper/code_generator.dart';
 import '../../view_model/battle_entity.dart';
 import '../../view_model/create_battle_cubit.dart';
@@ -25,12 +24,14 @@ class _CreateBattleScreenState extends State<CreateBattleScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController customCategoryController = TextEditingController();
-  String selectedCategory = 'Learning';
+  String? selectedCategory;
+final _step1Key=GlobalKey<FormState>();
+final _step2Key=GlobalKey<FormState>();
 
 
   final TextEditingController goalController = TextEditingController();
   DateTime? startDate;
-  int durationDays = 21;
+  int? durationDays;
   bool isReminderOn = true;
   TimeOfDay reminderTime = const TimeOfDay(hour: 20, minute: 0);
   bool isInviteOnly = true;
@@ -40,6 +41,42 @@ class _CreateBattleScreenState extends State<CreateBattleScreen> {
   final List<String> invitedFriends = ["MK", "NJ", "SA"];
 
   void _nextPage() {
+
+    if (currentStep == 0) {
+      if (!(_step1Key.currentState?.validate() ?? false)) return;
+
+
+      if (selectedCategory == null || selectedCategory!.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select a battle category')),
+        );
+        return;
+      }
+    }
+
+
+    else if (currentStep == 1) {
+
+      if (!(_step2Key.currentState?.validate() ?? false)) return;
+
+
+      if (startDate == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select a start date')),
+        );
+        return;
+      }
+
+
+      if (durationDays == null || durationDays! <= 0) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select battle duration')),
+        );
+        return;
+      }
+    }
+
+
     if (currentStep < 2) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
@@ -74,10 +111,10 @@ class _CreateBattleScreenState extends State<CreateBattleScreen> {
 
     final battle = BattleEntity(
       title: titleController.text.trim(),
-      category: finalCategory,
+      category: finalCategory??'',
       description: descriptionController.text.trim(),
       startDate: startDate ?? DateTime.now(),
-      durationDays: durationDays,
+      durationDays: durationDays??0,
       dailyGoal: goalController.text.trim(),
       isReminderOn: isReminderOn,
       reminderTime: formattedReminderTime,
@@ -87,6 +124,8 @@ class _CreateBattleScreenState extends State<CreateBattleScreen> {
       members: invitedFriends,
       createdAt: DateTime.now(),
     );
+
+
 
     blocContext.read<CreateBattleCubit>().createBattle(battle);
   }
@@ -168,33 +207,39 @@ class _CreateBattleScreenState extends State<CreateBattleScreen> {
                       });
                     },
                     children: [
-                      Step1InfoWidget(
-                        titleController: titleController,
-                        descriptionController: descriptionController,
-                        customCategoryController: customCategoryController,
-                        selectedCategory: selectedCategory,
-                        onCategoryChanged: (cat) =>
-                            setState(() => selectedCategory = cat),
-                        onNext: _nextPage,
+                      Form(
+                        key: _step1Key,
+                        child: Step1InfoWidget(
+                          titleController: titleController,
+                          descriptionController: descriptionController,
+                          customCategoryController: customCategoryController,
+                          selectedCategory: selectedCategory??'',
+                          onCategoryChanged: (cat) =>
+                              setState(() => selectedCategory = cat),
+                          onNext: _nextPage,
+                        ),
                       ),
-                      Step2RulesWidget(
-                        goalController: goalController,
-                        startDate: startDate,
-                        durationDays: durationDays,
-                        isReminderOn: isReminderOn,
-                        reminderTime: reminderTime,
-                        isInviteOnly: isInviteOnly,
-                        onStartDateChanged: (date) =>
-                            setState(() => startDate = date),
-                        onDurationChanged: (days) =>
-                            setState(() => durationDays = days),
-                        onReminderStatusChanged: (val) =>
-                            setState(() => isReminderOn = val),
-                        onReminderTimeChanged: (time) =>
-                            setState(() => reminderTime = time),
-                        onInviteOnlyChanged: (val) =>
-                            setState(() => isInviteOnly = val),
-                        onNext: _nextPage,
+                      Form(
+                        key: _step2Key,
+                        child: Step2RulesWidget(
+                          goalController: goalController,
+                          startDate: startDate,
+                          durationDays: durationDays??0,
+                          isReminderOn: isReminderOn,
+                          reminderTime: reminderTime,
+                          isInviteOnly: isInviteOnly,
+                          onStartDateChanged: (date) =>
+                              setState(() => startDate = date),
+                          onDurationChanged: (days) =>
+                              setState(() => durationDays = days),
+                          onReminderStatusChanged: (val) =>
+                              setState(() => isReminderOn = val),
+                          onReminderTimeChanged: (time) =>
+                              setState(() => reminderTime = time),
+                          onInviteOnlyChanged: (val) =>
+                              setState(() => isInviteOnly = val),
+                          onNext: _nextPage,
+                        ),
                       ),
                       Step3InviteWidget(
                         battleCode: battleCode,
