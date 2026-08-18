@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:streak_battle/features/history/view/widgets/history_battle_card.dart';
-import 'package:streak_battle/features/home/view/widgets/home_card.dart';
 
 import '../../../../core/constants/app_color_style.dart';
 
@@ -10,7 +9,7 @@ class BattlesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Battles history",style: TextStyle(fontWeight: .bold,fontSize: 33,color: AppColorStyle.primaryText),),),
+      appBar: AppBar(backgroundColor: AppColorStyle.scaffoldBackgroundColor,scrolledUnderElevation: 0,title: Text("Battles history",style: TextStyle(fontWeight: .bold,fontSize: 33,color: AppColorStyle.primaryText),),),
       backgroundColor: AppColorStyle.scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
