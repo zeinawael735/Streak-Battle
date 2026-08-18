@@ -9,8 +9,18 @@ import 'features/auth/signup/view/screens/signup_screen.dart';
 import 'features/battle/view/screens/create_battle_screen.dart';
 import 'firebase_options.dart';
 
+import 'core/helper/auth_helper.dart';
+import 'core/routes/app_routes.dart';
+import 'features/app_section/view/screens/app_section.dart';
+import 'features/auth/login/view/screens/login_screen.dart';
+import 'features/auth/signup/view/screens/signup_screen.dart';
+import 'features/battle/view/screens/create_battle_screen.dart';
+import 'features/notification/view_model/notification_services.dart';
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.init();
 
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(

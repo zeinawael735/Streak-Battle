@@ -144,53 +144,6 @@ class _Step3InviteWidgetState extends State<Step3InviteWidget> {
               ],
             ),
             const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Invited friends',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${widget.invitedFriends.length} pending',
-                  style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: [
-                ...widget.invitedFriends.map(
-                      (initials) => CircleAvatar(
-                    radius: 22,
-                    backgroundColor: const Color(0xFF6B11A1),
-                    child: Text(
-                      initials,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: _addFriend,
-                  borderRadius: BorderRadius.circular(22),
-                  child: CircleAvatar(
-                    radius: 22,
-                    backgroundColor: const Color(0xFF160E21),
-                    child: Icon(Icons.add, color: Colors.grey.shade400),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 40),
             CustomButton(
               text: "Start Battle",
               onPressed: widget.onNext,
