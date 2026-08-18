@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_color_style.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../home/view/widgets/home_card.dart';
 
 class HistoryBattleCard extends StatelessWidget {
@@ -14,7 +15,9 @@ class HistoryBattleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){},
+      onTap: () {
+        Navigator.pushNamed(context, AppRoutes.battleDetails);
+      },
       child: HomeCard(
           child: Padding(
             padding: const EdgeInsets.all(25),
