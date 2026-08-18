@@ -7,6 +7,7 @@ class BattleDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(leading: Icon(Icons.arrow_back_ios_new),),
       backgroundColor: AppColorStyle.scaffoldBackgroundColor,
       body: Center(child: Text("Battle details screen"),),
     );
