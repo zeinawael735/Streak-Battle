@@ -84,6 +84,13 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
               ),
               borderRadius: BorderRadius.circular(8),
               controller: widget.titleController,
+              validator: (value){
+                if (value == null || value.trim().isEmpty) {
+                  return 'Please enter battle title';
+                }
+                return null;
+
+              },
             ),
             const SizedBox(height: 10),
             const Text(
@@ -147,6 +154,13 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
               CustomTextFormField(
                 controller: widget.customCategoryController,
                 hintText: "Enter custom category",
+                validator: (value){
+    if (value == null || value.trim().isEmpty) {
+    return 'Please specify your category';
+    }
+    return null;
+    },
+
               ),
               const SizedBox(height: 10),
             ],
