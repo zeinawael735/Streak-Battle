@@ -27,6 +27,15 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
       if (!mounted) return;
       setState(() {});
 
+      if (state is JoinBattleInvalid) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Battle not found'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+
       if (state is JoinBattleJoined) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
