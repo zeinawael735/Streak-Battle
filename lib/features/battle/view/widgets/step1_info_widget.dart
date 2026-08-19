@@ -192,7 +192,7 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
             CustomButton(
               text: "Next: battle rules",
               onPressed: widget.onNext,
-              padding: const EdgeInsets.symmetric(horizontal: 105, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 95, vertical: 16),
             ),
           ],
         ),

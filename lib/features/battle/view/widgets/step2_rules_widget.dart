@@ -222,7 +222,7 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
           CustomButton(
             text: "Next: battle summary",
             onPressed: widget.onNext,
-            padding: const EdgeInsets.symmetric(horizontal: 77, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 16),
           ),
         ],
       ),
