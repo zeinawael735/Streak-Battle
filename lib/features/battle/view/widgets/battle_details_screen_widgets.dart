@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 
+import '../../../home/view/widgets/home_card.dart';
+
 class Participant {
   final String initials;
   final String name;
@@ -63,7 +65,7 @@ class ParticipantsDialog {
       barrierDismissible: true,
       builder: (dialogContext) {
         return Dialog(
-          backgroundColor: const Color(0xFF201F1F),
+          backgroundColor: AppColorStyle.scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -152,4 +154,34 @@ class ParticipantCircle extends StatelessWidget {
       ),
     );
   }
+}
+class CheckedInCard extends StatelessWidget{
+  const CheckedInCard({super.key, required this.name, required this.initials, required this.goal, required this.time});
+  final String name;
+  final String initials;
+  final String goal;
+  final String time;
+  @override
+  Widget build(BuildContext context) {
+    return HomeCard(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 21,horizontal: 16),
+          child: Row(
+            mainAxisAlignment: .spaceBetween,
+            children: [
+              ParticipantCircle(initials: initials, size: 50,),
+              Column(
+                crossAxisAlignment: .start,
+                children: [
+                  Text("$name checked in",style: TextStyle(fontWeight: .bold,fontSize: 20),),
+                  Text("$goal • $time ago"),
+                ],
+              ),
+              Icon(Icons.check_circle,color: AppColorStyle.primaryGreen,size: 35,)
+            ],
+          ),
+        )
+    );
+  }
+
 }
