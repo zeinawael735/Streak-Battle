@@ -118,7 +118,7 @@ class ActiveBattlesCard extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.pushNamed(
                                     context,
-                                    AppRoutes.createBattle,
+                                    AppRoutes.battleDetails,
                                   );
                                 },
                                 icon: const Icon(
