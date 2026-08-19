@@ -158,7 +158,13 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
           const SizedBox(height: 20),
           const Text('DAILY GOAL', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          TextField(
+          TextFormField(
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter a daily goal';
+              }
+              return null;
+            },
             controller: widget.goalController,
             style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
@@ -175,6 +181,8 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: Color(0xFF6B11A1)),
               ),
+
+
             ),
           ),
           const SizedBox(height: 20),
@@ -209,25 +217,12 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
               if (val) _selectReminderTime(context);
             },
           ),
-          const SizedBox(height: 12),
-          SwitchListTile(
-            tileColor: const Color(0xFF160E21),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: BorderSide(color: Colors.grey.shade800),
-            ),
-            secondary: const Icon(Icons.lock_outline, color: Color(0xFF6B11A1)),
-            title: const Text('Invite only', style: TextStyle(color: Colors.white, fontSize: 14)),
-            subtitle: const Text('Only people with code can join', style: TextStyle(color: Colors.grey, fontSize: 12)),
-            value: widget.isInviteOnly,
-            activeColor: const Color(0xFF6B11A1),
-            onChanged: widget.onInviteOnlyChanged,
-          ),
           const SizedBox(height: 30),
+
           CustomButton(
             text: "Next: battle summary",
             onPressed: widget.onNext,
-            padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 16),
           ),
         ],
       ),
