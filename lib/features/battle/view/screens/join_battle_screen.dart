@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/common/common.dart';
+import 'package:streak_battle/core/routes/app_routes.dart';
 import 'package:streak_battle/features/battle/view_model/join_battle_cubit.dart';
 import 'package:streak_battle/features/battle/view_model/join_battle_state.dart';
 
@@ -22,8 +23,27 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
   @override
   void initState() {
     super.initState();
-    _cubit.stream.listen((_) {
-      if (mounted) setState(() {});
+    _cubit.stream.listen((state) {
+      if (!mounted) return;
+      setState(() {});
+
+      if (state is JoinBattleJoined) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('You joined the battle successfully!'),
+            backgroundColor: Color(0xFF7911FF),
+          ),
+        );
+
+        Future.delayed(const Duration(milliseconds: 900), () {
+          if (!mounted) return;
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.appSection,
+                (route) => false,
+          );
+        });
+      }
     });
   }
 
@@ -243,7 +263,6 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
 
                       // ==================================================
                       // BATTLE CARD
-                      // (UI unchanged — only the surrounding `if` is new)
                       // ==================================================
 
                       if (state is JoinBattlePreview)
@@ -312,7 +331,6 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
 
   // ==============================================================
   // BATTLE CARD
-  // (same exact visual widget — content now comes from `battle`)
   // ==============================================================
 
   Widget _buildBattleCard(BattleEntity battle) {
