@@ -50,11 +50,7 @@ class _DailyCheckInScreenState extends State<DailyCheckInScreen> {
         ),
         title: Text(
           'Daily check-in',
-          style: TextStyle(
-            color: isDark ? Colors.white : Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [
           Container(
@@ -97,11 +93,7 @@ class _DailyCheckInScreenState extends State<DailyCheckInScreen> {
                       const SizedBox(height: 24),
                       Text(
                         "Did you complete today's goal?",
-                        style: TextStyle(
-                          color: isDark ? Colors.white : Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                       const SizedBox(height: 12),
 
@@ -154,10 +146,7 @@ class _DailyCheckInScreenState extends State<DailyCheckInScreen> {
                               const SizedBox(width: 16),
                               Text(
                                 'Yes, completed',
-                                style: TextStyle(
-                                  color: isDark ? Colors.white : Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -168,16 +157,13 @@ class _DailyCheckInScreenState extends State<DailyCheckInScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Add a note (optional)',
-                            style: TextStyle(color: Colors.grey, fontSize: 13),
+                            style: Theme.of(context).textTheme.labelLarge,
                           ),
                           Text(
                             '$_noteLength/120',
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 13,
-                            ),
+                            style: Theme.of(context).textTheme.labelLarge,
                           ),
                         ],
                       ),
@@ -230,8 +216,8 @@ class _DailyCheckInScreenState extends State<DailyCheckInScreen> {
                 width: double.infinity,
                 child: CustomButton(
                   text: 'Confirm check-in',
-                  onPressed: isCompleted == true ? () {} : () {},
-                  padding: EdgeInsets.zero,
+                  onPressed: isCompleted == true ? () {} : null,
+                  padding: EdgeInsets.symmetric(vertical: 15),
                 ),
               ),
             ],
