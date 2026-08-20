@@ -23,6 +23,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         'uid': uid,
         'name': name.trim(),
         'email': email.trim(),
+        'photoURL': '',
         'xp': 0,
         'currentStreak': 0,
         'wins': 0,
