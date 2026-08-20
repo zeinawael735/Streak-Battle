@@ -79,10 +79,9 @@ class LoginCubit extends Cubit<LoginState> {
         await firestore.collection('users').doc(user.uid).set({
           'uid': user.uid,
           'email': user.email,
-          'displayName': user.displayName ?? '',
+          'name': user.displayName ?? '',
           'photoURL': user.photoURL ?? '',
           'createdAt': FieldValue.serverTimestamp(),
-          'provider': 'google',
           'xp': 0,
           'currentStreak': 0,
           'wins': 0,
