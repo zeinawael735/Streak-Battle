@@ -31,7 +31,26 @@ class BattleEntity {
     required this.createdAt,
   });
 
-
-
-
+  factory BattleEntity.fromFirestore(String docId, Map<String, dynamic> data) {
+    return BattleEntity(
+      id: docId,
+      title: data['title'] ?? '',
+      category: data['category'] ?? '',
+      description: data['description'] ?? '',
+      startDate: (data['startDate'] != null)
+          ? (data['startDate'] as dynamic).toDate()
+          : DateTime.now(),
+      durationDays: data['durationDays'] ?? 0,
+      dailyGoal: data['dailyGoal'] ?? '',
+      isReminderOn: data['isReminderOn'] ?? false,
+      reminderTime: data['reminderTime'] ?? '',
+      isInviteOnly: data['isInviteOnly'] ?? true,
+      battleCode: data['battleCode'] ?? '',
+      creatorId: data['creatorId'] ?? '',
+      members: List<String>.from(data['members'] ?? []),
+      createdAt: (data['createdAt'] != null)
+          ? (data['createdAt'] as dynamic).toDate()
+          : DateTime.now(),
+    );
+  }
 }
