@@ -37,7 +37,7 @@ class AppTheme {
           color: AppColors.black,
         ),
         headlineMedium: TextStyle(
-          fontSize: 28,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
           color: AppColors.black,
         ),

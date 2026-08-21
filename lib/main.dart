@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:streak_battle/core/theme/theme.dart';
 import 'package:streak_battle/features/battle/view/screens/battle_details_screen.dart';
 import 'core/theme/theme.dart';
+import 'package:streak_battle/features/gamification/view/screens/daily_check_in_screen.dart';
+
 import 'core/helper/auth_helper.dart';
 import 'core/routes/app_routes.dart';
 import 'features/app_section/view/screens/app_section.dart';
