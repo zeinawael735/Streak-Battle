@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/theme/theme.dart';
 import 'package:streak_battle/features/battle/view/screens/battle_details_screen.dart';
-import 'core/theme/theme.dart';
 import 'package:streak_battle/features/gamification/view/screens/daily_check_in_screen.dart';
 
 import 'core/helper/auth_helper.dart';
@@ -51,6 +50,7 @@ class BattleStreakApp extends StatelessWidget {
         AppRoutes.login: (context) => const LoginScreen(),
         AppRoutes.battleDetails: (context) => const BattleDetailsScreen(),
         AppRoutes.joinBattle: (context) => const JoinBattleScreen(),
+        AppRoutes.checkIn: (context) => const DailyCheckInScreen(),
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
