@@ -5,6 +5,7 @@ import 'package:streak_battle/core/constants/app_assets.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 import 'package:streak_battle/features/home/view/widgets/home_card.dart';
 
+import '../../../../core/routes/app_routes.dart';
 import '../widgets/battle_details_screen_widgets.dart';
 
 class BattleDetailsScreen extends StatelessWidget {
@@ -233,7 +234,9 @@ class BattleDetailsScreen extends StatelessWidget {
                               width: .infinity,
                               height: 47,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushNamed(context, AppRoutes.checkIn);
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColorStyle.primaryViolet,
                                   shape: RoundedRectangleBorder(
