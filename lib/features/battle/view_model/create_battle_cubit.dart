@@ -12,9 +12,9 @@ class CreateBattleCubit extends Cubit<CreateBattleState> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void>createBattle(BattleEntity battle)async {
+  Future<void> createBattle(BattleEntity battle) async {
     emit(CreateBattleLoading());
-    try{
+    try {
       final currentUserId = _auth.currentUser?.uid ?? '';
 
       final docRef = _firestore.collection('battles').doc();
@@ -40,9 +40,14 @@ class CreateBattleCubit extends Cubit<CreateBattleState> {
         createdAt: DateTime.now(),
       );
 
-
-
       await docRef.set(battleDto.toMap());
+
+      if (currentUserId.isNotEmpty) {
+        await _firestore.collection('users').doc(currentUserId).update({
+          'battlesXp.${docRef.id}': 0,
+        });
+      }
+
       if (battle.isReminderOn) {
         final timeParts = battle.reminderTime.split(':');
         final reminderTimeOfDay = TimeOfDay(
@@ -59,9 +64,8 @@ class CreateBattleCubit extends Cubit<CreateBattleState> {
         );
       }
       emit(CreateBattleSuccess());
-    }catch(e){
+    } catch (e) {
       emit(CreateBattleError(e.toString()));
     }
   }
-
 }
