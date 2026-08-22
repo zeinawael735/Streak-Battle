@@ -6,7 +6,6 @@ import '../../../../core/constants/app_assets.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../history/view/screens/battles_history_screen.dart';
 import '../../../home/view/screens/home_screen.dart';
-import '../../../leaderboard/view/screens/ranking_screen.dart';
 import '../../../profile/view/screens/profile_screen.dart';
 import '../../view_model/app_section_cubit.dart';
 import '../../view_model/app_section_states.dart';
