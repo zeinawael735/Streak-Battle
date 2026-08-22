@@ -7,6 +7,7 @@ import 'package:streak_battle/core/constants/app_color_style.dart';
 import 'package:streak_battle/features/home/view/widgets/home_card.dart';
 
 import '../../../../core/routes/app_routes.dart';
+import '../../../../core/theme/theme.dart';
 import '../../view_model/battle_details_cubit.dart';
 import '../widgets/battle_details_screen_widgets.dart';
 
@@ -224,6 +225,30 @@ class BattleDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Participants", style: TextStyle(fontWeight: FontWeight.bold, color: AppColorStyle.primaryText, fontSize: 20)),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutes.ranking);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: AppColors.textPrimary,
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 9,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(
+                            color: Color(0xFF4B4456),
+                            width: 1.5,
+                          ),
+                        ),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text("LeaderBoard"),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
