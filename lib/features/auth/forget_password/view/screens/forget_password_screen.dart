@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/core/common/common.dart';
-import 'package:streak_battle/core/theme/theme.dart';
+import 'package:streak_battle/core/utils/responsive_helper.dart';
 import '../../view_model/forget_password_cubit.dart';
 import '../../view_model/forget_password_state.dart';
 
@@ -36,14 +36,20 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = theme.colorScheme.onSurface;
+    final secondaryTextColor = textColor.withOpacity(0.6);
+    final surfaceColor = isDark ? const Color(0xFF1A1A1A) : const Color(0xFFF2F2F2);
+    final r = ResponsiveHelper(context);
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: theme.scaffoldBackgroundColor,
         elevation: 0,
-        leading: const BackButton(color: AppColors.textPrimary),
-        title: const Text('Forgot Password',
-            style: TextStyle(color: AppColors.textPrimary)),
+        leading: BackButton(color: textColor),
+        title: Text('Forgot Password', style: TextStyle(color: textColor, fontSize: r.sp(16))),
       ),
       body: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
         listener: (context, state) {
@@ -51,7 +57,7 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                   content: Text(state.message),
-                  backgroundColor: AppColors.error),
+                  backgroundColor: theme.colorScheme.error),
             );
           }
         },
@@ -60,37 +66,37 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
           final isSuccess = state is ForgetPasswordSuccess;
 
           return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: r.w(24)),
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
+                  SizedBox(height: r.h(20)),
                   Center(
                     child: Container(
-                      width: 90,
-                      height: 90,
+                      width: r.w(90),
+                      height: r.w(90),
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(20),
+                        color: theme.colorScheme.primary,
+                        borderRadius: BorderRadius.circular(r.w(20)),
                       ),
-                      child: const Icon(Icons.lock_reset,
-                          color: Colors.white, size: 40),
+                      child: Icon(Icons.lock_reset,
+                          color: Colors.white, size: r.w(40)),
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  const Text('Reset your password',
+                  SizedBox(height: r.h(24)),
+                  Text('Reset your password',
                       style: TextStyle(
-                          color: AppColors.textPrimary,
-                          fontSize: 22,
+                          color: textColor,
+                          fontSize: r.sp(22),
                           fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
-                  const Text(
+                  SizedBox(height: r.h(8)),
+                  Text(
                     'Enter the email linked to your account. We will send a secure reset link.',
-                    style: TextStyle(color: AppColors.textSecondary),
+                    style: TextStyle(color: secondaryTextColor, fontSize: r.sp(14)),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: r.h(24)),
                   CustomTextField(
                     controller: _emailController,
                     labelText: 'Email address',
@@ -108,7 +114,7 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: r.h(24)),
                   CustomButton(
                     label: isSuccess && state.remainingSeconds > 0
                         ? 'Resend in ${state.remainingSeconds}s'
@@ -124,25 +130,24 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
                       }
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: r.h(16)),
                   if (isSuccess)
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: EdgeInsets.all(r.w(12)),
                       decoration: BoxDecoration(
-                        color: AppColors.surface,
-                        borderRadius: BorderRadius.circular(12),
+                        color: surfaceColor,
+                        borderRadius: BorderRadius.circular(r.w(12)),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
                           Icon(Icons.info_outline,
-                              color: AppColors.primary, size: 18),
-                          SizedBox(width: 8),
+                              color: theme.colorScheme.primary, size: r.w(18)),
+                          SizedBox(width: r.w(8)),
                           Expanded(
                             child: Text(
                               'Link expires in 30 minutes. Check your spam folder too.',
                               style: TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 12),
+                                  color: secondaryTextColor, fontSize: r.sp(12)),
                             ),
                           ),
                         ],
