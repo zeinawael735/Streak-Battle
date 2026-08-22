@@ -3,6 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CheckInRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<Map<String, dynamic>> getBattleInfo(String battleId) async {
+    final doc = await _firestore.collection('battles').doc(battleId).get();
+    if (doc.exists && doc.data() != null) {
+      final data = doc.data()!;
+      return {
+        'title': data['title'] ?? 'Unknown Battle',
+        'goal': data['dailyGoal'] ?? data['goal'] ?? 'No Goal Set',
+      };
+    }
+    return {'title': 'Unknown', 'goal': 'No Goal'};
+  }
+
   Future<Map<String, dynamic>> submitDailyCheckIn({
     required String userId,
     required String battleId,
