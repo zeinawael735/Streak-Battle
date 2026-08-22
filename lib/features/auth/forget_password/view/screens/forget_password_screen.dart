@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/core/common/common.dart';
 import 'package:streak_battle/core/utils/responsive_helper.dart';
+import '../../../../../core/common/custom_text_field.dart';
 import '../../view_model/forget_password_cubit.dart';
 import '../../view_model/forget_password_state.dart';
 
@@ -97,11 +98,10 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
                     style: TextStyle(color: secondaryTextColor, fontSize: r.sp(14)),
                   ),
                   SizedBox(height: r.h(24)),
-                  CustomTextField(
+                  CustomTextFormField(
                     controller: _emailController,
                     labelText: 'Email address',
                     hintText: 'alex@email.com',
-                    prefixIcon: Icons.email_outlined,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
