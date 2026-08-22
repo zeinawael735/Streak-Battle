@@ -70,20 +70,18 @@ class CheckInRepository {
         pointsEarned += 5;
       }
 
-      // 4. تحديث الـ XP العام والـ Level والـ Total Points
       int totalPoints = (userData['totalPoints'] ?? 0) + pointsEarned;
       int xp = (userData['xp'] ?? 0) + pointsEarned;
       int currentLevel = (xp ~/ 200) + 1;
 
-      // 5. حفظ البيانات في الـ Transaction
       transaction.update(userRef, {
         'currentStreak': currentStreak, // تم التعديل
         'lastCheckInDate': FieldValue.serverTimestamp(),
         'totalPoints': totalPoints,
         'xp': xp,
         'level': currentLevel,
-        // هنا السحر: ده هيزود النقط للـ Battle دي بس، ولو الباتل مش موجودة هيكريتها تلقائي
         'battlesXp.$battleId': FieldValue.increment(pointsEarned),
+        'weeklyCheckIns': FieldValue.arrayUnion([todayString]),
       });
 
       transaction.set(checkInRef, {
