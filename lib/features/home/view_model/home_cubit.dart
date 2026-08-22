@@ -32,15 +32,19 @@ class HomeCubit extends Cubit<HomeState> {
         final int currentStreak = userData['currentStreak'] ?? 0;
         final int totalPoints = userData['totalPoints'] ?? 0;
 
-        // 2. حساب الأيام للأسبوع الحالي (بافتراض الأسبوع يبدأ السبت)
+        // 2. حساب الأيام للأسبوع الحالي (يبدأ من السبت وينتهي الجمعة)
         List<String> weeklyCheckIns = List<String>.from(userData['weeklyCheckIns'] ?? []);
         DateTime now = DateTime.now();
-        // يوم 1 في Dart هو الاتنين، ويوم 7 هو الأحد. إحنا عايزين السبت يكون البداية.
-        int daysToSubtract = (now.weekday + 1) % 7;
-        DateTime startOfWeek = now.subtract(Duration(days: daysToSubtract));
+
+        // حساب عدد الأيام للرجوع ليوم السبت بشكل دقيق
+        int daysToSubtract = (now.weekday == DateTime.saturday)
+            ? 0
+            : (now.weekday % 7) + 1;
+
+        DateTime startOfWeek = DateTime(now.year, now.month, now.day).subtract(Duration(days: daysToSubtract));
 
         List<bool> completedDays = [];
-        int currentDayIndex = daysToSubtract + 1; // هيكون من 1 لـ 7
+        int currentDayIndex = daysToSubtract + 1; // هيكون من 1 لـ 7 (السبت للجمعة)
 
         for (int i = 0; i < 7; i++) {
           DateTime day = startOfWeek.add(Duration(days: i));
@@ -52,7 +56,6 @@ class HomeCubit extends Cubit<HomeState> {
         // 3. جلب وتصفية التحديات
         List<Map<String, dynamic>> activeBattles = [];
         List<Map<String, dynamic>> nextUpBattles = [];
-        final todayStr = "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
 
         final battlesSnap = await _firestore.collection('battles').where('members', arrayContains: uid).get();
 
@@ -62,19 +65,26 @@ class HomeCubit extends Cubit<HomeState> {
 
           DateTime startDate = (data['startDate'] as Timestamp).toDate();
           int durationDays = data['durationDays'] ?? 21;
-          DateTime endDate = startDate.add(Duration(days: durationDays));
 
-          // تخطي التحديات المنتهية
-          if (now.isAfter(endDate) && now.difference(endDate).inDays >= 1) continue;
+          // 1. تصفير الساعات والدقائق عشان الحساب يكون بـ (أيام النتيجة) مش الساعات
+          DateTime today = DateTime(now.year, now.month, now.day);
+          DateTime start = DateTime(startDate.year, startDate.month, startDate.day);
+
+          // 2. حساب اليوم الحالي للتحدي بدقة
+          int currentDayOfBattle = today.difference(start).inDays + 1;
+
+          // 3. لو اليوم الحالي للتحدي أكبر من مدة التحدي، يبقى التحدي خلص!
+          if (currentDayOfBattle > durationDays) {
+            continue; // كده الكود هيتخطى التحدي ده ومش هيضيفه في الـ Active Battles خالص
+          }
+
+          // لو التحدي لسه هيبدأ في المستقبل
+          if (currentDayOfBattle < 1) currentDayOfBattle = 1;
 
           // جلب عدد مرات الحضور لحساب النسبة ومعرفة إذا كان حضر اليوم
           final checkInsSnap = await _firestore.collection('battles').doc(battleId).collection('check_ins').where('userId', isEqualTo: uid).get();
           int checkInsCount = checkInsSnap.docs.length;
           int progress = durationDays > 0 ? ((checkInsCount / durationDays) * 100).round().clamp(0, 100) : 0;
-
-          int currentDayOfBattle = now.difference(startDate).inDays + 1;
-          if (currentDayOfBattle < 1) currentDayOfBattle = 1;
-          if (currentDayOfBattle > durationDays) currentDayOfBattle = durationDays;
 
           // هل عمل Check-in النهاردة في التحدي ده؟
           bool checkedInToday = false;
@@ -106,10 +116,13 @@ class HomeCubit extends Cubit<HomeState> {
           }
         }
 
-        // الحفاظ على حالة زرار الـ Show More لو كانت الشاشة متحملة قبل كده
+        // الحفاظ على حالة زراير الـ Show More لو كانت الشاشة متحملة قبل كده
         bool currentShowAll = false;
+        bool currentShowAllNextUp = false;
+
         if (state is HomeLoaded) {
           currentShowAll = (state as HomeLoaded).showAllBattles;
+          currentShowAllNextUp = (state as HomeLoaded).showAllNextUpBattles;
         }
 
         emit(HomeLoaded(
@@ -122,6 +135,7 @@ class HomeCubit extends Cubit<HomeState> {
           activeBattles: activeBattles,
           nextUpBattles: nextUpBattles,
           showAllBattles: currentShowAll,
+          showAllNextUpBattles: currentShowAllNextUp,
         ));
       } catch (e) {
         emit(HomeError(e.toString()));
@@ -133,6 +147,13 @@ class HomeCubit extends Cubit<HomeState> {
     if (state is HomeLoaded) {
       final currentState = state as HomeLoaded;
       emit(currentState.copyWith(showAllBattles: !currentState.showAllBattles));
+    }
+  }
+
+  void toggleShowAllNextUpBattles() {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      emit(currentState.copyWith(showAllNextUpBattles: !currentState.showAllNextUpBattles));
     }
   }
 
