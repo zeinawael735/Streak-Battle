@@ -47,6 +47,7 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
       final doc = query.docs.first;
       final battle = BattleEntity.fromFirestore(doc.id, doc.data());
       final userId = _auth.currentUser?.uid;
+
       if (userId != null && battle.members.contains(userId)) {
         emit(JoinBattleAlreadyJoined());
         return;
@@ -69,6 +70,10 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
     try {
       await _firestore.collection('battles').doc(battle.id).update({
         'members': FieldValue.arrayUnion([userId]),
+      });
+
+      await _firestore.collection('users').doc(userId).update({
+        'battlesXp.${battle.id}': 0,
       });
 
       emit(JoinBattleJoined(battle.id));

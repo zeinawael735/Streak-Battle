@@ -38,7 +38,7 @@ final _step2Key=GlobalKey<FormState>();
 
 
 
-  final List<String> invitedFriends = ["MK", "NJ", "SA"];
+  final List<String> invitedFriends = [];
 
   void _nextPage() {
 
