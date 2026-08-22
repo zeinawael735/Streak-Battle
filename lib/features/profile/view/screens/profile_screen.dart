@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:streak_battle/core/theme/theme.dart';
-import '../../../../core/routes/app_routes.dart';
+import 'package:streak_battle/core/routes/app_routes.dart';
+import 'package:streak_battle/core/utils/responsive_helper.dart';
 import '../../view_model/profile_cubit.dart';
 import '../../view_model/profile_state.dart';
 
@@ -23,14 +23,22 @@ class _ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = theme.colorScheme.onSurface;
+    final secondaryTextColor = textColor.withOpacity(0.5);
+    final cardColor = isDark ? const Color(0xFF1C1C1C) : const Color(0xFFF5F5F5);
+    final borderColor = textColor.withOpacity(0.08);
+    final r = ResponsiveHelper(context);
+
     return Scaffold(
-      backgroundColor: AppColors.black,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
             if (state is ProfileLoading) {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.violetFocus),
+              return Center(
+                child: CircularProgressIndicator(color: theme.colorScheme.secondary),
               );
             }
 
@@ -38,7 +46,7 @@ class _ProfileView extends StatelessWidget {
               return Center(
                 child: Text(
                   state.message,
-                  style: const TextStyle(color: AppColors.white),
+                  style: TextStyle(color: textColor, fontSize: r.sp(14)),
                 ),
               );
             }
@@ -46,22 +54,22 @@ class _ProfileView extends StatelessWidget {
             final profile = state as ProfileLoaded;
 
             return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: r.w(20)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 10),
+                  SizedBox(height: r.h(10)),
 
                   // ================= HEADER =================
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Spacer(),
-                      const Text(
+                      Text(
                         'Profile',
                         style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 18,
+                          color: textColor,
+                          fontSize: r.sp(18),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -69,25 +77,25 @@ class _ProfileView extends StatelessWidget {
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(context, AppRoutes.settings),
                         child: Icon(Icons.settings_outlined,
-                            color: AppColors.white.withOpacity(0.7), size: 22),
+                            color: secondaryTextColor, size: r.w(22)),
                       ),
                     ],
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: r.h(24)),
 
                   // ================= AVATAR =================
                   Center(
                     child: Stack(
                       children: [
                         CircleAvatar(
-                          radius: 40,
-                          backgroundColor: AppColors.violetFocus,
+                          radius: r.w(40),
+                          backgroundColor: theme.colorScheme.secondary,
                           child: Text(
                             _initials(profile.name),
-                            style: const TextStyle(
-                              color: AppColors.white,
-                              fontSize: 26,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: r.sp(26),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -96,54 +104,54 @@ class _ProfileView extends StatelessWidget {
                           bottom: 0,
                           right: 0,
                           child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: const BoxDecoration(
-                              color: AppColors.purple,
+                            padding: EdgeInsets.all(r.w(4)),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.primary,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(Icons.edit,
-                                size: 12, color: AppColors.white),
+                            child: Icon(Icons.edit,
+                                size: r.w(12), color: Colors.white),
                           ),
                         ),
                       ],
                     ),
                   ),
 
-                  const SizedBox(height: 12),
+                  SizedBox(height: r.h(12)),
 
                   Center(
                     child: Text(
                       profile.name,
-                      style: const TextStyle(
-                        color: AppColors.white,
-                        fontSize: 18,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: r.sp(18),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 6),
+                  SizedBox(height: r.h(6)),
 
                   Center(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 4),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: r.w(12), vertical: r.h(4)),
                       decoration: BoxDecoration(
-                        color: AppColors.success.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(20),
+                        color: theme.colorScheme.tertiary.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(r.w(20)),
                       ),
                       child: Text(
                         profile.rankLabel,
-                        style: const TextStyle(
-                          color: AppColors.success,
-                          fontSize: 12,
+                        style: TextStyle(
+                          color: theme.colorScheme.tertiary,
+                          fontSize: r.sp(12),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: r.h(20)),
 
                   // ================= STATS CARDS =================
                   Row(
@@ -152,49 +160,60 @@ class _ProfileView extends StatelessWidget {
                         child: _statCard(
                           value: '${profile.battlesCount}',
                           label: 'BATTLES',
-                          color: AppColors.white,
+                          color: textColor,
+                          cardColor: cardColor,
+                          borderColor: borderColor,
+                          secondaryTextColor: secondaryTextColor,
+                          r: r,
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: r.w(10)),
                       Expanded(
                         child: _statCard(
                           value: '${profile.wins}',
                           label: 'WINS',
-                          color: AppColors.success,
+                          color: theme.colorScheme.tertiary,
+                          cardColor: cardColor,
+                          borderColor: borderColor,
+                          secondaryTextColor: secondaryTextColor,
+                          r: r,
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: r.w(10)),
                       Expanded(
                         child: _statCard(
                           value: '${profile.currentStreak}d',
                           label: 'STREAK',
-                          color: AppColors.warning,
+                          color: theme.colorScheme.error,
+                          cardColor: cardColor,
+                          borderColor: borderColor,
+                          secondaryTextColor: secondaryTextColor,
+                          r: r,
                         ),
                       ),
                     ],
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: r.h(24)),
 
                   // ================= ACTIVITY CHART =================
-                  const Text(
+                  Text(
                     'Activity',
                     style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 15,
+                      color: textColor,
+                      fontSize: r.sp(15),
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   Text(
                     'Last 7 days',
-                    style: TextStyle(
-                        color: AppColors.white.withOpacity(0.5), fontSize: 12),
+                    style: TextStyle(color: secondaryTextColor, fontSize: r.sp(12)),
                   ),
 
-                  const SizedBox(height: 12),
+                  SizedBox(height: r.h(12)),
 
                   SizedBox(
-                    height: 110,
+                    height: r.h(110),
                     child: BarChart(
                       BarChartData(
                         gridData: const FlGridData(show: false),
@@ -208,11 +227,11 @@ class _ProfileView extends StatelessWidget {
                             barRods: [
                               BarChartRodData(
                                 toY: profile.activityLastWeek[index],
-                                width: 18,
-                                borderRadius: BorderRadius.circular(4),
+                                width: r.w(18),
+                                borderRadius: BorderRadius.circular(r.w(4)),
                                 color: index % 2 == 0
-                                    ? AppColors.violetFocus
-                                    : AppColors.success,
+                                    ? theme.colorScheme.secondary
+                                    : theme.colorScheme.tertiary,
                               ),
                             ],
                           ),
@@ -221,89 +240,93 @@ class _ProfileView extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: r.h(24)),
 
                   // ================= FAVORITE HABITS =================
-                  const Text(
+                  Text(
                     'Favorite Habits',
                     style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 15,
+                      color: textColor,
+                      fontSize: r.sp(15),
                       fontWeight: FontWeight.w700,
                     ),
                   ),
 
-                  const SizedBox(height: 12),
+                  SizedBox(height: r.h(12)),
 
                   Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
+                    spacing: r.w(8),
+                    runSpacing: r.h(8),
                     children: profile.favoriteHabits.isEmpty
                         ? [
-                      _habitChip('Fitness', Icons.fitness_center),
-                      _habitChip('Learning', Icons.menu_book),
-                      _habitChip('Wellness', Icons.spa),
+                      _habitChip('Fitness', Icons.fitness_center, theme,
+                          cardColor, borderColor, r),
+                      _habitChip('Learning', Icons.menu_book, theme,
+                          cardColor, borderColor, r),
+                      _habitChip('Wellness', Icons.spa, theme,
+                          cardColor, borderColor, r),
                     ]
                         : profile.favoriteHabits
-                        .map((h) => _habitChip(h, Icons.check))
+                        .map((h) => _habitChip(
+                        h, Icons.check, theme, cardColor, borderColor, r))
                         .toList(),
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: r.h(24)),
 
                   // ================= ACHIEVEMENTS CARD =================
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, AppRoutes.achievements),
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRoutes.achievements),
                     child: Container(
-                      padding: const EdgeInsets.all(14),
+                      padding: EdgeInsets.all(r.w(14)),
                       decoration: BoxDecoration(
-                        color: AppColors.indigo,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                            color: AppColors.white.withOpacity(0.08)),
+                        color: cardColor,
+                        borderRadius: BorderRadius.circular(r.w(14)),
+                        border: Border.all(color: borderColor),
                       ),
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(8),
+                            padding: EdgeInsets.all(r.w(8)),
                             decoration: BoxDecoration(
-                              color: AppColors.violetFocus.withOpacity(0.15),
+                              color: theme.colorScheme.secondary
+                                  .withOpacity(0.15),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(Icons.emoji_events_outlined,
-                                color: AppColors.violetFocus, size: 20),
+                            child: Icon(Icons.emoji_events_outlined,
+                                color: theme.colorScheme.secondary, size: r.w(20)),
                           ),
-                          const SizedBox(width: 12),
+                          SizedBox(width: r.w(12)),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Achievements',
                                   style: TextStyle(
-                                    color: AppColors.white,
+                                    color: textColor,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 14,
+                                    fontSize: r.sp(14),
                                   ),
                                 ),
                                 Text(
                                   '${profile.achievementsUnlocked} of ${profile.achievementsTotal} unlocked',
                                   style: TextStyle(
-                                    color: AppColors.white.withOpacity(0.5),
-                                    fontSize: 12,
+                                    color: secondaryTextColor,
+                                    fontSize: r.sp(12),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Icon(Icons.chevron_right,
-                              color: AppColors.white.withOpacity(0.5)),
+                          Icon(Icons.chevron_right, color: secondaryTextColor, size: r.w(24)),
                         ],
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(height: r.h(24)),
                 ],
               ),
             );
@@ -325,13 +348,17 @@ class _ProfileView extends StatelessWidget {
     required String value,
     required String label,
     required Color color,
+    required Color cardColor,
+    required Color borderColor,
+    required Color secondaryTextColor,
+    required ResponsiveHelper r,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14),
+      padding: EdgeInsets.symmetric(vertical: r.h(14)),
       decoration: BoxDecoration(
-        color: AppColors.indigo,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.white.withOpacity(0.08)),
+        color: cardColor,
+        borderRadius: BorderRadius.circular(r.w(12)),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
         children: [
@@ -339,16 +366,16 @@ class _ProfileView extends StatelessWidget {
             value,
             style: TextStyle(
               color: color,
-              fontSize: 18,
+              fontSize: r.sp(18),
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: r.h(4)),
           Text(
             label,
             style: TextStyle(
-              color: AppColors.white.withOpacity(0.5),
-              fontSize: 10,
+              color: secondaryTextColor,
+              fontSize: r.sp(10),
               letterSpacing: 0.5,
             ),
           ),
@@ -357,22 +384,24 @@ class _ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _habitChip(String label, IconData icon) {
+  Widget _habitChip(String label, IconData icon, ThemeData theme,
+      Color cardColor, Color borderColor, ResponsiveHelper r) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: r.w(12), vertical: r.h(8)),
       decoration: BoxDecoration(
-        color: AppColors.indigo,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.white.withOpacity(0.08)),
+        color: cardColor,
+        borderRadius: BorderRadius.circular(r.w(20)),
+        border: Border.all(color: borderColor),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: AppColors.violetFocus),
-          const SizedBox(width: 6),
+          Icon(icon, size: r.w(14), color: theme.colorScheme.secondary),
+          SizedBox(width: r.w(6)),
           Text(label,
               style: TextStyle(
-                  color: AppColors.white.withOpacity(0.7), fontSize: 12)),
+                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                  fontSize: r.sp(12))),
         ],
       ),
     );

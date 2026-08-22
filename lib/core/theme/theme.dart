@@ -44,6 +44,7 @@ class AppTheme {
       colorScheme: const ColorScheme.light(
         primary: AppColors.purple,
         secondary: AppColors.violetFocus,
+        tertiary: AppColors.success,
         error: AppColors.error,
         surface: AppColors.white,
       ),
@@ -81,6 +82,7 @@ class AppTheme {
       colorScheme: const ColorScheme.dark(
         primary: AppColors.purple,
         secondary: AppColors.violetFocus,
+        tertiary: AppColors.success,
         error: AppColors.error,
         surface: AppColors.indigo,
       ),
