@@ -64,7 +64,7 @@ class NextUpCard extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.createBattle);
+                Navigator.pushNamed(context, AppRoutes.checkIn);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColorStyle.primaryViolet,
