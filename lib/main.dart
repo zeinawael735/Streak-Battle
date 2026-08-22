@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/theme/theme.dart';
+import 'package:streak_battle/features/achievements/view/screens/achievements_screen.dart';
 import 'package:streak_battle/features/battle/view/screens/battle_details_screen.dart';
 import 'core/theme/theme.dart';
 import 'package:streak_battle/features/gamification/view/screens/daily_check_in_screen.dart';
@@ -43,7 +44,7 @@ class BattleStreakApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
-      initialRoute: initialRoute,
+      home: AchievementsScreen(),
       routes: {
         AppRoutes.appSection: (context) => const AppSection(),
         AppRoutes.createBattle: (context) => const CreateBattleScreen(),
