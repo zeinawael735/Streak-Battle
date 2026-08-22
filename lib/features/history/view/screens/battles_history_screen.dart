@@ -4,6 +4,7 @@ import 'package:streak_battle/core/theme/theme.dart';
 import 'package:streak_battle/features/history/view/widgets/history_battle_card.dart';
 
 import '../../../../core/constants/app_color_style.dart';
+import '../../../../core/helper/get_category_icon_helper.dart';
 import '../../view_model/history_cubit.dart';
 import '../../view_model/history_state.dart';
 
@@ -75,7 +76,7 @@ class BattlesScreen extends StatelessWidget {
                             battleId: battleData['id'],
                             title: battleData['title'],
                             duration: battleData['duration'],
-                            symbol: categories[battleData['category']] ?? Icons.edit,
+                            symbol: getCategoryIcon(battleData['category']),
                             progress: battleData['progress'],
                             rank: battleData['rank'],
                           );
