@@ -76,17 +76,26 @@ class LoginCubit extends Cubit<LoginState> {
       final user = userCredential.user;
 
       if (user != null) {
-        await firestore.collection('users').doc(user.uid).set({
-          'uid': user.uid,
-          'email': user.email,
-          'displayName': user.displayName ?? '',
-          'photoURL': user.photoURL ?? '',
-          'createdAt': FieldValue.serverTimestamp(),
-          'provider': 'google',
-          'xp': 0,
-          'currentStreak': 0,
-          'wins': 0,
-        }, SetOptions(merge: true));
+        final userDoc = await firestore.collection('users').doc(user.uid).get();
+
+        if (!userDoc.exists) {
+          await firestore.collection('users').doc(user.uid).set({
+            'uid': user.uid,
+            'name': user.displayName ?? '',
+            'email': user.email ?? '',
+            'photoURL': user.photoURL ?? '',
+            'totalPoints': 0,
+            'xp': 0,
+            'battlesXp': {}, // نفس الماب الفاضية
+            'level': 1,
+            'currentStreak': 0,
+            'lastCheckInDate': null,
+            'weeklyCheckIns': [],
+            'wins': 0,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+        }
+
         await storage.write(key: 'user_id', value: user.uid);
         await storage.write(key: 'user_email', value: user.email);
 

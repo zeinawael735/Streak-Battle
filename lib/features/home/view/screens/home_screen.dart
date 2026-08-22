@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:streak_battle/core/constants/app_assets.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
+import 'package:streak_battle/core/theme/theme.dart';
 import 'package:streak_battle/features/home/view/widgets/Next_up_card.dart';
 import 'package:streak_battle/features/home/view/widgets/active_battles_card.dart';
 import 'package:streak_battle/features/home/view/widgets/home_card.dart';
@@ -15,7 +16,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorStyle.scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                           "Hi,",
                           style: TextStyle(
                             fontSize: 20,
-                            color: AppColorStyle.primaryText,
+                            color: AppColors.textPrimary,
                           ),
                         ),
                         Text(
@@ -43,19 +43,20 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
-                            color: AppColorStyle.primaryText,
+                            color: AppColors.textPrimary,
                           ),
                         ),
                       ],
                     ),
                     CircleAvatar(
-                      backgroundColor: AppColorStyle.primaryViolet,
+                      backgroundColor: AppColors.primary,
                       radius: 23,
                       child: Text("AM"),
                     ),
                   ],
                 ),
                 SizedBox(height: 7),
+
 
                 // second row
                 SizedBox(
@@ -90,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                                   "Current streak",
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: AppColorStyle.primaryText,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ],
@@ -116,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                                   "Total points",
                                   style: TextStyle(
                                     fontSize: 17,
-                                    color: AppColorStyle.primaryText,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ],
@@ -151,7 +152,7 @@ class HomeScreen extends StatelessWidget {
                                     Text(
                                       "4/7 Days",
                                       style: TextStyle(
-                                        color: AppColorStyle.primaryText,
+                                        color: AppColors.textPrimary,
                                       ),
                                     ),
                                   ],
@@ -178,17 +179,17 @@ class HomeScreen extends StatelessWidget {
                       "Active Battles",
                       style: TextStyle(
                         fontSize: 25,
-                        color: AppColorStyle.primaryText,
+                        color: AppColors.textPrimary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.createBattle);
+                        Navigator.pushNamed(context, AppRoutes.joinBattle);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColorStyle.primaryViolet,
-                        foregroundColor: AppColorStyle.primaryText,
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.textPrimary,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 30,
@@ -226,7 +227,7 @@ class HomeScreen extends StatelessWidget {
                   "Next Up",
                   style: TextStyle(
                     fontSize: 25,
-                    color: AppColorStyle.primaryText,
+                    color: AppColors.textPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
