@@ -16,7 +16,6 @@ import '../widgets/weekly_days_row.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -26,11 +25,18 @@ class HomeScreen extends StatelessWidget {
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               if (state is HomeLoading || state is HomeInitial) {
-                return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+                return const Center(
+                  child: CircularProgressIndicator(color: AppColors.primary),
+                );
               }
 
               if (state is HomeError) {
-                return Center(child: Text("Error: ${state.message}", style: const TextStyle(color: Colors.white)));
+                return Center(
+                  child: Text(
+                    "Error: ${state.message}",
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                );
               }
 
               if (state is HomeLoaded) {
@@ -38,6 +44,11 @@ class HomeScreen extends StatelessWidget {
                 final activeBattlesToShow = state.showAllBattles
                     ? state.activeBattles
                     : state.activeBattles.take(2).toList();
+
+                // تحديد عدد التحديات المعروضة في Next Up
+                final nextUpBattlesToShow = state.showAllNextUpBattles
+                    ? state.nextUpBattles
+                    : state.nextUpBattles.take(2).toList();
 
                 // حساب عدد الأيام المكتملة لعرضها 4/7
                 int completedCount = state.completedDays.where((e) => e).length;
@@ -55,14 +66,32 @@ class HomeScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("Hi,", style: TextStyle(fontSize: 20, color: AppColors.textPrimary)),
-                                Text(state.userName, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textPrimary)),
+                                const Text(
+                                  "Hi,",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                                Text(
+                                  state.userName,
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
                               ],
                             ),
                             CircleAvatar(
                               backgroundColor: AppColors.primary,
                               radius: 23,
-                              child: Text(state.initials, style: const TextStyle(fontWeight: FontWeight.bold)),
+                              child: Text(
+                                state.initials,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -77,13 +106,34 @@ class HomeScreen extends StatelessWidget {
                               Expanded(
                                 child: HomeCard(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 30, left: 30, top: 25),
+                                    padding: const EdgeInsets.only(
+                                      bottom: 30,
+                                      left: 30,
+                                      top: 25,
+                                    ),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                       children: [
-                                        SvgPicture.asset(AppAssets.fireIconSvg, width: 27, height: 27),
-                                        Text("${state.currentStreak} days", style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                                        const Text("Current streak", style: TextStyle(fontSize: 16, color: AppColors.textPrimary)),
+                                        SvgPicture.asset(
+                                          AppAssets.fireIconSvg,
+                                          width: 27,
+                                          height: 27,
+                                        ),
+                                        Text(
+                                          "${state.currentStreak} days",
+                                          style: const TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const Text(
+                                          "Current streak",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: AppColors.textPrimary,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -92,14 +142,32 @@ class HomeScreen extends StatelessWidget {
                               Expanded(
                                 child: HomeCard(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(left: 25, top: 24, bottom: 24),
+                                    padding: const EdgeInsets.only(
+                                      left: 25,
+                                      top: 24,
+                                      bottom: 24,
+                                    ),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text("⭐", style: TextStyle(fontSize: 25)),
-                                        Text("${state.totalPoints}", style: const TextStyle(fontSize: 22)),
-                                        const Text("Total points", style: TextStyle(fontSize: 17, color: AppColors.textPrimary)),
+                                        const Text(
+                                          "⭐",
+                                          style: TextStyle(fontSize: 25),
+                                        ),
+                                        Text(
+                                          "${state.totalPoints}",
+                                          style: const TextStyle(fontSize: 22),
+                                        ),
+                                        const Text(
+                                          "Total points",
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                            color: AppColors.textPrimary,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -120,18 +188,29 @@ class HomeScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(25.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text("This week", style: TextStyle(fontSize: 17)),
-                                            Text("$completedCount/7 Days", style: const TextStyle(color: AppColors.textPrimary)),
+                                            const Text(
+                                              "This week",
+                                              style: TextStyle(fontSize: 17),
+                                            ),
+                                            Text(
+                                              "$completedCount/7 Days",
+                                              style: const TextStyle(
+                                                color: AppColors.textPrimary,
+                                              ),
+                                            ),
                                           ],
                                         ),
                                         WeeklyDaysRow(
                                           completedDays: state.completedDays,
-                                          currentDayIndex: state.currentDayIndex,
+                                          currentDayIndex:
+                                          state.currentDayIndex,
                                         ),
                                       ],
                                     ),
@@ -149,20 +228,33 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             const Text(
                               "Active Battles",
-                              style: TextStyle(fontSize: 25, color: AppColors.textPrimary, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontSize: 25,
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, AppRoutes.joinBattle);
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.joinBattle,
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primary,
                                 foregroundColor: AppColors.textPrimary,
                                 elevation: 0,
-                                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 30,
+                                  vertical: 8,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
-                                  side: const BorderSide(color: Color(0xFF4B4456), width: 1.5),
+                                  side: const BorderSide(
+                                    color: Color(0xFF4B4456),
+                                    width: 1.5,
+                                  ),
                                 ),
                                 minimumSize: Size.zero,
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -177,7 +269,12 @@ class HomeScreen extends StatelessWidget {
                         if (state.activeBattles.isEmpty)
                           const Padding(
                             padding: EdgeInsets.symmetric(vertical: 20),
-                            child: Center(child: Text("You haven't joined any battles yet.", style: TextStyle(color: Colors.grey))),
+                            child: Center(
+                              child: Text(
+                                "You haven't joined any battles yet.",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ),
                           )
                         else
                           Column(
@@ -196,31 +293,42 @@ class HomeScreen extends StatelessWidget {
                             }).toList(),
                           ),
 
-                        // Show More / Show Less Button
+                        // Show More / Show Less Button for Active Battles
                         if (state.activeBattles.length > 2)
                           Align(
                             alignment: Alignment.center,
                             child: TextButton(
-                              onPressed: () => context.read<HomeCubit>().toggleShowAllBattles(),
+                              onPressed: () => context
+                                  .read<HomeCubit>()
+                                  .toggleShowAllBattles(),
                               child: Text(
-                                state.showAllBattles ? "Show less" : "Show more",
-                                style: const TextStyle(color: AppColors.primary, fontSize: 16),
+                                state.showAllBattles
+                                    ? "Show less"
+                                    : "Show more",
+                                style: const TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
 
                         const SizedBox(height: 15),
 
-                        // Next Up Section (بيظهر بس لو في تحديات محتاجة Check-in)
+                        // Next Up Section
                         if (state.nextUpBattles.isNotEmpty) ...[
                           const Text(
                             "Next Up",
-                            style: TextStyle(fontSize: 25, color: AppColors.textPrimary, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 25,
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Column(
                             spacing: 15,
-                            children: state.nextUpBattles.map((battle) {
+                            children: nextUpBattlesToShow.map((battle) {
                               return NextUpCard(
                                 battleId: battle['id'],
                                 icon: getCategoryIcon(battle['category']),
@@ -229,6 +337,26 @@ class HomeScreen extends StatelessWidget {
                               );
                             }).toList(),
                           ),
+
+                          // Show More / Show Less Button for Next Up
+                          if (state.nextUpBattles.length > 2)
+                            Align(
+                              alignment: Alignment.center,
+                              child: TextButton(
+                                onPressed: () => context
+                                    .read<HomeCubit>()
+                                    .toggleShowAllNextUpBattles(),
+                                child: Text(
+                                  state.showAllNextUpBattles
+                                      ? "Show less"
+                                      : "Show more",
+                                  style: const TextStyle(
+                                    color: AppColors.primary,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
                           const SizedBox(height: 20),
                         ],
                       ],

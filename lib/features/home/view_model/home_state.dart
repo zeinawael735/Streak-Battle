@@ -14,6 +14,7 @@ class HomeLoaded extends HomeState {
   final List<Map<String, dynamic>> activeBattles;
   final List<Map<String, dynamic>> nextUpBattles;
   final bool showAllBattles;
+  final bool showAllNextUpBattles; // المتغير الجديد
 
   HomeLoaded({
     required this.userName,
@@ -25,11 +26,13 @@ class HomeLoaded extends HomeState {
     required this.activeBattles,
     required this.nextUpBattles,
     this.showAllBattles = false,
+    this.showAllNextUpBattles = false, // القيمة الافتراضية
   });
 
-  // دالة علشان نقدر نغير حالة زرار الـ Show More من غير ما نحمل الداتا من تاني
+  // تحديث الدالة علشان تدعم المتغير الجديد
   HomeLoaded copyWith({
     bool? showAllBattles,
+    bool? showAllNextUpBattles,
   }) {
     return HomeLoaded(
       userName: userName,
@@ -41,6 +44,7 @@ class HomeLoaded extends HomeState {
       activeBattles: activeBattles,
       nextUpBattles: nextUpBattles,
       showAllBattles: showAllBattles ?? this.showAllBattles,
+      showAllNextUpBattles: showAllNextUpBattles ?? this.showAllNextUpBattles,
     );
   }
 }
