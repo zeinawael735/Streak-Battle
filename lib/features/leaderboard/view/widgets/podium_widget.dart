@@ -57,7 +57,7 @@ class PodiumWidget extends StatelessWidget {
   }
 
 
-  String _getInitials(String name) {
+  String getInitials(String name) {
     if (name.trim().isEmpty) return "";
     final parts = name.trim().split(' ');
     if (parts.length > 1 && parts[1].isNotEmpty) {
@@ -81,7 +81,7 @@ class PodiumWidget extends StatelessWidget {
           radius: 45,
           backgroundColor: const Color(0XFF150050),
           child: Text(
-            _getInitials(user.displayName),
+            getInitials(user.displayName),
             style: const TextStyle(
               color: Colors.white,
               fontSize: 30,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:streak_battle/core/theme/theme.dart';
 import 'package:streak_battle/features/battle/view/screens/battle_details_screen.dart';
 import 'package:streak_battle/features/gamification/view/screens/daily_check_in_screen.dart';
+import 'package:streak_battle/features/history/view/screens/battles_history_screen.dart';
 import 'package:streak_battle/features/leaderboard/view/screens/ranking_screen.dart';
 
 import 'core/helper/auth_helper.dart';
@@ -54,8 +55,15 @@ class BattleStreakApp extends StatelessWidget {
         AppRoutes.battleDetails: (context) => const BattleDetailsScreen(),
         AppRoutes.joinBattle: (context) => const JoinBattleScreen(),
         AppRoutes.checkIn: (context) => const DailyCheckInScreen(),
-        AppRoutes.ranking: (context) => const RankingScreen(),
-      },
+      },onGenerateRoute: (settings) {
+      if (settings.name == AppRoutes.ranking) {
+        final String battleId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (context) => RankingScreen(battleId: battleId),
+        );
+      }
+      return null;
+    },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

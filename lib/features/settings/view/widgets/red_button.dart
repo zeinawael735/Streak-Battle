@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-class LogoutButton extends StatelessWidget {
+class RedButton extends StatelessWidget {
   final VoidCallback onTap;
-
-  const LogoutButton({super.key, required this.onTap});
+  String text;
+  IconData? icon;
+   RedButton({super.key, required this.onTap, required this.text,required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +18,12 @@ class LogoutButton extends StatelessWidget {
           border: Border.all(color: Colors.redAccent.shade700, width: 1.5),
         ),
         child: Row(
-          children: const [
-            Icon(Icons.logout, color: Colors.redAccent, size: 20),
-            SizedBox(width: 12),
+          children: [
+             Icon(icon, color: Colors.redAccent, size: 20),
+            const SizedBox(width: 12),
             Text(
-              'Log out',
-              style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 15),
+              text,
+              style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 15),
             ),
           ],
         ),

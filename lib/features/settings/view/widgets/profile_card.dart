@@ -14,6 +14,14 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String getInitials(String name) {
+      if (name.trim().isEmpty) return "";
+      final parts = name.trim().split(' ');
+      if (parts.length > 1 && parts[1].isNotEmpty) {
+        return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+      }
+      return name.length >= 2 ? name.substring(0, 2).toUpperCase() : name.toUpperCase();
+    }
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF16151A),
@@ -26,7 +34,7 @@ class ProfileCard extends StatelessWidget {
           radius: 24,
           backgroundColor: Colors.purple.shade800,
           child: Text(
-            name.isNotEmpty ? name.substring(0, 2).toUpperCase() : '',
+            name.isNotEmpty ? getInitials(name) : '',
             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),

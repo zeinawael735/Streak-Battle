@@ -8,14 +8,14 @@ import '../../../../core/constants/app_color_style.dart';
 import '../../view_model/leader_board_cubit.dart';
 
 class RankingScreen extends StatelessWidget {
-  const RankingScreen({super.key});
-
+  RankingScreen({super.key, required this.battleId});
+  String battleId;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-      LeaderboardCubit()
-        ..fetchLeaderboard(battleId: '2h1HtVtErDpZ7Y56QjHG'),
+          LeaderboardCubit()
+            ..fetchLeaderboard(battleId: battleId),
       child: Scaffold(
         backgroundColor: AppColorStyle.scaffoldBackgroundColor,
         appBar: AppBar(
@@ -32,13 +32,13 @@ class RankingScreen extends StatelessWidget {
         ),
         body: BlocBuilder<LeaderboardCubit, LeaderBoardState>(
           builder: (context, state) {
-            if(state is LeaderBoardLoading){
-              return  Center(
+            if (state is LeaderBoardLoading) {
+              return Center(
                 child: CircularProgressIndicator(color: Colors.purple),
               );
             }
 
-            if(state is LeaderBoardError){
+            if (state is LeaderBoardError) {
               return Center(
                 child: Text(
                   state.message,
@@ -46,17 +46,14 @@ class RankingScreen extends StatelessWidget {
                 ),
               );
             }
-            if(state is LeaderBoardSuccess){
-
+            if (state is LeaderBoardSuccess) {
               return Column(
                 children: [
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: PodiumWidget(top3: state.top3),
                   ),
                   const SizedBox(height: 20),
-
 
                   Expanded(
                     child: Padding(
@@ -74,19 +71,18 @@ class RankingScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
 
-
                           Expanded(
                             child: ListView.builder(
                               itemCount: state.remainingUsers.length,
                               itemBuilder: (context, index) {
                                 final user = state.remainingUsers[index];
-                                return
-                                  UserRankTile(
-                                    rank: "${user.rank}",
-                                    name: user.displayName,
-                                    checkIns: "${user.currentStreak}",
-                                    points: "${user.xp}",
-                                  );}
+                                return UserRankTile(
+                                  rank: "${user.rank}",
+                                  name: user.displayName,
+                                  checkIns: "${user.currentStreak}",
+                                  points: "${user.xp}",
+                                );
+                              },
                             ),
                           ),
                         ],
@@ -94,12 +90,14 @@ class RankingScreen extends StatelessWidget {
                     ),
                   ),
 
-
-                  if(state.currentUser!=null)...[
-
+                  if (state.currentUser != null) ...[
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 16, top: 8),
+                        left: 20,
+                        right: 20,
+                        bottom: 16,
+                        top: 8,
+                      ),
                       child: UserRankTile(
                         rank: "${state.currentUser!.rank}",
                         name: state.currentUser!.displayName,
@@ -107,19 +105,15 @@ class RankingScreen extends StatelessWidget {
                         points: "${state.currentUser!.xp}",
                         isSticky: true,
                       ),
-                    )]
-
+                    ),
+                  ],
                 ],
               );
             }
             return const SizedBox.shrink();
-
           },
         ),
       ),
     );
   }
 }
-
-
-

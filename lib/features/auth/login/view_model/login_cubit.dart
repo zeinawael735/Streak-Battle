@@ -86,7 +86,7 @@ class LoginCubit extends Cubit<LoginState> {
             'photoURL': user.photoURL ?? '',
             'totalPoints': 0,
             'xp': 0,
-            'battlesXp': {}, // نفس الماب الفاضية
+            'battlesXp': {},
             'level': 1,
             'currentStreak': 0,
             'lastCheckInDate': null,
@@ -110,6 +110,66 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginError(e.message ?? 'Google Sign-In failed'));
     } catch (e) {
       emit(LoginError(e.toString()));
+    }
+  }
+
+
+
+  String userName = '';
+  String userEmail = '';
+
+  Future<void> getUserData() async {
+    final user = auth.currentUser;
+    userEmail = user?.email ?? '';
+
+    if (user != null&&userEmail!='') {
+      try {
+        final doc = await firestore.collection('users').doc(user.uid).get();
+        userName = doc.data()?['name'] ?? user.displayName ?? 'User';
+      } catch (_) {
+        userName = user.displayName ?? 'User';
+      }
+    }
+    emit(UserNameLoaded());
+  }
+
+
+  String get currentUserEmail {
+    return auth.currentUser?.email ?? '';
+  }
+
+
+  Future<void> logout() async {
+    try {
+      await storage.deleteAll();
+      await auth.signOut();
+      emit(LogoutSuccess());
+    } catch (e) {
+      emit(LogoutError('Logout failed: ${e.toString()}'));
+    }
+  }
+  Future<void> deleteAccount() async {
+    emit(DeleteAccountLoading());
+    try {
+      final user = auth.currentUser;
+
+      if (user != null) {
+
+        await firestore.collection('users').doc(user.uid).delete();
+
+
+        await user.delete();
+
+        emit(DeleteAccountSuccess());
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        emit(DeleteAccountError("Please log in again before deleting your account for security reasons."));
+      } else {
+        emit(DeleteAccountError(e.message ?? "Failed to delete account."));
+      }
+    } catch (e) {
+      emit(DeleteAccountError(e.toString()));
     }
   }
 }

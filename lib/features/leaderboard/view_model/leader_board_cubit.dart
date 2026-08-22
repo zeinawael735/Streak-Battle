@@ -45,7 +45,6 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
         return;
       }
 
-
       final List<String> memberIds = List<String>.from(
         battleData['members'] ?? [],
       );
@@ -74,19 +73,38 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
           .where(FieldPath.documentId, whereIn: queryUserIds.toList());
 
       _subscription = query.snapshots().listen(
-        (snapshot) {
-          log('USER DATA: ${snapshot.docs.map((doc) => doc.data()).toList()}');
-
+            (snapshot) {
           try {
+
             List<UserModel> allFetchedUsers = snapshot.docs
-                .map((doc) => UserModel.fromFirestore(doc.data(), doc.id))
+                .map(
+                  (doc) => UserModel.fromFirestore(
+                doc.data(),
+                doc.id,
+                battleId: battleId,
+              ),
+            )
                 .toList();
 
             List<UserModel> leaderboardUsers = allFetchedUsers.toList();
 
             leaderboardUsers.sort((a, b) {
-              if (b.xp != a.xp) return b.xp.compareTo(a.xp);
-              return b.currentStreak.compareTo(a.currentStreak);
+
+              if (b.xp != a.xp) {
+                return b.xp.compareTo(a.xp);
+              }
+
+
+              if (b.currentStreak != a.currentStreak) {
+                return b.currentStreak.compareTo(a.currentStreak);
+              }
+
+
+              if (a.lastCheckInDate != null && b.lastCheckInDate != null) {
+                return a.lastCheckInDate!.compareTo(b.lastCheckInDate!);
+              }
+
+              return 0;
             });
 
             for (int i = 0; i < leaderboardUsers.length; i++) {
@@ -101,7 +119,7 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
             UserModel? currentUserModel;
             try {
               currentUserModel = leaderboardUsers.firstWhere(
-                (u) => u.uid == currentUserId,
+                    (u) => u.uid == currentUserId,
               );
             } catch (_) {
               currentUserModel = null;
