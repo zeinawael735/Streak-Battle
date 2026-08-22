@@ -7,6 +7,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit() : super(SignUpInitial());
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   Future<void> signUp({
     required String name,
     required String email,
@@ -19,15 +20,23 @@ class SignUpCubit extends Cubit<SignUpState> {
         password: password,
       );
       final String uid = userCredential.user!.uid;
+
       await firestore.collection('users').doc(uid).set({
         'uid': uid,
         'name': name.trim(),
         'email': email.trim(),
+        'photoURL': '',
+        'totalPoints': 0,
         'xp': 0,
+        'battlesXp': {},
+        'level': 1,
         'currentStreak': 0,
+        'lastCheckInDate': null,
+        'weeklyCheckIns': [],
         'wins': 0,
         'createdAt': FieldValue.serverTimestamp(),
       });
+
       emit(SignUpSuccess());
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'An error occurred';
