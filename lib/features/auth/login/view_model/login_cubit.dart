@@ -96,6 +96,7 @@ class LoginCubit extends Cubit<LoginState> {
           });
         }
 
+
         await storage.write(key: 'user_id', value: user.uid);
         await storage.write(key: 'user_email', value: user.email);
 
