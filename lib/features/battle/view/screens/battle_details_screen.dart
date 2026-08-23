@@ -50,7 +50,7 @@ class BattleDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: const Color(0xFF150050),
+            color: const Color(0xFF150050),//light:0xFFEFE4F5
             child: Padding(
               padding: const EdgeInsets.only(top: 35, left: 17, right: 17),
               child: Column(

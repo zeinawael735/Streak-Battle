@@ -62,20 +62,13 @@ class HomeScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                 Text(
                                   "Hi,",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.headlineMedium
                                 ),
                                 Text(
                                   state.userName,
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: .bold,fontSize: 22)
                                 ),
                               ],
                             ),
@@ -108,8 +101,8 @@ class HomeScreen extends StatelessWidget {
                                       top: 25,
                                     ),
                                     child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                      crossAxisAlignment: .start,
+                                      spacing: 4,
                                       children: [
                                         SvgPicture.asset(
                                           AppAssets.fireIconSvg,
@@ -118,17 +111,11 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                         Text(
                                           "${state.currentStreak} days",
-                                          style: const TextStyle(
-                                            fontSize: 28,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          style: Theme.of(context).textTheme.headlineLarge
                                         ),
-                                        const Text(
+                                         Text(
                                           "Current streak",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodySmall
                                         ),
                                       ],
                                     ),
@@ -144,10 +131,8 @@ class HomeScreen extends StatelessWidget {
                                       bottom: 24,
                                     ),
                                     child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      spacing: 3,
+                                      crossAxisAlignment: .start,
                                       children: [
                                         const Text(
                                           "⭐",
@@ -155,14 +140,11 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                         Text(
                                           "${state.totalPoints}",
-                                          style: const TextStyle(fontSize: 22),
+                                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 22)
                                         ),
-                                        const Text(
+                                         Text(
                                           "Total points",
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodySmall
                                         ),
                                       ],
                                     ),
@@ -191,15 +173,13 @@ class HomeScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text(
+                                             Text(
                                               "This week",
-                                              style: TextStyle(fontSize: 17),
+                                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: .normal),
                                             ),
                                             Text(
                                               "$completedCount/7 Days",
-                                              style: const TextStyle(
-                                                color: AppColors.textPrimary,
-                                              ),
+                                              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14)
                                             ),
                                           ],
                                         ),
@@ -222,13 +202,9 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                             Text(
                               "Active Battles",
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: AppColors.textPrimary,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 25)
                             ),
                             ElevatedButton(
                               onPressed: () {
@@ -238,7 +214,7 @@ class HomeScreen extends StatelessWidget {
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
+                                backgroundColor: Theme.of(context).colorScheme.primary,
                                 foregroundColor: AppColors.textPrimary,
                                 elevation: 0,
                                 padding: const EdgeInsets.symmetric(
@@ -255,7 +231,7 @@ class HomeScreen extends StatelessWidget {
                                 minimumSize: Size.zero,
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: const Text("join"),
+                              child: Text("join"),
                             ),
                           ],
                         ),
@@ -263,12 +239,12 @@ class HomeScreen extends StatelessWidget {
 
                         // fifth row (Active Battles List)
                         if (state.activeBattles.isEmpty)
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Center(
                               child: Text(
                                 "You haven't joined any battles yet.",
-                                style: TextStyle(color: Colors.grey),
+                                style: Theme.of(context).textTheme.bodySmall
                               ),
                             ),
                           )
@@ -301,10 +277,7 @@ class HomeScreen extends StatelessWidget {
                                 state.showAllBattles
                                     ? "Show less"
                                     : "Show more",
-                                style: const TextStyle(
-                                  color: AppColors.primary,
-                                  fontSize: 16,
-                                ),
+                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Theme.of(context).textTheme.bodySmall?.color)
                               ),
                             ),
                           ),
@@ -313,13 +286,9 @@ class HomeScreen extends StatelessWidget {
 
                         // Next Up Section
                         if (state.nextUpBattles.isNotEmpty) ...[
-                          const Text(
+                           Text(
                             "Next Up",
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: AppColors.textPrimary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 25)
                           ),
                           const SizedBox(height: 10),
                           Column(
@@ -346,10 +315,7 @@ class HomeScreen extends StatelessWidget {
                                   state.showAllNextUpBattles
                                       ? "Show less"
                                       : "Show more",
-                                  style: const TextStyle(
-                                    color: AppColors.primary,
-                                    fontSize: 16,
-                                  ),
+                                  style:Theme.of(context).textTheme.headlineSmall?.copyWith(color: Theme.of(context).textTheme.bodySmall?.color)
                                 ),
                               ),
                             ),
@@ -360,7 +326,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
               }
-              return const SizedBox(); // Fallback
+              return const SizedBox();
             },
           ),
         ),

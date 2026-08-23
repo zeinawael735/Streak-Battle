@@ -25,12 +25,14 @@ class WeeklyDaysRow extends StatelessWidget {
           label: days[index],
           isComplete: isComplete,
           isToday: isToday,
+          context: context,
         );
       }),
     );
   }
 
   Widget buildDayCircle({
+    required BuildContext context,
     required String label,
     required bool isComplete,
     required bool isToday,
@@ -42,11 +44,11 @@ class WeeklyDaysRow extends StatelessWidget {
           height: 38,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isComplete ? AppColorStyle.primaryViolet : Colors.transparent,
+            color: isComplete ? Theme.of(context).colorScheme.primary : Colors.transparent,
             border: Border.all(
               color: isToday
                   ? const Color(0xFFFFD700)
-                  : (isComplete ? Colors.transparent : Colors.white.withOpacity(0.1)),
+                  : (isComplete ? Colors.transparent : Theme.of(context).colorScheme.surfaceBright.withOpacity(0.1)),
               width: isToday ? 2 : 1,
             ),
             boxShadow: isToday
@@ -74,8 +76,8 @@ class WeeklyDaysRow extends StatelessWidget {
           style: TextStyle(
             fontSize: 13,
             color: isToday
-                ? const Color(0xFFFFD700)
-                : (isComplete ? AppColorStyle.primaryText : Colors.grey[600]),
+                ?  Color(0xFFFFD700)
+                : (isComplete ? Theme.of(context).textTheme.bodySmall?.color : Colors.grey[600]),
             fontWeight: (isComplete || isToday) ? FontWeight.bold : FontWeight.normal,
           ),
         ),

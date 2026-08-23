@@ -51,10 +51,10 @@ class HistoryBattleCard extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 25,
-                    backgroundColor: AppColors.circleAvatarIconBackground,
+                    backgroundColor: Color(0xFF15004B),
                     child: Icon(
                       symbol,
-                      color: AppColors.primaryGreen,
+                      color: Color(0xFF9368D1),
                       size: 30,
                     ),
                   ),
@@ -63,18 +63,11 @@ class HistoryBattleCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
-                          color: AppColorStyle.primaryText,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 22)
                       ),
                       Text(
                         duration,
-                        style: TextStyle(
-                          color: AppColorStyle.primaryText,
-                          fontSize: 15,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall
                       ),
                     ],
                   ),
@@ -87,7 +80,7 @@ class HistoryBattleCard extends StatelessWidget {
                   minHeight: 6,
                   backgroundColor: AppColors.progressIndicatorBackgroundColor,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.progressIndicatorColor,
+                    AppColors.primaryGreen,
                   ),
                 ),
               ),
@@ -96,7 +89,7 @@ class HistoryBattleCard extends StatelessWidget {
                 children: [
                   Text(
                     "$progress%",
-                    style: TextStyle(color: AppColors.primaryGreen),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(color:AppColors.primaryGreen ),
                   )
                 ],
               )

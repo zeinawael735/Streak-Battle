@@ -95,19 +95,15 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
                             onPressed: () => Navigator.pop(context),
                             icon: const Icon(
                               Icons.arrow_back_ios_new_rounded,
-                              color: AppColors.textPrimary,
                               size: 22,
                             ),
+                            padding: EdgeInsets.only(right: 25),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Center(
                               child: Text(
                                 'Join Battle',
-                                style: TextStyle(
-                                  color: AppColors.textPrimary,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Theme.of(context).textTheme.headlineLarge
                               ),
                             ),
                           ),
@@ -121,7 +117,7 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
                         height: 120,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1A1525),
+                          color: Theme.of(context).colorScheme.onTertiaryContainer,
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Center(

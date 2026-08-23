@@ -20,7 +20,7 @@ class BattlesScreen extends StatelessWidget {
           scrolledUnderElevation: 0,
           title: Text(
             "Battles history",
-            style: Theme.of(context).textTheme.displayLarge
+            style: Theme.of(context).textTheme.headlineLarge
           ),
         ),
         body: BlocBuilder<HistoryCubit, HistoryState>(

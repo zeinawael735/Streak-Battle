@@ -20,10 +20,10 @@ class BattlePreviewCard extends StatelessWidget {
       width: double.infinity,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
+        color:Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFF333333),
+          color: Theme.of(context).colorScheme.surfaceBright.withOpacity(0.05),
           width: 1,
         ),
       ),
@@ -84,11 +84,7 @@ class BattlePreviewCard extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   battle.title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 24)
                 ),
                 const SizedBox(height: 8),
 
@@ -124,23 +120,19 @@ class BattlePreviewCard extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF151515),
+                    color: Theme.of(context).colorScheme.onTertiary,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
                       const Icon(
                         Icons.directions_run_rounded,
-                        color: Color(0xFFCDB5FF),
                         size: 20,
                       ),
                       const SizedBox(width: 12),
                       Text(
                         '${battle.durationDays} days • ${battle.dailyGoal}',
-                        style: const TextStyle(
-                          color: Color(0xFFE0E0E0),
-                          fontSize: 14,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall
                       ),
                     ],
                   ),

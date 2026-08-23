@@ -102,7 +102,7 @@ class _BattleCodeInputState extends State<BattleCodeInput> {
           width: 38,
           height: 52,
           decoration: BoxDecoration(
-            color: const Color(0xFF17131C),
+            color: Theme.of(context).colorScheme.onTertiary,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: const Color(0xFF532389),
@@ -130,11 +130,7 @@ class _BattleCodeInputState extends State<BattleCodeInput> {
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\-]')),
               ],
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineMedium,
               decoration: const InputDecoration(
                 counterText: '',
                 border: InputBorder.none,
