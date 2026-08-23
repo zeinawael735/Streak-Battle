@@ -9,22 +9,35 @@ class AchievementsHeaderCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF3F1D8B), Color(0xFF6A1B9A)],
+          colors: [Color(0xFF0F172A), Color(0xFF2E1065)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
+
         borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.emoji_events, color: Colors.amber, size: 28),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.amber.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.emoji_events,
+                  color: Colors.amber,
+                  size: 24,
+                ),
+              ),
               const SizedBox(width: 12),
-              const Text(
+              Text(
                 '12 of 24 unlocked',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -32,19 +45,21 @@ class AchievementsHeaderCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           const Text(
             'You are halfway to Badge Master',
-            style: TextStyle(color: Colors.white70, fontSize: 13),
+            style: TextStyle(color: Colors.white60, fontSize: 13),
           ),
           const SizedBox(height: 16),
           ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: const LinearProgressIndicator(
-              value: 0.5,
-              backgroundColor: Color(0x33FFFFFF),
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.purpleAccent),
-              minHeight: 6,
+            borderRadius: BorderRadius.circular(6),
+            child: LinearProgressIndicator(
+              value: 1.5,
+              backgroundColor: Colors.white10,
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                Colors.purpleAccent,
+              ),
+              minHeight: 8,
             ),
           ),
         ],
