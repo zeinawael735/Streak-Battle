@@ -4,6 +4,7 @@ class AppColors {
   static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);
   static const Color indigo = Color(0xFF150050);
+  static const Color circleAvatarIconBackground = Color(0xFF2E263F);
   static const Color deepPurple = Color(0xFF3F0071);
   static const Color purple = Color(0xFF610094);
   static const Color violetFocus = Color(0xFFC77DFF);
@@ -55,6 +56,7 @@ class AppTheme {
       colorScheme: const ColorScheme.light(
         primary: AppColors.purple,
         secondary: AppColors.violetFocus,
+        tertiary: AppColors.success,
         error: AppColors.error,
         surface: AppColors.white,
       ),
@@ -92,6 +94,7 @@ class AppTheme {
       colorScheme: const ColorScheme.dark(
         primary: AppColors.purple,
         secondary: AppColors.violetFocus,
+        tertiary: AppColors.success,
         error: AppColors.error,
         surface: AppColors.indigo,
       ),
