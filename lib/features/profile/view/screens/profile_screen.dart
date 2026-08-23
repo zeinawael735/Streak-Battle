@@ -132,6 +132,7 @@ class _ProfileView extends StatelessWidget {
 
                   SizedBox(height: r.h(6)),
 
+                  // Level badge (replaces old placeholder rank label)
                   Center(
                     child: Container(
                       padding: EdgeInsets.symmetric(
@@ -141,7 +142,7 @@ class _ProfileView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(r.w(20)),
                       ),
                       child: Text(
-                        profile.rankLabel,
+                        'Level ${profile.level}',
                         style: TextStyle(
                           color: theme.colorScheme.tertiary,
                           fontSize: r.sp(12),
@@ -170,7 +171,7 @@ class _ProfileView extends StatelessWidget {
                       SizedBox(width: r.w(10)),
                       Expanded(
                         child: _statCard(
-                          value: '${profile.wins}',
+                          value: '${profile.wins}', // TODO: confirm final source for wins with team
                           label: 'WINS',
                           color: theme.colorScheme.tertiary,
                           cardColor: cardColor,
@@ -220,13 +221,16 @@ class _ProfileView extends StatelessWidget {
                         borderData: FlBorderData(show: false),
                         titlesData: const FlTitlesData(show: false),
                         barTouchData: BarTouchData(enabled: false),
+                        maxY: 1.2, // check-in days are represented as 0 or 1
                         barGroups: List.generate(
                           profile.activityLastWeek.length,
                               (index) => BarChartGroupData(
                             x: index,
                             barRods: [
                               BarChartRodData(
-                                toY: profile.activityLastWeek[index],
+                                toY: profile.activityLastWeek[index] == 0
+                                    ? 0.1 // small visible baseline for empty days
+                                    : profile.activityLastWeek[index],
                                 width: r.w(18),
                                 borderRadius: BorderRadius.circular(r.w(4)),
                                 color: index % 2 == 0

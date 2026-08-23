@@ -19,20 +19,24 @@ class ProfileLoaded extends ProfileState {
   final String name;
   final int wins;
   final int currentStreak;
-  final int battlesCount; // TODO: not in schema yet, placeholder 0
-  final String rankLabel; // TODO: not in schema yet, placeholder text
-  final List<double> activityLastWeek; // TODO: not in schema yet, placeholder zeros
-  final List<String> favoriteHabits; // TODO: not in schema yet, placeholder list
-  final int achievementsUnlocked; // TODO: not in schema yet
-  final int achievementsTotal; // TODO: not in schema yet
+  final int level;
+  final int totalPoints;
+  final int battlesCount;
+  final List<double> activityLastWeek; // 7 values, 1 = check-in day, 0 = no check-in
+  final String rankLabel; // TODO: waiting on Zeina for rank logic
+  final List<String> favoriteHabits; // TODO: postponed
+  final int achievementsUnlocked; // TODO: postponed
+  final int achievementsTotal; // TODO: postponed
 
   const ProfileLoaded({
     required this.name,
     required this.wins,
     required this.currentStreak,
-    this.battlesCount = 0,
-    this.rankLabel = 'Level 1 Challenger',
-    this.activityLastWeek = const [0, 0, 0, 0, 0, 0, 0],
+    required this.level,
+    required this.totalPoints,
+    required this.battlesCount,
+    required this.activityLastWeek,
+    this.rankLabel = 'Level', // will be combined with level number in UI
     this.favoriteHabits = const [],
     this.achievementsUnlocked = 0,
     this.achievementsTotal = 0,
@@ -43,9 +47,11 @@ class ProfileLoaded extends ProfileState {
     name,
     wins,
     currentStreak,
+    level,
+    totalPoints,
     battlesCount,
-    rankLabel,
     activityLastWeek,
+    rankLabel,
     favoriteHabits,
     achievementsUnlocked,
     achievementsTotal,
