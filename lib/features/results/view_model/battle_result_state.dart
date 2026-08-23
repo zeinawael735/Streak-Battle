@@ -15,22 +15,23 @@ class BattleResultError extends BattleResultState {
   List<Object?> get props => [message];
 }
 
-// Base data shared across Winner / RunnerUp / Participant / Tie
 class BattleResultLoaded extends BattleResultState {
-  final String battleTitle;
-  final String winnerName;
-  final String userRankLabel; // e.g. "#2 Runner-up", "#1 Winner"
-  final int points;
-  final double completionPercent; // 0.0 - 1.0
-  final int checkIns;
-  final int bestStreak;
-  final double totalDistanceKm;
+  final String battleTitle; // e.g. "Morning Run Club" (name only, without day count)
+  final int durationDays; // e.g. 21
+  final String winnerName; // full winner name, e.g. "Maya Ahmed"
+  final String userCategoryLabel; // battle category, e.g. "Fitness"
+  final int points; // TODO: confirm source
+  final double completionPercent; // TODO: confirm source
+  final int checkIns; // TODO: confirm source
+  final int bestStreak; // postponed
+  final double totalDistanceKm; // postponed
   final bool isTie;
 
   const BattleResultLoaded({
     required this.battleTitle,
+    required this.durationDays,
     required this.winnerName,
-    required this.userRankLabel,
+    required this.userCategoryLabel,
     required this.points,
     required this.completionPercent,
     required this.checkIns,
@@ -42,8 +43,9 @@ class BattleResultLoaded extends BattleResultState {
   @override
   List<Object?> get props => [
     battleTitle,
+    durationDays,
     winnerName,
-    userRankLabel,
+    userCategoryLabel,
     points,
     completionPercent,
     checkIns,
