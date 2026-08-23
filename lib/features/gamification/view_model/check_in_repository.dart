@@ -83,16 +83,17 @@ class CheckInRepository {
       }
 
       int totalPoints = (userData['totalPoints'] ?? 0) + pointsEarned;
-      int xp = (userData['xp'] ?? 0) + pointsEarned;
-      int currentLevel = (xp ~/ 200) + 1;
+
+      // اعتمدنا على totalPoints بدلاً من xp لحساب الـ level (كل 200 نقطة مستوى جديد)
+      int currentLevel = (totalPoints ~/ 200) + 1;
 
       transaction.update(userRef, {
-        'currentStreak': currentStreak, // تم التعديل
+        'currentStreak': currentStreak,
         'lastCheckInDate': FieldValue.serverTimestamp(),
         'totalPoints': totalPoints,
-        'xp': xp,
         'level': currentLevel,
         'battlesXp.$battleId': FieldValue.increment(pointsEarned),
+        'battlesCheckInsCount.$battleId': FieldValue.increment(1), // عداد مرات الـ Check-in للباتل دي
         'weeklyCheckIns': FieldValue.arrayUnion([todayString]),
       });
 
