@@ -81,4 +81,8 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
       emit(JoinBattleInvalid());
     }
   }
+  
+
+
+
 }

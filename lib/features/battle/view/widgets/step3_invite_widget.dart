@@ -117,7 +117,7 @@ class _Step3InviteWidgetState extends State<Step3InviteWidget> {
                 ElevatedButton.icon(
                   onPressed: _copyCode,
                   icon: const Icon(Icons.copy, color: Colors.white, size: 18),
-                  label: const Text("Copy Code"),
+                  label: const Text("Copy Code",style: TextStyle(color: Colors.white),),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF6B11A1),
                     shape: RoundedRectangleBorder(

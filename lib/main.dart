@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/theme/theme.dart';
+import 'package:streak_battle/features/achievements/view/screens/achievements_screen.dart';
+import 'package:streak_battle/features/auth/forget_password/view/screens/forget_password_screen.dart';
 import 'package:streak_battle/features/battle/view/screens/battle_details_screen.dart';
 import 'package:streak_battle/features/gamification/view/screens/daily_check_in_screen.dart';
+import 'package:streak_battle/features/history/view/screens/battles_history_screen.dart';
 import 'package:streak_battle/features/leaderboard/view/screens/ranking_screen.dart';
 import 'package:streak_battle/features/results/view/screens/battle_result_screen.dart';
 
@@ -12,6 +15,7 @@ import 'features/app_section/view/screens/app_section.dart';
 import 'features/auth/login/view/screens/login_screen.dart';
 import 'features/auth/signup/view/screens/signup_screen.dart';
 import 'features/battle/view/screens/create_battle_screen.dart';
+import 'features/settings/view/screens/setting_screen.dart';
 import 'features/battle/view/screens/join_battle_screen.dart';
 import 'firebase_options.dart';
 import 'features/notification/view_model/notification_services.dart';
@@ -34,7 +38,7 @@ void main() async {
 class BattleStreakApp extends StatelessWidget {
   final String initialRoute;
 
-  const BattleStreakApp({super.key, required this.initialRoute});
+   BattleStreakApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +48,7 @@ class BattleStreakApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
+     // home: SettingsScreen(),
       initialRoute: initialRoute,
       routes: {
         AppRoutes.appSection: (context) => const AppSection(),
@@ -55,7 +60,18 @@ class BattleStreakApp extends StatelessWidget {
         AppRoutes.checkIn: (context) => const DailyCheckInScreen(),
         AppRoutes.ranking: (context) => const RankingScreen(),
         AppRoutes.battleResult: (context) => const BattleResultScreen(),
+        AppRoutes.forgotPassword: (context) => const ForgetPasswordScreen(),
       },
+
+  onGenerateRoute: (settings) {
+      if (settings.name == AppRoutes.ranking) {
+        final String battleId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (context) => RankingScreen(battleId: battleId),
+        );
+      }
+      return null;
+    },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
           builder: (context) => const Scaffold(

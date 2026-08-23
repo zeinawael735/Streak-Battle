@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/theme.dart';
 
 class GoalCard extends StatelessWidget {
-  const GoalCard({super.key});
+  final String title;
+  final String goal;
+
+  const GoalCard({
+    super.key,
+    required this.title,
+    required this.goal,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +42,21 @@ class GoalCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 22),
-          const Text(
-            'Run 3 km',
-            style: TextStyle(
+          Text(
+            goal,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 26,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Morning Run Club',
-            style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 15),
+          Text(
+            title,
+            style: const TextStyle(
+              color: Color(0xFF9CA3AF),
+              fontSize: 15,
+            ),
           ),
         ],
       ),
