@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.11.5 <4.0.0'
+  sdk: ^3.12.2
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -45,6 +45,7 @@ dependencies:
   flutter_secure_storage: ^11.0.0
   intl: ^0.20.3
   flutter_svg: ^2.3.0
+  equatable: ^2.0.7
   toastification: ^3.2.0
   google_sign_in: ^7.2.0
   share_plus: ^13.3.0
@@ -56,6 +57,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   shared_preferences: ^2.3.2
+  flutter_native_splash: ^2.3.14
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -76,10 +78,24 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-  
+
   assets:
     - assets/images/
     - assets/icons/
+
+flutter_native_splash:
+  color: "#290843"
+  image: "assets/images/splashScreen.png"
+
+
+
+  android_12:
+    color: "#290843"
+    image: "assets/images/splashScreen.png"
+    icon_background_color: "#290843"
+
+
+
 
   # To add assets to your application, add an assets section, like this:
 
