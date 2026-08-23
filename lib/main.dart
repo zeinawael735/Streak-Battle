@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/theme/theme.dart';
+import 'package:streak_battle/features/auth/forget_password/view/screens/forget_password_screen.dart';
 import 'package:streak_battle/features/battle/view/screens/battle_details_screen.dart';
 import 'package:streak_battle/features/gamification/view/screens/daily_check_in_screen.dart';
 import 'package:streak_battle/features/leaderboard/view/screens/ranking_screen.dart';
@@ -53,6 +54,8 @@ class BattleStreakApp extends StatelessWidget {
         AppRoutes.joinBattle: (context) => const JoinBattleScreen(),
         AppRoutes.checkIn: (context) => const DailyCheckInScreen(),
         AppRoutes.ranking: (context) => const RankingScreen(),
+        AppRoutes.forgotPassword: (context) => const ForgetPasswordScreen(),
+
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
