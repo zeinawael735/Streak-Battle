@@ -18,6 +18,7 @@ class CustomTextFormField extends StatefulWidget {
     this.action,
     this.focusNode,
     this.borderRadius,
+    this.labelText,
   });
   final TextEditingController? controller;
   final bool isPassword;
@@ -30,6 +31,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextInputAction? action;
   final FocusNode? focusNode;
   final BorderRadius? borderRadius;
+  final String? labelText;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -76,6 +78,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         fillColor: Color(0xFF201F1F),
         filled: true,
         hintText: widget.hintText,
+        labelText: widget.labelText,
         hintStyle: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w500,

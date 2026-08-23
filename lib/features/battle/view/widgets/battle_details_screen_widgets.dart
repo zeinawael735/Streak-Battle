@@ -173,7 +173,7 @@ class CheckedInCard extends StatelessWidget{
               Column(
                 crossAxisAlignment: .start,
                 children: [
-                  Text("$name checked in",style: TextStyle(fontWeight: .bold,fontSize: 20),),
+                  Text("$name checked in",style: TextStyle(fontWeight: .bold,fontSize: 17),),
                   Text("$goal • $time ago"),
                 ],
               ),
