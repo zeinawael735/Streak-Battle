@@ -58,7 +58,7 @@ class BattleStreakApp extends StatelessWidget {
         AppRoutes.battleDetails: (context) => const BattleDetailsScreen(),
         AppRoutes.joinBattle: (context) => const JoinBattleScreen(),
         AppRoutes.checkIn: (context) => const DailyCheckInScreen(),
-        AppRoutes.ranking: (context) => const RankingScreen(),
+        //AppRoutes.ranking: (context) => const RankingScreen(),
         AppRoutes.battleResult: (context) => const BattleResultScreen(),
         AppRoutes.forgotPassword: (context) => const ForgetPasswordScreen(),
       },
