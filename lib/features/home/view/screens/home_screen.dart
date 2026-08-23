@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:streak_battle/core/constants/app_assets.dart';
-import 'package:streak_battle/core/constants/app_color_style.dart';
 import 'package:streak_battle/core/theme/theme.dart';
 import 'package:streak_battle/features/home/view/widgets/Next_up_card.dart';
 import 'package:streak_battle/features/home/view/widgets/active_battles_card.dart';
@@ -40,21 +39,18 @@ class HomeScreen extends StatelessWidget {
               }
 
               if (state is HomeLoaded) {
-                // تحديد عدد التحديات المعروضة في Active Battles
                 final activeBattlesToShow = state.showAllBattles
                     ? state.activeBattles
                     : state.activeBattles.take(2).toList();
 
-                // تحديد عدد التحديات المعروضة في Next Up
                 final nextUpBattlesToShow = state.showAllNextUpBattles
                     ? state.nextUpBattles
                     : state.nextUpBattles.take(2).toList();
 
-                // حساب عدد الأيام المكتملة لعرضها 4/7
                 int completedCount = state.completedDays.where((e) => e).length;
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
