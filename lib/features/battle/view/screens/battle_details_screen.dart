@@ -220,7 +220,11 @@ class BattleDetailsScreen extends StatelessWidget {
                     Text("Participants", style: TextStyle(fontWeight: FontWeight.bold, color: AppColorStyle.primaryText, fontSize: 20)),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.ranking);
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.ranking,
+                          arguments: battleId,
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
