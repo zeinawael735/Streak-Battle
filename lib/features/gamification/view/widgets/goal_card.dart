@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/theme.dart';
 
 class GoalCard extends StatelessWidget {
-  // ضفنا المتغيرات دي عشان نستقبل الداتا الحقيقية
   final String title;
   final String goal;
 
@@ -18,7 +17,7 @@ class GoalCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
       decoration: BoxDecoration(
-        color: AppColors.indigo, // تأكد إن AppColors موجودة في مسارها الصح
+        color: AppColors.indigo,
         borderRadius: BorderRadius.circular(28),
         border: Border.all(color: AppColors.deepPurple, width: 1.5),
       ),
@@ -36,14 +35,13 @@ class GoalCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Image.asset(
-                  'assets/images/Margin.png', // لو عندك أيقونة ديناميكية لكل باتل ممكن تباصيها هنا بعدين
+                  'assets/images/Margin.png',
                   fit: BoxFit.contain,
                 ),
               ),
             ),
           ),
           const SizedBox(height: 22),
-          // عرض الهدف الحقيقي بدل 'Run 3 km'
           Text(
             goal,
             style: const TextStyle(
@@ -53,7 +51,6 @@ class GoalCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          // عرض اسم التحدي الحقيقي بدل 'Morning Run Club'
           Text(
             title,
             style: const TextStyle(

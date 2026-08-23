@@ -10,14 +10,6 @@ import '../../view_model/history_state.dart';
 
 class BattlesScreen extends StatelessWidget {
   const BattlesScreen({super.key});
-  static const Map<String, IconData> categories = {
-    'Fitness': Icons.directions_run,
-    'Learning': Icons.menu_book,
-    'Wellness': Icons.self_improvement,
-    'Nutrition': Icons.apple,
-    'Coding': Icons.code,
-    'Custom': Icons.edit,
-  };
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

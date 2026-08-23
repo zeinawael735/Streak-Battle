@@ -19,7 +19,6 @@ class DailyCheckInScreen extends StatelessWidget {
         (ModalRoute.of(context)?.settings.arguments as String?) ?? '';
 
     return BlocProvider(
-      // التعديل هنا: بنحمل الداتا أول ما نفتح الشاشة
       create: (context) => CheckInCubit(CheckInRepository())..loadBattleData(battleId),
       child: DailyCheckInContent(battleId: battleId),
     );
@@ -86,7 +85,7 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
       },
       builder: (context, state) {
         final isLoading = state is CheckInLoading;
-        final cubit = context.read<CheckInCubit>(); // بنجيب الكوبيت عشان نقرأ منه الداتا
+        final cubit = context.read<CheckInCubit>();
 
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -129,7 +128,6 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // التعديل هنا: بنعرض الداتا الحقيقية لو حملت، ولو لسه بنعرض Lodaing
                           cubit.battleTitle.isEmpty
                               ? const Padding(
                             padding: EdgeInsets.all(20.0),

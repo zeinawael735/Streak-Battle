@@ -19,24 +19,20 @@ class HomeCubit extends Cubit<HomeState> {
       return;
     }
 
-    // بنستمع لتغييرات اليوزر علشان لما يعمل Check-in الشاشة تتحدث فوراً
     _userSub?.cancel();
     _userSub = _firestore.collection('users').doc(uid).snapshots().listen((userDoc) async {
       try {
         if (!userDoc.exists) return;
         final userData = userDoc.data()!;
 
-        // 1. الداتا الأساسية
         final String name = userData['name'] ?? 'User';
         final String initials = name.isNotEmpty ? name.trim().split(' ').map((e) => e[0].toUpperCase()).take(2).join() : 'U';
         final int currentStreak = userData['currentStreak'] ?? 0;
         final int totalPoints = userData['totalPoints'] ?? 0;
 
-        // 2. حساب الأيام للأسبوع الحالي (يبدأ من السبت وينتهي الجمعة)
         List<String> weeklyCheckIns = List<String>.from(userData['weeklyCheckIns'] ?? []);
         DateTime now = DateTime.now();
 
-        // حساب عدد الأيام للرجوع ليوم السبت بشكل دقيق
         int daysToSubtract = (now.weekday == DateTime.saturday)
             ? 0
             : (now.weekday % 7) + 1;
@@ -44,16 +40,14 @@ class HomeCubit extends Cubit<HomeState> {
         DateTime startOfWeek = DateTime(now.year, now.month, now.day).subtract(Duration(days: daysToSubtract));
 
         List<bool> completedDays = [];
-        int currentDayIndex = daysToSubtract + 1; // هيكون من 1 لـ 7 (السبت للجمعة)
+        int currentDayIndex = daysToSubtract + 1;
 
         for (int i = 0; i < 7; i++) {
           DateTime day = startOfWeek.add(Duration(days: i));
           String dayStr = "${day.year}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}";
-          // لو التاريخ موجود في المصفوفة، يبقى عمل check-in
           completedDays.add(weeklyCheckIns.contains(dayStr));
         }
 
-        // 3. جلب وتصفية التحديات
         List<Map<String, dynamic>> activeBattles = [];
         List<Map<String, dynamic>> nextUpBattles = [];
 
@@ -66,27 +60,22 @@ class HomeCubit extends Cubit<HomeState> {
           DateTime startDate = (data['startDate'] as Timestamp).toDate();
           int durationDays = data['durationDays'] ?? 21;
 
-          // 1. تصفير الساعات والدقائق عشان الحساب يكون بـ (أيام النتيجة) مش الساعات
           DateTime today = DateTime(now.year, now.month, now.day);
           DateTime start = DateTime(startDate.year, startDate.month, startDate.day);
 
-          // 2. حساب اليوم الحالي للتحدي بدقة
           int currentDayOfBattle = today.difference(start).inDays + 1;
 
-          // 3. لو اليوم الحالي للتحدي أكبر من مدة التحدي، يبقى التحدي خلص!
           if (currentDayOfBattle > durationDays) {
-            continue; // كده الكود هيتخطى التحدي ده ومش هيضيفه في الـ Active Battles خالص
+            continue;
           }
 
-          // لو التحدي لسه هيبدأ في المستقبل
           if (currentDayOfBattle < 1) currentDayOfBattle = 1;
 
-          // جلب عدد مرات الحضور لحساب النسبة ومعرفة إذا كان حضر اليوم
+
           final checkInsSnap = await _firestore.collection('battles').doc(battleId).collection('check_ins').where('userId', isEqualTo: uid).get();
           int checkInsCount = checkInsSnap.docs.length;
           int progress = durationDays > 0 ? ((checkInsCount / durationDays) * 100).round().clamp(0, 100) : 0;
 
-          // هل عمل Check-in النهاردة في التحدي ده؟
           bool checkedInToday = false;
           for (var checkInDoc in checkInsSnap.docs) {
             final checkInData = checkInDoc.data();
@@ -110,13 +99,11 @@ class HomeCubit extends Cubit<HomeState> {
 
           activeBattles.add(battleInfo);
 
-          // لو لسه معملش Check-in النهاردة، حطه في الـ Next Up
           if (!checkedInToday) {
             nextUpBattles.add(battleInfo);
           }
         }
 
-        // الحفاظ على حالة زراير الـ Show More لو كانت الشاشة متحملة قبل كده
         bool currentShowAll = false;
         bool currentShowAllNextUp = false;
 
@@ -126,7 +113,7 @@ class HomeCubit extends Cubit<HomeState> {
         }
 
         emit(HomeLoaded(
-          userName: name.split(' ')[0], // أول اسم فقط
+          userName: name.split(' ')[0],
           initials: initials,
           currentStreak: currentStreak,
           totalPoints: totalPoints,

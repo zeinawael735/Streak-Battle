@@ -7,21 +7,19 @@ class CheckInCubit extends Cubit<CheckInState> {
   final CheckInRepository _repository;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // متغيرات لحفظ الداتا عشان نعرضها في الشاشة
   String battleTitle = '';
   String battleGoal = '';
 
   CheckInCubit(this._repository) : super(CheckInInitial());
 
-  // الدالة الجديدة اللي بتجيب بيانات الـ Battle
   Future<void> loadBattleData(String battleId) async {
     try {
       final data = await _repository.getBattleInfo(battleId);
       battleTitle = data['title'] ?? '';
       battleGoal = data['goal'] ?? '';
-      emit(CheckInInfoLoaded()); // تحديث الشاشة
+      emit(CheckInInfoLoaded());
     } catch (e) {
-      // ممكن نسيبها صامتة عشان متوقفش الشاشة
+      //
     }
   }
 

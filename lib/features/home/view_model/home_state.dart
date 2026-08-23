@@ -10,11 +10,11 @@ class HomeLoaded extends HomeState {
   final int currentStreak;
   final int totalPoints;
   final List<bool> completedDays;
-  final int currentDayIndex; // من 1 لـ 7 (السبت لـ الجمعة)
+  final int currentDayIndex;
   final List<Map<String, dynamic>> activeBattles;
   final List<Map<String, dynamic>> nextUpBattles;
   final bool showAllBattles;
-  final bool showAllNextUpBattles; // المتغير الجديد
+  final bool showAllNextUpBattles;
 
   HomeLoaded({
     required this.userName,
@@ -26,10 +26,9 @@ class HomeLoaded extends HomeState {
     required this.activeBattles,
     required this.nextUpBattles,
     this.showAllBattles = false,
-    this.showAllNextUpBattles = false, // القيمة الافتراضية
+    this.showAllNextUpBattles = false,
   });
 
-  // تحديث الدالة علشان تدعم المتغير الجديد
   HomeLoaded copyWith({
     bool? showAllBattles,
     bool? showAllNextUpBattles,
