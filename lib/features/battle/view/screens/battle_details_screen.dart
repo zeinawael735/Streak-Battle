@@ -6,6 +6,7 @@ import 'package:streak_battle/core/constants/app_assets.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 import 'package:streak_battle/features/home/view/widgets/home_card.dart';
 
+import '../../../../core/helper/get_category_icon_helper.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/theme.dart';
 import '../../view_model/battle_details_cubit.dart';
@@ -13,14 +14,6 @@ import '../widgets/battle_details_screen_widgets.dart';
 
 class BattleDetailsScreen extends StatelessWidget {
   const BattleDetailsScreen({super.key});
-  static const Map<String, Icon> categories = {
-    'Fitness': Icon(Icons.directions_run,size: 30) ,
-    'Learning': Icon(Icons.menu_book,size: 30) ,
-    'Wellness': Icon(Icons.self_improvement,size: 30) ,
-    'Nutrition': Icon(Icons.apple,size: 30) ,
-    'Coding': Icon(Icons.code,size: 30) ,
-    'Custom': Icon(Icons.edit,size: 30) ,
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +87,8 @@ class BattleDetailsScreen extends StatelessWidget {
                         ),
                         height: 55,
                         width: 55,
-                        child:  Center(
-                          child: categories[state.category] ?? Icon(Icons.workspace_premium_outlined) ,
+                        child:  Center(//
+                          child: Icon(getCategoryIcon(state.category),size: 33,),
                         ),
                       ),
                       Container(

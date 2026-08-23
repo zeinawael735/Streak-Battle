@@ -85,8 +85,8 @@ class LoginCubit extends Cubit<LoginState> {
             'email': user.email ?? '',
             'photoURL': user.photoURL ?? '',
             'totalPoints': 0,
-            'xp': 0,
             'battlesXp': {},
+            'battlesCheckInsCount': {},
             'level': 1,
             'currentStreak': 0,
             'lastCheckInDate': null,
@@ -95,6 +95,7 @@ class LoginCubit extends Cubit<LoginState> {
             'createdAt': FieldValue.serverTimestamp(),
           });
         }
+
 
         await storage.write(key: 'user_id', value: user.uid);
         await storage.write(key: 'user_email', value: user.email);
