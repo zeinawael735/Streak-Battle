@@ -85,7 +85,6 @@ class LoginCubit extends Cubit<LoginState> {
             'email': user.email ?? '',
             'photoURL': user.photoURL ?? '',
             'totalPoints': 0,
-            'xp': 0,
             'battlesXp': {},
             'battlesCheckInsCount': {},
             'level': 1,
