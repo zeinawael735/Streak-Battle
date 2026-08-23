@@ -22,7 +22,6 @@ class BattleDetailsScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => BattleDetailsCubit()..loadBattleDetails(battleId),
       child: Scaffold(
-        backgroundColor: AppColorStyle.scaffoldBackgroundColor,
         body: BlocBuilder<BattleDetailsCubit, BattleDetailsState>(
           builder: (context, state) {
             if (state is BattleDetailsInitial || state is BattleDetailsLoading) {
@@ -50,7 +49,7 @@ class BattleDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: const Color(0xFF150050),//light:0xFFEFE4F5
+            color:  Theme.of(context).colorScheme.tertiaryFixed,
             child: Padding(
               padding: const EdgeInsets.only(top: 35, left: 17, right: 17),
               child: Column(
@@ -62,7 +61,7 @@ class BattleDetailsScreen extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+                        icon:  Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.headlineMedium?.color),
                         padding: EdgeInsets.zero,
                         alignment: Alignment.centerLeft,
                       ),
@@ -70,7 +69,7 @@ class BattleDetailsScreen extends StatelessWidget {
                         onPressed: () async {
                           await Share.share('Join my battle! Use code: ${state.battleCode}');
                         },
-                        icon: const Icon(Icons.share, color: Colors.white),
+                        icon:  Icon(Icons.share, color: Theme.of(context).textTheme.headlineMedium?.color),
                         padding: EdgeInsets.zero,
                         alignment: Alignment.centerRight,
                       ),
@@ -82,13 +81,13 @@ class BattleDetailsScreen extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: AppColorStyle.primaryViolet,
+                          color: AppColors.primary,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         height: 55,
                         width: 55,
                         child:  Center(//
-                          child: Icon(getCategoryIcon(state.category),size: 33,),
+                          child: Icon(getCategoryIcon(state.category),size: 33,color: Colors.white,),
                         ),
                       ),
                       Container(
@@ -102,10 +101,7 @@ class BattleDetailsScreen extends StatelessWidget {
                         child: Center(
                           child: Text(
                             state.isFinished ? "Finished" : "Active",
-                            style: TextStyle(
-                              color: state.isFinished ? Colors.redAccent : AppColorStyle.primaryGreen,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: state.isFinished ? Colors.redAccent : AppColorStyle.primaryGreen,)
                           ),
                         ),
                       ),
@@ -114,12 +110,12 @@ class BattleDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     state.title,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: AppColorStyle.primaryText),
+                    style: Theme.of(context).textTheme.headlineLarge
                   ),
                   const SizedBox(height: 8),
                   Text(
                     "Day ${state.currentDay} of ${state.durationDays} • ${state.participantsCount} players",
-                    style: const TextStyle(color: Color(0xFFCDC2D9)),
+                    style: Theme.of(context).textTheme.bodyMedium // TextStyle(color: Color(0xFFCDC2D9)),
                   ),
                   const SizedBox(height: 10),
                   ClipRRect(
@@ -127,8 +123,8 @@ class BattleDetailsScreen extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: state.progressValue,
                       minHeight: 6,
-                      backgroundColor: AppColorStyle.progressIndicatorBackgroundColor,
-                      valueColor: AlwaysStoppedAnimation<Color>(AppColorStyle.progressIndicatorColor),
+                      backgroundColor: AppColors.progressIndicatorBackgroundColor,
+                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryGreen),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -151,16 +147,16 @@ class BattleDetailsScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("TODAY'S GOAL", style: TextStyle(color: Colors.white70)),
+                           Text("TODAY'S GOAL", style: Theme.of(context).textTheme.bodySmall),
                           const SizedBox(height: 10),
                           Text(
                             state.goal,
-                            style: TextStyle(color: AppColorStyle.primaryText, fontSize: 24, fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 23),
                           ),
                           const SizedBox(height: 5),
                           Text(
                             "Check in before ${state.formattedEndDate}",
-                            style: const TextStyle(color: Color(0xFFCDC2D9), fontSize: 16),
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)//Color(0xFFCDC2D9)
                           ),
                           const SizedBox(height: 15),
                           Container(
@@ -190,7 +186,7 @@ class BattleDetailsScreen extends StatelessWidget {
                                   ? null
                                   : () => Navigator.pushNamed(context, AppRoutes.checkIn, arguments: battleId),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: state.isFinished ? Colors.grey : AppColorStyle.primaryViolet,
+                                backgroundColor: state.isFinished ? Colors.grey : AppColors.primary,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
                                 elevation: 0,
                               ),
@@ -217,7 +213,7 @@ class BattleDetailsScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Participants", style: TextStyle(fontWeight: FontWeight.bold, color: AppColorStyle.primaryText, fontSize: 20)),
+                    Text("Participants", style: Theme.of(context).textTheme.headlineMedium),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(
@@ -231,7 +227,7 @@ class BattleDetailsScreen extends StatelessWidget {
                         foregroundColor: AppColors.textPrimary,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
+                          horizontal: 16,
                           vertical: 9,
                         ),
                         shape: RoundedRectangleBorder(
@@ -244,7 +240,7 @@ class BattleDetailsScreen extends StatelessWidget {
                         minimumSize: Size.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      child: Text("LeaderBoard"),
+                      child: Text("LeaderBoard",style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 12),),
                     ),
                   ],
                 ),

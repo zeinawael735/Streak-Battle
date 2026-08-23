@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 
+import '../../../../core/theme/theme.dart';
 import '../../../home/view/widgets/home_card.dart';
 
 class Participant {
@@ -17,7 +18,7 @@ class ParticipantsDialog {
       barrierDismissible: true,
       builder: (dialogContext) {
         return Dialog(
-          backgroundColor: AppColorStyle.scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -30,7 +31,7 @@ class ParticipantsDialog {
                   alignment: Alignment.topRight,
                   child: IconButton(
                     onPressed: () => Navigator.pop(dialogContext),
-                    icon: const Icon(Icons.close, color: Colors.white),
+                    icon:  Icon(Icons.close, color: Theme.of(context).textTheme.headlineSmall?.color),
                   ),
                 ),
 
@@ -42,11 +43,7 @@ class ParticipantsDialog {
 
                 Text(
                   participant.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium//.w600 18
                 ),
               ],
             ),
@@ -65,7 +62,6 @@ class ParticipantsDialog {
       barrierDismissible: true,
       builder: (dialogContext) {
         return Dialog(
-          backgroundColor: AppColorStyle.scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -78,7 +74,7 @@ class ParticipantsDialog {
                   alignment: Alignment.topRight,
                   child: IconButton(
                     onPressed: () => Navigator.pop(dialogContext),
-                    icon: const Icon(Icons.close, color: Colors.white),
+                    icon:  Icon(Icons.close, color:Theme.of(context).textTheme.headlineSmall?.color),
                   ),
                 ),
 
@@ -104,10 +100,7 @@ class ParticipantsDialog {
                           Expanded(
                             child: Text(
                               participant.name,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
+                              style:  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: .normal)
                             ),
                           ),
                         ],
@@ -167,17 +160,30 @@ class CheckedInCard extends StatelessWidget{
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 21,horizontal: 16),
           child: Row(
-            mainAxisAlignment: .spaceBetween,
             children: [
               ParticipantCircle(initials: initials, size: 50,),
-              Column(
-                crossAxisAlignment: .start,
-                children: [
-                  Text("$name checked in",style: TextStyle(fontWeight: .bold,fontSize: 17),),
-                  Text("$goal • $time ago"),
-                ],
+              SizedBox(width: 16,),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$name checked in",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "$goal • $time ago",
+                      style: Theme.of(context).textTheme.bodySmall,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-              Icon(Icons.check_circle,color: AppColorStyle.primaryGreen,size: 35,)
+              Icon(Icons.check_circle,color: AppColors.primaryGreen,size: 35,)
             ],
           ),
         )
