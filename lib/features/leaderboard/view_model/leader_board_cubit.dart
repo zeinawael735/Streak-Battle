@@ -73,36 +73,37 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
           .where(FieldPath.documentId, whereIn: queryUserIds.toList());
 
       _subscription = query.snapshots().listen(
-            (snapshot) {
+        (snapshot) {
           try {
-
             List<UserModel> allFetchedUsers = snapshot.docs
                 .map(
                   (doc) => UserModel.fromFirestore(
-                doc.data(),
-                doc.id,
-                battleId: battleId,
-              ),
-            )
+                    doc.data(),
+                    doc.id,
+                    battleId: battleId,
+                  ),
+                )
                 .toList();
 
             List<UserModel> leaderboardUsers = allFetchedUsers.toList();
 
             leaderboardUsers.sort((a, b) {
-
               if (b.xp != a.xp) {
                 return b.xp.compareTo(a.xp);
               }
-
 
               if (b.currentStreak != a.currentStreak) {
                 return b.currentStreak.compareTo(a.currentStreak);
               }
 
-
               if (a.lastCheckInDate != null && b.lastCheckInDate != null) {
                 return a.lastCheckInDate!.compareTo(b.lastCheckInDate!);
               }
+
+              if (a.lastCheckInDate != null && b.lastCheckInDate == null)
+                return -1;
+              if (a.lastCheckInDate == null && b.lastCheckInDate != null)
+                return 1;
 
               return 0;
             });
@@ -119,7 +120,7 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
             UserModel? currentUserModel;
             try {
               currentUserModel = leaderboardUsers.firstWhere(
-                    (u) => u.uid == currentUserId,
+                (u) => u.uid == currentUserId,
               );
             } catch (_) {
               currentUserModel = null;

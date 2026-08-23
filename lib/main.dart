@@ -47,8 +47,8 @@ class BattleStreakApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
-      home: SettingsScreen(),
-     // initialRoute: initialRoute,
+     // home: SettingsScreen(),
+      initialRoute: initialRoute,
       routes: {
         AppRoutes.appSection: (context) => const AppSection(),
         AppRoutes.createBattle: (context) => const CreateBattleScreen(),

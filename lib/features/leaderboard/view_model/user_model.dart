@@ -28,12 +28,22 @@ class UserModel {
       return 0;
     }
 
+
     int calculatedXp = 0;
     if (battleId != null && data['battlesXp'] is Map) {
       final battlesXpMap = data['battlesXp'] as Map<String, dynamic>;
       calculatedXp = parseNum(battlesXpMap[battleId]);
     } else {
       calculatedXp = parseNum(data['xp'] ?? data['totalPoints']);
+    }
+
+
+    int calculatedStreak = 0;
+    if (battleId != null && data['battlesCheckInsCount'] is Map) {
+      final checkInsMap = data['battlesCheckInsCount'] as Map<String, dynamic>;
+      calculatedStreak = parseNum(checkInsMap[battleId]);
+    } else {
+      calculatedStreak = parseNum(data['currentStreak']);
     }
 
 
@@ -46,7 +56,7 @@ class UserModel {
       uid: (data['uid'] ?? docId).toString().replaceAll('"', '').trim(),
       displayName: (data['name'] ?? 'User').toString(),
       xp: calculatedXp,
-      currentStreak: parseNum(data['currentStreak']),
+      currentStreak: calculatedStreak,
       lastCheckInDate: checkInDate,
     );
   }
