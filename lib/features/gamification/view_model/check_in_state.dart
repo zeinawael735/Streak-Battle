@@ -4,6 +4,8 @@ class CheckInInitial extends CheckInState {}
 
 class CheckInLoading extends CheckInState {}
 
+class CheckInInfoLoaded extends CheckInState {}
+
 class CheckInSuccess extends CheckInState {
   final int earnedPoints;
   final int streak;
