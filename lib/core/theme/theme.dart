@@ -80,6 +80,8 @@ class AppTheme {
         tertiaryContainer: Color(0xFFEFE2F5),//active battles back ground icon
         /// join battle
         onTertiaryContainer:  Color(0xFFEFE4F5),
+        /// battle details screen
+        tertiaryFixed: Color(0xFFD8CBEA),
         ///
         primary: AppColors.purple,
         surfaceBright: Colors.black12,
@@ -145,6 +147,8 @@ class AppTheme {
         tertiaryContainer: Color(0xFF15004B),//active battles back ground icon
         ///join battle
         onTertiaryContainer:  Color(0xFF1A1525),
+        ///battle details screen
+        tertiaryFixed: Color(0xFF150050),
         ///
         primary: AppColors.purple,
         secondary: AppColors.violetFocus,
