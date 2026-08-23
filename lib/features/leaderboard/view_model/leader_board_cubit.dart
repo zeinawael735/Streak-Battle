@@ -24,7 +24,7 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
       final currentUserId = _auth.currentUser?.uid;
 
       if (currentUserId == null || currentUserId.isEmpty) {
-        emit(LeaderBoardError("المستخدم غير مسجل دخول"));
+        emit(LeaderBoardError("You Are Not Logged in"));
         return;
       }
 
@@ -34,14 +34,14 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
           .get();
 
       if (!battleDoc.exists) {
-        emit(LeaderBoardError("الباتيل غير موجودة"));
+        emit(LeaderBoardError("Battle Not Found"));
         return;
       }
 
       final battleData = battleDoc.data();
 
       if (battleData == null) {
-        emit(LeaderBoardError("بيانات الباتيل غير موجودة"));
+        emit(LeaderBoardError("Battle Details are not  found"));
         return;
       }
 
@@ -54,7 +54,7 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
       final bool isCreator = creatorId == currentUserId;
 
       if (!isMember && !isCreator) {
-        emit(LeaderBoardError("أنت لست عضوًا في هذه الباتيل"));
+        emit(LeaderBoardError("You Are Not a Member Of This Battle"));
         return;
       }
 
@@ -128,15 +128,15 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
 
             emit(LeaderBoardSuccess(top3, remaining, currentUserModel));
           } catch (e) {
-            emit(LeaderBoardError("حدث خطأ أثناء معالجة البيانات: $e"));
+            emit(LeaderBoardError(e.toString()));
           }
         },
         onError: (e) {
-          emit(LeaderBoardError("خطأ في الاتصال: ${e.toString()}"));
+          emit(LeaderBoardError(e.toString()));
         },
       );
     } catch (e) {
-      emit(LeaderBoardError("تعذر جلب بيانات الباتيل: $e"));
+      emit(LeaderBoardError(e.toString()));
     }
   }
 
