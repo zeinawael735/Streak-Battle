@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -11,6 +12,25 @@ class LoginCubit extends Cubit<LoginState> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FlutterSecureStorage storage = const FlutterSecureStorage();
+
+
+  Future<void> _saveFcmToken(String uid) async {
+    try {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await firestore.collection('users').doc(uid).set(
+          {
+            'fcmToken': fcmToken,
+
+            'isNotificationEnabled': true,
+          },
+          SetOptions(merge: true),
+        );
+      }
+    } catch (e) {
+      print("Error saving FCM Token: $e");
+    }
+  }
 
   Future<void> login({
     required String email,
@@ -32,6 +52,9 @@ class LoginCubit extends Cubit<LoginState> {
         if (token != null) {
           await storage.write(key: 'auth_token', value: token);
         }
+
+
+        await _saveFcmToken(user.uid);
       }
 
       emit(LoginSuccess());
@@ -84,6 +107,7 @@ class LoginCubit extends Cubit<LoginState> {
             'name': user.displayName ?? '',
             'email': user.email ?? '',
             'photoURL': user.photoURL ?? '',
+            'isNotificationEnabled': true,
             'totalPoints': 0,
             'battlesXp': {},
             'battlesCheckInsCount': {},
@@ -96,7 +120,6 @@ class LoginCubit extends Cubit<LoginState> {
           });
         }
 
-
         await storage.write(key: 'user_id', value: user.uid);
         await storage.write(key: 'user_email', value: user.email);
 
@@ -104,6 +127,9 @@ class LoginCubit extends Cubit<LoginState> {
         if (token != null) {
           await storage.write(key: 'auth_token', value: token);
         }
+
+
+        await _saveFcmToken(user.uid);
       }
 
       emit(LoginSuccess());
@@ -149,28 +175,46 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LogoutError('Logout failed: ${e.toString()}'));
     }
   }
-  Future<void> deleteAccount() async {
+
+
+  Future<void> deleteAccount({String? password}) async {
     emit(DeleteAccountLoading());
     try {
       final user = auth.currentUser;
-
       if (user != null) {
 
         await firestore.collection('users').doc(user.uid).delete();
 
 
         await user.delete();
-
         emit(DeleteAccountSuccess());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
-        emit(DeleteAccountError("Please log in again before deleting your account for security reasons."));
+
+        emit(RequiresReAuthentication());
       } else {
-        emit(DeleteAccountError(e.message ?? "Failed to delete account."));
+        emit(DeleteAccountError(e.message ?? 'Failed to delete account'));
       }
     } catch (e) {
       emit(DeleteAccountError(e.toString()));
+    }
+  }
+
+
+  Future<void> reauthenticateAndDelete(String password) async {
+    try {
+      final user = auth.currentUser;
+      if (user != null && user.email != null) {
+        final credential = EmailAuthProvider.credential(
+          email: user.email!,
+          password: password,
+        );
+        await user.reauthenticateWithCredential(credential);
+        await deleteAccount();
+      }
+    } catch (e) {
+      emit(DeleteAccountError("Re-authentication failed. Incorrect password."));
     }
   }
 }

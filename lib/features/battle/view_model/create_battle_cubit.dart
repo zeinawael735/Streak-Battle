@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../notification/view_model/notification_services.dart';
 import 'battle_dto.dart';
 import 'battle_entity.dart';
 import 'create_battle_state.dart';
@@ -55,13 +54,7 @@ class CreateBattleCubit extends Cubit<CreateBattleState> {
           minute: int.parse(timeParts[1]),
         );
 
-        await NotificationService.scheduleBattleReminders(
-          battleId: docRef.id,
-          title: battle.title,
-          startDate: battle.startDate,
-          durationDays: battle.durationDays,
-          reminderTime: reminderTimeOfDay,
-        );
+
       }
       emit(CreateBattleSuccess());
     } catch (e) {
