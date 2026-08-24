@@ -93,8 +93,9 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
                         children: [
                           IconButton(
                             onPressed: () => Navigator.pop(context),
-                            icon: const Icon(
+                            icon:  Icon(
                               Icons.arrow_back_ios_new_rounded,
+                              color: Theme.of(context).textTheme.headlineSmall?.color,
                               size: 22,
                             ),
                             padding: EdgeInsets.only(right: 25),
@@ -103,7 +104,7 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
                             child: Center(
                               child: Text(
                                 'Join Battle',
-                                style: Theme.of(context).textTheme.headlineLarge
+                                style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 23)
                               ),
                             ),
                           ),
