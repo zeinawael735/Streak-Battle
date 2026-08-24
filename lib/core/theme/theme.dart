@@ -7,6 +7,7 @@ class AppColors {
   static const Color circleAvatarIconBackground = Color(0xFF2E263F);
   static const Color deepPurple = Color(0xFF3F0071);
   static const Color purple = Color(0xFF610094);
+  static const Color secondPurple = Color(0xFF7911FF);
   static const Color violetFocus = Color(0xFFC77DFF);
   static const Color success = Color(0xFF32D583);
   static const Color warning = Color(0xFFFDB022);
@@ -87,7 +88,7 @@ class AppTheme {
         ///
         primary: AppColors.purple,
         surfaceBright: Colors.black12,
-        secondary: AppColors.violetFocus,
+        secondary: AppColors.secondPurple,
         tertiary: AppColors.success,
         error: AppColors.error,
         surface: AppColors.white,
@@ -153,7 +154,7 @@ class AppTheme {
         tertiaryFixed: Color(0xFF150050),
         ///
         primary: AppColors.purple,
-        secondary: AppColors.violetFocus,
+        secondary: AppColors.secondPurple,
         surfaceBright: Colors.white,
         tertiary: AppColors.success,
         error: AppColors.error,
