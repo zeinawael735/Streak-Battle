@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/constants/app_assets.dart';
+import '../../../../core/theme/theme.dart';
 import 'custom_button.dart';
 import 'custom_text_form_field.dart';
 
@@ -46,31 +47,23 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+             Text(
               "Battle Basics",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineMedium
             ),
             const SizedBox(height: 6),
             Text(
               "Give your challenge a clear, motivating identity.",
               style: TextStyle(
-                color: Colors.grey.shade400,
+                color: Colors.grey,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 6),
-            const Text(
+             Text(
               "Battle name",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineSmall
             ),
             const SizedBox(height: 10),
             CustomTextFormField(
@@ -80,6 +73,7 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
                   AppAssets.swordIconSvg,
                   width: 20,
                   height: 20,
+                  color: Theme.of(context).textTheme.bodySmall?.color
                 ),
               ),
               borderRadius: BorderRadius.circular(8),
@@ -93,13 +87,9 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
               },
             ),
             const SizedBox(height: 10),
-            const Text(
+             Text(
               "Categories",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineSmall
             ),
             const SizedBox(height: 10),
             Wrap(
@@ -115,23 +105,23 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
                   avatar: Icon(
                     icon,
                     size: 18,
-                    color: isSelected ? Colors.white : Colors.grey.shade400,
+                    color: isSelected ? Colors.white : Color(0xFF9368D1),
                   ),
                   label: Text(
                     title,
                     style: TextStyle(
-                      color: isSelected ? Colors.white : Colors.grey.shade300,
+                      color: isSelected ? Colors.white : Theme.of(context).textTheme.headlineSmall?.color,//Colors.grey.shade300
                       fontWeight:
                       isSelected ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),
                   selected: isSelected,
-                  selectedColor: const Color(0xFF6B11A1),
-                  backgroundColor: const Color(0xFF160E21),
+                  selectedColor: AppColors.primary,
+                  backgroundColor: Theme.of(context).cardColor,
                   side: BorderSide(
-                    width: 1.5,
+                    width: 1,
                     color: isSelected
-                        ? const Color(0xFF6B11A1)
+                        ? AppColors.primary
                         : const Color(0xFF2D2338),
                   ),
                   shape: RoundedRectangleBorder(
@@ -143,12 +133,9 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
             ),
             const SizedBox(height: 20),
             if (widget.selectedCategory == 'Custom') ...[
-              const Text(
+               Text(
                 "Specify your category",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 14)
               ),
               const SizedBox(height: 8),
               CustomTextFormField(
@@ -165,13 +152,14 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
               const SizedBox(height: 10),
             ],
             const SizedBox(height: 20),
-            const Text('Description (optional)',
-                style: TextStyle(color: Colors.white, fontSize: 14)),
+             Text('Description (optional)',
+                style: Theme.of(context).textTheme.headlineSmall,
+             ),
             const SizedBox(height: 8),
             TextField(
               controller: widget.descriptionController,
               maxLines: 3,
-              style: const TextStyle(color: Colors.white),
+              style:  TextStyle(color: Theme.of(context).textTheme.headlineSmall?.color),
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.grey.shade600),
                 filled: true,
@@ -182,7 +170,7 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
                     color: Colors.grey.shade800,
                   ),
                 ),
-                fillColor: const Color(0xFF160E21),
+                fillColor: Theme.of(context).cardColor ,//dark Color(0xFF160E21)
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
