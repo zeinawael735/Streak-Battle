@@ -83,8 +83,10 @@ class AppTheme {
         onTertiaryContainer:  Color(0xFFEFE4F5),
         /// battle details screen
         tertiaryFixed: Color(0xFFD8CBEA),
-        /// step 1 create
-
+        /// check in circle
+        tertiaryFixedDim:  Color(0xFFCE99DC),
+        ///  settings card
+        onTertiaryFixed: Color(0xFFECD9EC),//0xFFE6C8E6
         ///
         primary: AppColors.purple,
         surfaceBright: Colors.black12,
@@ -152,6 +154,10 @@ class AppTheme {
         onTertiaryContainer:  Color(0xFF1A1525),
         ///battle details screen
         tertiaryFixed: Color(0xFF150050),
+        ///daily check in circle
+        tertiaryFixedDim:  Color(0xFF150050),
+        ///  settings card
+        onTertiaryFixed: Color(0xFF16151A),
         ///
         primary: AppColors.purple,
         secondary: AppColors.secondPurple,
