@@ -19,7 +19,8 @@ class DailyCheckInScreen extends StatelessWidget {
         (ModalRoute.of(context)?.settings.arguments as String?) ?? '';
 
     return BlocProvider(
-      create: (context) => CheckInCubit(CheckInRepository())..loadBattleData(battleId),
+      create: (context) =>
+          CheckInCubit(CheckInRepository())..loadBattleData(battleId),
       child: DailyCheckInContent(battleId: battleId),
     );
   }
@@ -74,7 +75,8 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
           AppToast.showToast(
             context: context,
             title: 'Check-in Successful!',
-            description: '+${state.earnedPoints} Points | Level ${state.level} 🚀',
+            description:
+                '+${state.earnedPoints} Points | Level ${state.level} 🚀',
             type: ToastificationType.success,
           );
 
@@ -90,19 +92,31 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: isDark ? Colors.white : Colors.black, size: 18),
               onPressed: () => Navigator.pop(context),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: Theme.of(context).textTheme.headlineSmall?.color,
+                size: 23,
+              ),
             ),
-            title: Text('Daily check-in', style: Theme.of(context).textTheme.headlineMedium),
+            title: Text(
+              'Daily check-in',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
             actions: [
               Container(
                 margin: const EdgeInsets.only(right: 16),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF1C2A22) : Colors.green.withOpacity(0.1),
+                  color: isDark
+                      ? const Color(0xFF1C2A22)
+                      : Colors.green.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Row(
@@ -111,7 +125,11 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
                     SizedBox(width: 4),
                     Text(
                       'Daily Streak',
-                      style: TextStyle(color: AppColors.success, fontWeight: FontWeight.w600, fontSize: 12),
+                      style: TextStyle(
+                        color: AppColors.success,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),
@@ -129,28 +147,45 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           cubit.battleTitle.isEmpty
-                              ? const Padding(
-                            padding: EdgeInsets.all(20.0),
-                            child: Center(child: CircularProgressIndicator(color: AppColors.purple)),
-                          )
+                              ?  Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color:Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                )
                               : GoalCard(
-                            title: cubit.battleTitle,
-                            goal: cubit.battleGoal,
-                          ),
+                                  title: cubit.battleTitle,
+                                  goal: cubit.battleGoal,
+                                ),
 
                           const SizedBox(height: 24),
-                          Text("Did you complete today's goal?", style: Theme.of(context).textTheme.labelLarge),
+                          Text(
+                            "Did you complete today's goal?",
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
                           const SizedBox(height: 12),
                           GestureDetector(
-                            onTap: () => setState(() => isCompleted = (isCompleted == true) ? null : true),
+                            onTap: () => setState(
+                              () => isCompleted = (isCompleted == true)
+                                  ? null
+                                  : true,
+                            ),
                             child: Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: isDark ? AppColors.indigo : Colors.grey.shade100,
+                                color: isDark
+                                    ? Theme.of(context).cardColor//AppColors.indigo
+                                    : Colors.grey.shade100,
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
-                                  color: (isCompleted == true) ? AppColors.success : Colors.grey.withOpacity(0.3),
-                                  width: 2,
+                                  color: (isCompleted == true)
+                                      ? AppColors.success
+                                      : isDark
+                                      ? Colors.grey.shade100//AppColors.indigo
+                                      : Theme.of(context).textTheme.bodySmall?.color??Colors.white,
+                                  width: (isCompleted == true)?2:0.5,
                                 ),
                               ),
                               child: Row(
@@ -160,16 +195,33 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
                                     height: 24,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: (isCompleted == true) ? AppColors.success : Colors.transparent,
+                                      color: (isCompleted == true)
+                                          ? AppColors.success
+                                          : Colors.transparent,
                                       border: Border.all(
-                                        color: (isCompleted == true) ? AppColors.success : (isDark ? Colors.white : Colors.black54),
+                                        color: (isCompleted == true)
+                                            ? AppColors.success
+                                            : (isDark
+                                                  ? Colors.white
+                                                  : Colors.black54),
                                         width: 2,
                                       ),
                                     ),
-                                    child: (isCompleted == true) ? const Icon(Icons.check, size: 16, color: Colors.white) : null,
+                                    child: (isCompleted == true)
+                                        ? const Icon(
+                                            Icons.check,
+                                            size: 16,
+                                            color: Colors.white,
+                                          )
+                                        : null,
                                   ),
                                   const SizedBox(width: 16),
-                                  Text('Yes, completed', style: Theme.of(context).textTheme.bodyLarge),
+                                  Text(
+                                    'Yes, completed',
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium,
+                                  ),
                                 ],
                               ),
                             ),
@@ -178,8 +230,14 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Add a note (optional)', style: Theme.of(context).textTheme.labelLarge),
-                              Text('$_noteLength/120', style: Theme.of(context).textTheme.labelLarge),
+                              Text(
+                                'Add a note (optional)',
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
+                              Text(
+                                '$_noteLength/120',
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -187,22 +245,34 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
                             controller: _noteController,
                             maxLength: 120,
                             maxLines: 2,
-                            style: TextStyle(color: isDark ? Colors.white : Colors.black, fontSize: 14),
+                            style: TextStyle(
+                              color: isDark ? Colors.white : Colors.black,
+                              fontSize: 14,
+                            ),
                             decoration: InputDecoration(
                               counterText: '',
                               filled: true,
-                              fillColor: isDark ? AppColors.indigo : Colors.grey.shade100,
+                              fillColor: Theme.of(context).cardColor,
                               hintText: 'Felt strong - 18:42 pace.',
                               hintStyle: const TextStyle(color: Colors.grey),
                               contentPadding: const EdgeInsets.all(16),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                borderSide: BorderSide.none,
+                              ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).textTheme.bodyMedium?.color??Colors.white,
+                                  width: 0.5,
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: const BorderSide(color: AppColors.purple, width: 1.5),
+                                borderSide: const BorderSide(
+                                  color: AppColors.purple,
+                                  width: 1.5,
+                                ),
                               ),
                             ),
                           ),
@@ -215,13 +285,16 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
                     width: double.infinity,
                     child: CustomButton(
                       text: isLoading ? 'Checking in...' : 'Confirm check-in',
-                      onPressed: (isCompleted == true && !isLoading && widget.battleId.isNotEmpty)
+                      onPressed:
+                          (isCompleted == true &&
+                              !isLoading &&
+                              widget.battleId.isNotEmpty)
                           ? () {
-                        context.read<CheckInCubit>().confirmCheckIn(
-                          battleId: widget.battleId,
-                          note: _noteController.text,
-                        );
-                      }
+                              context.read<CheckInCubit>().confirmCheckIn(
+                                battleId: widget.battleId,
+                                note: _noteController.text,
+                              );
+                            }
                           : null,
                       padding: const EdgeInsets.symmetric(vertical: 15),
                     ),

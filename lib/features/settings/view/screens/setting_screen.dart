@@ -77,15 +77,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF16151A),
-        title: const Text(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title:  Text(
           'Help & Feedback',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Theme.of(context).textTheme.headlineSmall?.color),
         ),
         content: TextField(
           controller: controller,
           maxLines: 3,
-          style: const TextStyle(color: Colors.white),
+          style:  TextStyle(color: Theme.of(context).textTheme.headlineSmall?.color,fontSize: 20),
           decoration: const InputDecoration(
             hintText: 'Write your feedback here...',
             hintStyle: TextStyle(color: Colors.grey),
@@ -97,6 +97,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: const Text('Cancel'),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(26),
+              ),
+              elevation: 0,
+            ),
             onPressed: () async {
               if (controller.text.isNotEmpty) {
                 await FirebaseFirestore.instance.collection('feedbacks').add({
@@ -182,22 +189,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
             builder: (context, state) {
               return Scaffold(
-                backgroundColor: Colors.black,
                 appBar: AppBar(
-                  backgroundColor: Colors.black,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   elevation: 0,
                   leading: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 18,
+                    icon:  Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Theme.of(context).textTheme.headlineSmall?.color,
+                      size: 23,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   title: Text(
                     'Settings',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.headlineMedium
                   ),
+                  centerTitle: true,
                 ),
                 body: SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
@@ -289,6 +296,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildSectionTitle(String title, BuildContext context) {
-    return Text(title, style: Theme.of(context).textTheme.bodySmall);
+    return Text(title, style: Theme.of(context).textTheme.headlineSmall);
   }
 }

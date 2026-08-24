@@ -24,7 +24,7 @@ class ProfileCard extends StatelessWidget {
     }
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF16151A),
+        color:  Theme.of(context).colorScheme.onTertiaryFixed,
         borderRadius: BorderRadius.circular(16),
       ),
       child: ListTile(

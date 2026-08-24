@@ -17,26 +17,34 @@ class GoalCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
       decoration: BoxDecoration(
-        color: AppColors.indigo,
+        color: Theme.of(context).colorScheme.onTertiaryContainer,
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: AppColors.deepPurple, width: 1.5),
       ),
       child: Column(
         children: [
           Container(
-            width: 90,
-            height: 90,
-            decoration: BoxDecoration(
+            width: 150,
+            height: 150,
+            decoration:  BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.deepPurple,
-              border: Border.all(color: AppColors.purple, width: 2),
+              color: Theme.of(context).colorScheme.tertiaryFixedDim,//Color(0xFF1E0140),
             ),
-            child: ClipOval(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Image.asset(
-                  'assets/images/Margin.png',
-                  fit: BoxFit.contain,
+            child: Center(
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,//const Color(0xFF4A0072),
+                  border: Border.all(
+                    color: const Color(0xFF9100E5),
+                    width: 4.5,
+                  ),
+                ),
+                child: Icon(
+                  Icons.my_location,
+                  size: 50,
+                  color: Theme.of(context).textTheme.headlineSmall?.color,
                 ),
               ),
             ),
@@ -44,19 +52,12 @@ class GoalCard extends StatelessWidget {
           const SizedBox(height: 22),
           Text(
             goal,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headlineLarge
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Text(
             title,
-            style: const TextStyle(
-              color: Color(0xFF9CA3AF),
-              fontSize: 15,
-            ),
+            style: Theme.of(context).textTheme.bodySmall
           ),
         ],
       ),
