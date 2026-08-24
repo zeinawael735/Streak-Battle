@@ -106,11 +106,11 @@ class AppSection extends StatelessWidget {
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        color: AppColorStyle.primaryViolet,
+                        color: Theme.of(context).colorScheme.primary,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColorStyle.primaryViolet.withOpacity(0.4),
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
                             blurRadius: 10,
                             spreadRadius: 1,
                           ),
