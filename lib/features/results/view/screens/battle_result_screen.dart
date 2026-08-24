@@ -11,8 +11,14 @@ class BattleResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args =
+    ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final battleId = args?['battleId'] as String? ?? '';
+    final winnerId = args?['winnerId'] as String? ?? '';
+
     return BlocProvider(
-      create: (_) => BattleResultCubit(),
+      create: (_) => BattleResultCubit()
+        ..loadResult(battleId: battleId, winnerId: winnerId),
       child: const _BattleResultView(),
     );
   }
@@ -87,7 +93,9 @@ class _BattleResultViewState extends State<_BattleResultView>
     if (parts.length >= 2) {
       return (parts.first[0] + parts.last[0]).toUpperCase();
     }
-    return parts.first.substring(0, parts.first.length >= 2 ? 2 : 1).toUpperCase();
+    return parts.first
+        .substring(0, parts.first.length >= 2 ? 2 : 1)
+        .toUpperCase();
   }
 
   @override
@@ -104,7 +112,8 @@ class _BattleResultViewState extends State<_BattleResultView>
     final isDark = theme.brightness == Brightness.dark;
     final textColor = theme.colorScheme.onSurface;
     final secondaryTextColor = textColor.withOpacity(0.55);
-    final cardColor = isDark ? const Color(0xFF1C1C1C) : const Color(0xFFF5F5F5);
+    final cardColor =
+    isDark ? const Color(0xFF1C1C1C) : const Color(0xFFF5F5F5);
     final r = ResponsiveHelper(context);
 
     return Scaffold(
@@ -114,7 +123,8 @@ class _BattleResultViewState extends State<_BattleResultView>
           builder: (context, state) {
             if (state is BattleResultCalculating) {
               return Center(
-                child: CircularProgressIndicator(color: theme.colorScheme.secondary),
+                child: CircularProgressIndicator(
+                    color: theme.colorScheme.secondary),
               );
             }
 
@@ -144,7 +154,8 @@ class _BattleResultViewState extends State<_BattleResultView>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.auto_awesome,
-                              color: theme.colorScheme.secondary, size: r.w(14)),
+                              color: theme.colorScheme.secondary,
+                              size: r.w(14)),
                           SizedBox(width: r.w(8)),
                           Text(
                             'BATTLE COMPLETE',
@@ -157,7 +168,8 @@ class _BattleResultViewState extends State<_BattleResultView>
                           ),
                           SizedBox(width: r.w(8)),
                           Icon(Icons.auto_awesome,
-                              color: theme.colorScheme.secondary, size: r.w(14)),
+                              color: theme.colorScheme.secondary,
+                              size: r.w(14)),
                         ],
                       ),
 
@@ -184,13 +196,13 @@ class _BattleResultViewState extends State<_BattleResultView>
                                 color: cardColor,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: theme.colorScheme.secondary.withOpacity(0.35),
+                                    color: theme.colorScheme.secondary
+                                        .withOpacity(0.35),
                                     blurRadius: r.w(30),
                                     spreadRadius: r.w(4),
                                   ),
                                 ],
                               ),
-                              // Winner initials in the empty circle
                               child: Center(
                                 child: Text(
                                   _initials(result.winnerName),
@@ -210,9 +222,9 @@ class _BattleResultViewState extends State<_BattleResultView>
                                   child: child!,
                                 );
                               },
-                              // Trophy color fixed to gold/yellow regardless of theme
                               child: Icon(Icons.emoji_events,
-                                  color: const Color(0xFFFFC107), size: r.w(34)),
+                                  color: const Color(0xFFFFC107),
+                                  size: r.w(34)),
                             ),
                             Positioned(
                               bottom: r.h(-6),
@@ -224,7 +236,8 @@ class _BattleResultViewState extends State<_BattleResultView>
                                   color: theme.colorScheme.tertiary,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                      color: theme.scaffoldBackgroundColor, width: 2),
+                                      color: theme.scaffoldBackgroundColor,
+                                      width: 2),
                                 ),
                                 child: Center(
                                   child: Text('1',
@@ -255,10 +268,10 @@ class _BattleResultViewState extends State<_BattleResultView>
                               ),
                             ),
                             SizedBox(height: r.h(6)),
-                            // "21-day Morning Run Club" = durationDays + battle title
                             Text(
                               '${result.durationDays}-day ${result.battleTitle}',
-                              style: TextStyle(color: secondaryTextColor, fontSize: r.sp(13)),
+                              style: TextStyle(
+                                  color: secondaryTextColor, fontSize: r.sp(13)),
                             ),
                             SizedBox(height: r.h(24)),
 
@@ -270,7 +283,8 @@ class _BattleResultViewState extends State<_BattleResultView>
                                 color: cardColor,
                                 borderRadius: BorderRadius.circular(r.w(16)),
                                 border: Border.all(
-                                    color: theme.colorScheme.tertiary.withOpacity(0.4)),
+                                    color: theme.colorScheme.tertiary
+                                        .withOpacity(0.4)),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,7 +292,8 @@ class _BattleResultViewState extends State<_BattleResultView>
                                   Row(
                                     children: [
                                       Icon(Icons.bar_chart,
-                                          color: theme.colorScheme.tertiary, size: r.w(14)),
+                                          color: theme.colorScheme.tertiary,
+                                          size: r.w(14)),
                                       SizedBox(width: r.w(6)),
                                       Text(
                                         'YOUR RESULT',
@@ -292,7 +307,6 @@ class _BattleResultViewState extends State<_BattleResultView>
                                     ],
                                   ),
                                   SizedBox(height: r.h(10)),
-                                  // Category of the battle instead of a hardcoded "#2 Runner-up"
                                   Text(
                                     result.userCategoryLabel,
                                     style: TextStyle(
@@ -303,7 +317,7 @@ class _BattleResultViewState extends State<_BattleResultView>
                                   ),
                                   SizedBox(height: r.h(4)),
                                   Text(
-                                    '${result.points} points', // TODO: confirm points source with team
+                                    '${result.points} points',
                                     style: TextStyle(
                                       color: theme.colorScheme.secondary,
                                       fontSize: r.sp(14),
@@ -314,17 +328,18 @@ class _BattleResultViewState extends State<_BattleResultView>
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(r.w(10)),
                                     child: LinearProgressIndicator(
-                                      value: result.completionPercent, // TODO: confirm source
+                                      value: result.completionPercent,
                                       minHeight: r.h(8),
-                                      backgroundColor:
-                                      AppColors.progressIndicatorBackgroundColor,
+                                      backgroundColor: AppColors
+                                          .progressIndicatorBackgroundColor,
                                       valueColor: const AlwaysStoppedAnimation(
                                           AppColors.progressIndicatorColor),
                                     ),
                                   ),
                                   SizedBox(height: r.h(8)),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         '${(result.completionPercent * 100).round()}% completion',
@@ -335,12 +350,14 @@ class _BattleResultViewState extends State<_BattleResultView>
                                       Row(
                                         children: [
                                           Icon(Icons.check_circle_outline,
-                                              color: secondaryTextColor, size: r.w(13)),
+                                              color: secondaryTextColor,
+                                              size: r.w(13)),
                                           SizedBox(width: r.w(4)),
                                           Text(
-                                            '${result.checkIns} check-ins', // TODO: confirm source
+                                            '${result.checkIns} check-ins',
                                             style: TextStyle(
-                                                color: secondaryTextColor, fontSize: r.sp(12)),
+                                                color: secondaryTextColor,
+                                                fontSize: r.sp(12)),
                                           ),
                                         ],
                                       ),
@@ -352,35 +369,37 @@ class _BattleResultViewState extends State<_BattleResultView>
 
                             SizedBox(height: r.h(16)),
 
-                            // ================= STATS CARDS (postponed logic) =================
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _statCard(
-                                    icon: Icons.local_fire_department,
-                                    iconColor: theme.colorScheme.error,
-                                    value: '${result.bestStreak} days',
-                                    label: 'Best streak',
-                                    textColor: textColor,
-                                    secondaryTextColor: secondaryTextColor,
-                                    cardColor: cardColor,
-                                    r: r,
+                            // ================= XP BONUS CARD =================
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: r.h(16), horizontal: r.w(16)),
+                              decoration: BoxDecoration(
+                                color: cardColor,
+                                borderRadius: BorderRadius.circular(r.w(14)),
+                                border: Border.all(
+                                    color: textColor.withOpacity(0.08)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.stars_rounded,
+                                      color: const Color(0xFFFFC107),
+                                      size: r.w(22)),
+                                  SizedBox(width: r.w(12)),
+                                  Expanded(
+                                    child: Text(
+                                      result.xpBonusAwarded
+                                          ? 'Winner earned +50 XP bonus!'
+                                          : 'XP bonus already awarded for this battle.',
+                                      style: TextStyle(
+                                        color: textColor,
+                                        fontSize: r.sp(13),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: r.w(12)),
-                                Expanded(
-                                  child: _statCard(
-                                    icon: Icons.directions_run,
-                                    iconColor: theme.colorScheme.secondary,
-                                    value: '${result.totalDistanceKm} km',
-                                    label: 'Total distance',
-                                    textColor: textColor,
-                                    secondaryTextColor: secondaryTextColor,
-                                    cardColor: cardColor,
-                                    r: r,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
 
                             SizedBox(height: r.h(24)),
@@ -410,11 +429,13 @@ class _BattleResultViewState extends State<_BattleResultView>
 
                             TextButton(
                               onPressed: () {
-                                Navigator.popUntil(context, (route) => route.isFirst);
+                                Navigator.popUntil(
+                                    context, (route) => route.isFirst);
                               },
                               child: Text(
                                 'Back to home',
-                                style: TextStyle(color: secondaryTextColor, fontSize: r.sp(13)),
+                                style: TextStyle(
+                                    color: secondaryTextColor, fontSize: r.sp(13)),
                               ),
                             ),
 
@@ -444,38 +465,6 @@ class _BattleResultViewState extends State<_BattleResultView>
             );
           },
         ),
-      ),
-    );
-  }
-
-  Widget _statCard({
-    required IconData icon,
-    required Color iconColor,
-    required String value,
-    required String label,
-    required Color textColor,
-    required Color secondaryTextColor,
-    required Color cardColor,
-    required ResponsiveHelper r,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: r.h(16), horizontal: r.w(12)),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(r.w(14)),
-        border: Border.all(color: textColor.withOpacity(0.08)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: iconColor, size: r.w(18)),
-          SizedBox(height: r.h(8)),
-          Text(value,
-              style: TextStyle(
-                  color: textColor, fontSize: r.sp(15), fontWeight: FontWeight.bold)),
-          SizedBox(height: r.h(2)),
-          Text(label, style: TextStyle(color: secondaryTextColor, fontSize: r.sp(11))),
-        ],
       ),
     );
   }

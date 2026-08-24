@@ -16,16 +16,14 @@ class BattleResultError extends BattleResultState {
 }
 
 class BattleResultLoaded extends BattleResultState {
-  final String battleTitle; // e.g. "Morning Run Club" (name only, without day count)
-  final int durationDays; // e.g. 21
-  final String winnerName; // full winner name, e.g. "Maya Ahmed"
-  final String userCategoryLabel; // battle category, e.g. "Fitness"
-  final int points; // TODO: confirm source
-  final double completionPercent; // TODO: confirm source
-  final int checkIns; // TODO: confirm source
-  final int bestStreak; // postponed
-  final double totalDistanceKm; // postponed
-  final bool isTie;
+  final String battleTitle;
+  final int durationDays;
+  final String winnerName;
+  final String userCategoryLabel;
+  final int points;
+  final double completionPercent;
+  final int checkIns;
+  final bool xpBonusAwarded; // true only the first time the bonus is granted
 
   const BattleResultLoaded({
     required this.battleTitle,
@@ -35,9 +33,7 @@ class BattleResultLoaded extends BattleResultState {
     required this.points,
     required this.completionPercent,
     required this.checkIns,
-    required this.bestStreak,
-    required this.totalDistanceKm,
-    this.isTie = false,
+    required this.xpBonusAwarded,
   });
 
   @override
@@ -49,8 +45,6 @@ class BattleResultLoaded extends BattleResultState {
     points,
     completionPercent,
     checkIns,
-    bestStreak,
-    totalDistanceKm,
-    isTie,
+    xpBonusAwarded,
   ];
 }

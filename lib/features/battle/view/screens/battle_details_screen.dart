@@ -5,7 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:streak_battle/core/constants/app_assets.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 import 'package:streak_battle/features/home/view/widgets/home_card.dart';
-
+import 'package:streak_battle/core/helper/battle_winner_helper.dart';
 import '../../../../core/helper/get_category_icon_helper.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/theme.dart';
@@ -218,6 +218,37 @@ class BattleDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Participants", style: TextStyle(fontWeight: FontWeight.bold, color: AppColorStyle.primaryText, fontSize: 20)),
+                    ElevatedButton(
+                      onPressed: () async {
+                        final winnerId = await getBattleWinnerId(battleId);
+                        if (winnerId == null) return;
+
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.battleResult,
+                          arguments: {'battleId': battleId, 'winnerId': winnerId},
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: AppColors.textPrimary,
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 9,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(
+                            color: Color(0xFF4B4456),
+                            width: 1.5,
+                          ),
+                        ),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text("Battle Results"),
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(
