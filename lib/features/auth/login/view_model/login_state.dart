@@ -30,3 +30,5 @@ class DeleteAccountError extends LoginState {
   final String message;
   DeleteAccountError(this.message);
 }
+
+class RequiresReAuthentication extends LoginState {}
