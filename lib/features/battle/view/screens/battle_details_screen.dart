@@ -219,7 +219,8 @@ class BattleDetailsScreen extends StatelessWidget {
                   children: [
                     Text("Participants", style: TextStyle(fontWeight: FontWeight.bold, color: AppColorStyle.primaryText, fontSize: 20)),
                     ElevatedButton(
-                      onPressed: () async {
+                      onPressed: state.isFinished
+                          ? () async {
                         final winnerId = await getBattleWinnerId(battleId);
                         if (winnerId == null) return;
 
@@ -228,10 +229,13 @@ class BattleDetailsScreen extends StatelessWidget {
                           AppRoutes.battleResult,
                           arguments: {'battleId': battleId, 'winnerId': winnerId},
                         );
-                      },
+                      }
+                          : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
-                        foregroundColor: AppColors.textPrimary,
+                        foregroundColor: state.isFinished
+                            ? AppColors.textPrimary
+                            : AppColors.textPrimary.withOpacity(0.3),
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 20,
@@ -240,7 +244,9 @@ class BattleDetailsScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                           side: BorderSide(
-                            color: Color(0xFF4B4456),
+                            color: state.isFinished
+                                ? const Color(0xFF4B4456)
+                                : const Color(0xFF4B4456).withOpacity(0.3),
                             width: 1.5,
                           ),
                         ),
