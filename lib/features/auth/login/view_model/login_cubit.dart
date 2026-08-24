@@ -175,28 +175,46 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LogoutError('Logout failed: ${e.toString()}'));
     }
   }
-  Future<void> deleteAccount() async {
+
+
+  Future<void> deleteAccount({String? password}) async {
     emit(DeleteAccountLoading());
     try {
       final user = auth.currentUser;
-
       if (user != null) {
 
         await firestore.collection('users').doc(user.uid).delete();
 
 
         await user.delete();
-
         emit(DeleteAccountSuccess());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
-        emit(DeleteAccountError("Please log in again before deleting your account for security reasons."));
+
+        emit(RequiresReAuthentication());
       } else {
-        emit(DeleteAccountError(e.message ?? "Failed to delete account."));
+        emit(DeleteAccountError(e.message ?? 'Failed to delete account'));
       }
     } catch (e) {
       emit(DeleteAccountError(e.toString()));
+    }
+  }
+
+
+  Future<void> reauthenticateAndDelete(String password) async {
+    try {
+      final user = auth.currentUser;
+      if (user != null && user.email != null) {
+        final credential = EmailAuthProvider.credential(
+          email: user.email!,
+          password: password,
+        );
+        await user.reauthenticateWithCredential(credential);
+        await deleteAccount();
+      }
+    } catch (e) {
+      emit(DeleteAccountError("Re-authentication failed. Incorrect password."));
     }
   }
 }

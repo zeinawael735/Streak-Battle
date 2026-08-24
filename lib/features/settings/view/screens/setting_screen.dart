@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/core/utils/app_toast.dart';
 import '../../../auth/login/view_model/login_state.dart';
-import 'package:streak_battle/features/auth/signup/view/screens/signup_screen.dart';
 import 'package:toastification/toastification.dart';
 import '../../../auth/login/view/screens/login_screen.dart';
 import '../../../auth/login/view_model/login_cubit.dart';
@@ -152,6 +151,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   description: state.message,
                   type: ToastificationType.error,
                 );
+
+                if (state is RequiresReAuthentication) {
+                  AppToast.showToast(
+                    context: context,
+                    title: "Security Check",
+                    description: "Please log in again before deleting your account for security reasons.",
+                    type: ToastificationType.error,
+                  );
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                        (route) => false,
+                  );
+                }
               }
               if (state is DeleteAccountSuccess) {
                 AppToast.showToast(
@@ -162,7 +175,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignupScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                       (route) => false,
                 );
               }
