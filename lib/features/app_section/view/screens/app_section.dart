@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
-import 'package:streak_battle/features/achievements/view/screens/achievemnts_screen.dart';
+import 'package:streak_battle/features/achievements/view/screens/achievements_screen.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../history/view/screens/battles_history_screen.dart';
@@ -34,7 +34,7 @@ class AppSection extends StatelessWidget {
               children: const [
                 HomeScreen(),
                 BattlesScreen(),
-                AchievemntsScreen(),
+                AchievementsScreen(),
                 ProfileScreen(),
               ],
             ),
@@ -76,10 +76,7 @@ class AppSection extends StatelessWidget {
                       ),
                       label: "",
                     ),
-                     BottomNavigationBarItem(
-                      icon: SizedBox.shrink(),
-                      label: "",
-                    ),
+                    BottomNavigationBarItem(icon: SizedBox.shrink(), label: ""),
                     BottomNavigationBarItem(
                       icon: NavIcon(
                         path: AppAssets.awardsIconSvg,
