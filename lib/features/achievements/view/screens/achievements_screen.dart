@@ -18,7 +18,7 @@ class AchievementsScreen extends StatelessWidget {
       title: 'Podium Pro',
       isUnlocked: true,
       progress: 1.0,
-      icon: Icons.military_tech,
+      icon: Icons.emoji_events,
     ),
     BadgeModel(
       title: 'Unbreakable',
@@ -30,7 +30,7 @@ class AchievementsScreen extends StatelessWidget {
       title: 'Ten Wins',
       isUnlocked: true,
       progress: 1.0,
-      icon: Icons.emoji_events,
+      icon: Icons.military_tech,
     ),
     BadgeModel(
       title: 'Crew Chief',
@@ -49,14 +49,15 @@ class AchievementsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0E13),
+      // الباك جراوند وحدها هي اللي بتتغير حسب الثيم العام
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
           'Achievements',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.white, // ثابت دايماً
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -75,7 +76,6 @@ class AchievementsScreen extends StatelessWidget {
           children: [
             const AchievementsHeaderCard(),
             const SizedBox(height: 24),
-
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -91,8 +91,6 @@ class AchievementsScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 28),
-
-            // 3. قسم الـ Next milestone
             const Text(
               'Next milestone',
               style: TextStyle(
