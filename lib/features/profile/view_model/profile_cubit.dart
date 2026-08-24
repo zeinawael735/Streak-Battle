@@ -37,15 +37,18 @@ class ProfileCubit extends Cubit<ProfileState> {
 
       final data = snapshot.data()!;
 
-      // battlesXp is a map of {battleId: score} -> count = number of battles played
       final battlesXp = data['battlesXp'] as Map<String, dynamic>? ?? {};
       final battlesCount = battlesXp.length;
 
-      // weeklyCheckIns is a list of date strings, e.g. "2026-08-22"
       final checkInsRaw = data['weeklyCheckIns'] as List<dynamic>? ?? [];
       final checkInDates = checkInsRaw.map((e) => e.toString()).toSet();
-
       final activity = _buildLast7DaysActivity(checkInDates);
+
+      // Achievements: total keys in the map, unlocked = keys with value true
+      final achievementsMap = data['achievements'] as Map<String, dynamic>? ?? {};
+      final achievementsTotal = achievementsMap.length;
+      final achievementsUnlocked =
+          achievementsMap.values.where((v) => v == true).length;
 
       emit(ProfileLoaded(
         name: data['name'] ?? 'Unknown',
@@ -55,6 +58,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         totalPoints: data['totalPoints'] ?? 0,
         battlesCount: battlesCount,
         activityLastWeek: activity,
+        achievementsTotal: achievementsTotal,
+        achievementsUnlocked: achievementsUnlocked,
       ));
     }, onError: (_) {
       emit(const ProfileError('Failed to load profile data.'));
