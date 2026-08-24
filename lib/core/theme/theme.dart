@@ -82,6 +82,8 @@ class AppTheme {
         onTertiaryContainer:  Color(0xFFEFE4F5),
         /// battle details screen
         tertiaryFixed: Color(0xFFD8CBEA),
+        /// step 1 create
+
         ///
         primary: AppColors.purple,
         surfaceBright: Colors.black12,
