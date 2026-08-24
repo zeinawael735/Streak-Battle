@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/core/utils/app_toast.dart';
-import 'package:streak_battle/features/auth/login/view_model/login_state.dart';
+import '../../../auth/login/view_model/login_state.dart';
 import 'package:streak_battle/features/auth/signup/view/screens/signup_screen.dart';
 import 'package:toastification/toastification.dart';
 import '../../../auth/login/view/screens/login_screen.dart';
@@ -21,6 +21,58 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  bool _isNotificationEnabled = true;
+  bool _isLoadingNotification = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchNotificationState();
+  }
+
+
+  Future<void> _fetchNotificationState() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      if (doc.exists && mounted) {
+        setState(() {
+          _isNotificationEnabled = doc.data()?['isNotificationEnabled'] ?? true;
+          _isLoadingNotification = false;
+        });
+      }
+    }
+  }
+
+
+  Future<void> _toggleNotification(bool value) async {
+    setState(() {
+      _isNotificationEnabled = value;
+    });
+
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      try {
+        await FirebaseFirestore.instance.collection('users').doc(uid).update({
+          'isNotificationEnabled': value,
+        });
+      } catch (e) {
+
+        if (mounted) {
+          setState(() {
+            _isNotificationEnabled = !value;
+          });
+          AppToast.showToast(
+            context: context,
+            title: "Update Failed",
+            description: "Could not update notification settings.",
+            type: ToastificationType.error,
+          );
+        }
+      }
+    }
+  }
+
   void _showFeedbackDialog() {
     final controller = TextEditingController();
     showDialog(
@@ -81,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                       (route) => false,
                 );
               }
@@ -101,7 +153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   type: ToastificationType.error,
                 );
               }
-              if(state is DeleteAccountSuccess){
+              if (state is DeleteAccountSuccess) {
                 AppToast.showToast(
                   context: context,
                   title: "Account Deleted",
@@ -110,7 +162,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => SignupScreen()),
+                  MaterialPageRoute(builder: (context) => const SignupScreen()),
                       (route) => false,
                 );
               }
@@ -140,21 +192,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ProfileCard(
-                        name:loginCubit.userName.isEmpty
-                      ? '...'
-                      : loginCubit.userName,
+                        name: loginCubit.userName.isEmpty
+                            ? '...'
+                            : loginCubit.userName,
                         email: loginCubit.currentUserEmail,
                         onTap: () {},
                       ),
                       const SizedBox(height: 24),
                       _buildSectionTitle('PREFERENCES', context),
                       const SizedBox(height: 8),
-                      SettingsTile(
-                        icon: Icons.notifications_none_rounded,
-                        title: 'Notifications',
-                        subtitle: 'Daily reminder on',
-                        onTap: () {},
+
+
+                      Material(
+                        color: const Color(0xFF16151A),
+                        borderRadius: BorderRadius.circular(12),
+                        clipBehavior: Clip.antiAlias,
+                        child: SwitchListTile(
+                          value: _isNotificationEnabled,
+                          onChanged: _isLoadingNotification ? null : _toggleNotification,
+                          activeColor: Colors.redAccent,
+                          title: const Text(
+                            'Notifications',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          subtitle: Text(
+                            _isNotificationEnabled
+                                ? 'Daily reminders enabled'
+                                : 'Daily reminders disabled',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          ),
+                          secondary: const Icon(
+                            Icons.notifications_none_rounded,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
+
                       const SizedBox(height: 12),
                       const AppearanceCard(),
                       const SizedBox(height: 24),

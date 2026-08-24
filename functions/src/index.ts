@@ -111,8 +111,8 @@ export const sendDailyBattleReminders = onSchedule("* * * * *", async () => {
           await admin.messaging().send({
             token: fcmToken,
             notification: {
-              title: "تذكير المعركة! ⏰",
-              body: `حان موعد تسجيل الـ Check-in في معركة "${battleTitle}"!`,
+              title: "Battle Reminder! ⏰",
+              body: `It is time to check-in for the battle "${battleTitle}"!`,
             },
             data: {
               click_action: "FLUTTER_NOTIFICATION_CLICK",

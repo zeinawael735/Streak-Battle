@@ -19,7 +19,11 @@ class LoginCubit extends Cubit<LoginState> {
       String? fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken != null) {
         await firestore.collection('users').doc(uid).set(
-          {'fcmToken': fcmToken},
+          {
+            'fcmToken': fcmToken,
+
+            'isNotificationEnabled': true,
+          },
           SetOptions(merge: true),
         );
       }
@@ -103,6 +107,7 @@ class LoginCubit extends Cubit<LoginState> {
             'name': user.displayName ?? '',
             'email': user.email ?? '',
             'photoURL': user.photoURL ?? '',
+            'isNotificationEnabled': true,
             'totalPoints': 0,
             'battlesXp': {},
             'battlesCheckInsCount': {},

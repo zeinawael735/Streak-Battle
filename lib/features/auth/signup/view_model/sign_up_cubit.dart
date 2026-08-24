@@ -22,7 +22,6 @@ class SignUpCubit extends Cubit<SignUpState> {
       );
       final String uid = userCredential.user!.uid;
 
-
       String? fcmToken = await FirebaseMessaging.instance.getToken();
 
       await firestore.collection('users').doc(uid).set({
@@ -31,6 +30,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         'email': email.trim(),
         'photoURL': '',
         'fcmToken': fcmToken ?? '',
+        'isNotificationEnabled': true,
         'totalPoints': 0,
         'battlesXp': {},
         'battlesCheckInsCount': {},
