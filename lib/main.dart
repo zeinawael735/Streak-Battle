@@ -17,7 +17,7 @@ import 'features/battle/view/screens/join_battle_screen.dart';
 import 'features/notification/view_model/push_notification_service.dart';
 import 'firebase_options.dart';
 import 'features/notification/view_model/notification_services.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await NotificationService.init();

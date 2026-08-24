@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/features/auth/signup/view_model/sign_up_state.dart';
 
@@ -21,11 +22,15 @@ class SignUpCubit extends Cubit<SignUpState> {
       );
       final String uid = userCredential.user!.uid;
 
+
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+
       await firestore.collection('users').doc(uid).set({
         'uid': uid,
         'name': name.trim(),
         'email': email.trim(),
         'photoURL': '',
+        'fcmToken': fcmToken ?? '',
         'totalPoints': 0,
         'battlesXp': {},
         'battlesCheckInsCount': {},
