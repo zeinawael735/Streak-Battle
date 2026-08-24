@@ -48,11 +48,9 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
       lastDate: DateTime.now().add(const Duration(days: 365)),
       builder: (context, child) {
         return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: const ColorScheme.dark(
-              primary: Color(0xFF6B11A1),
-              onPrimary: Colors.white,
-              surface: Color(0xFF160E21),
+          data: Theme.of(context).copyWith(
+            datePickerTheme: DatePickerThemeData(
+              backgroundColor: Theme.of(context).cardColor,
             ),
           ),
           child: child!,
@@ -70,10 +68,10 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
       initialTime: widget.reminderTime,
       builder: (context, child) {
         return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: const ColorScheme.dark(
-              primary: Color(0xFF6B11A1),
-              surface: Color(0xFF160E21),
+          data: Theme.of(context).copyWith(
+            timePickerTheme: TimePickerThemeData(
+              backgroundColor: Theme.of(context).cardColor,
+              dialBackgroundColor: Colors.transparent,
             ),
           ),
           child: child!,
@@ -92,37 +90,37 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+           Text(
             'Set the rules',
-            style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.headlineMedium
           ),
           const SizedBox(height: 6),
           Text(
             'Fair, simple rules keep everyone focused.',
-            style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13,fontWeight: .w500),//TextStyle(color: Colors.grey, fontSize: 13),
           ),
           const SizedBox(height: 24),
-          const Text('START DATE', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+           Text('START DATE', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 13),),
           const SizedBox(height: 8),
           InkWell(
             onTap: () => _selectStartDate(context),
             borderRadius: BorderRadius.circular(12),
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding:  EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF160E21),
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade800),
+                border: Border.all(color: Colors.grey.shade800,width: 0.5),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.calendar_month, color: Color(0xFF6B11A1)),
+                   Icon(Icons.calendar_month, color: Theme.of(context).colorScheme.primary),
                   const SizedBox(width: 12),
                   Text(
                     widget.startDate == null
                         ? 'Select start date'
                         : '${widget.startDate!.day}/${widget.startDate!.month}/${widget.startDate!.year}',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: .w400),
                   ),
                   const Spacer(),
                   const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 14),
@@ -131,7 +129,7 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
             ),
           ),
           const SizedBox(height: 20),
-          const Text('DURATION (DAYS)', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+           Text('DURATION (DAYS)', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 12)),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,14 +139,15 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
                 showCheckmark: false,
                 label: Text('$days days'),
                 selected: isSelected,
-                selectedColor: const Color(0xFF6B11A1),
-                backgroundColor: const Color(0xFF160E21),
+                selectedColor: Theme.of(context).colorScheme.primary,
+                backgroundColor: Theme.of(context).cardColor,
                 labelStyle: TextStyle(
-                  color: isSelected ? Colors.white : Colors.grey.shade400,
+                  color: isSelected ? Colors.white : Colors.grey,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
                 side: BorderSide(
                   color: isSelected ? const Color(0xFF6B11A1) : Colors.grey.shade800,
+                  width: 0.5
                 ),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 onSelected: (_) => widget.onDurationChanged(days),
@@ -166,16 +165,16 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
               return null;
             },
             controller: widget.goalController,
-            style: const TextStyle(color: Colors.white),
+            style:  Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: .normal),
             decoration: InputDecoration(
               hintText: 'e.g. Run 3 km / Read 10 pages',
-              hintStyle: TextStyle(color: Colors.grey.shade600),
+              hintStyle: TextStyle(color: Colors.grey),
               prefixIcon: const Icon(Icons.ads_click, color: Color(0xFF6B11A1)),
               filled: true,
-              fillColor: const Color(0xFF160E21),
+              fillColor: Theme.of(context).cardColor,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey.shade800),
+                borderSide: BorderSide(color: Colors.grey,width: 0.1),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -187,13 +186,13 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
           ),
           const SizedBox(height: 20),
           SwitchListTile(
-            tileColor: const Color(0xFF160E21),
+            tileColor: Theme.of(context).cardColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
-              side: BorderSide(color: Colors.grey.shade800),
+              side: BorderSide(color: Colors.grey,width: 0.2),
             ),
             secondary: const Icon(Icons.notifications_active_outlined, color: Color(0xFF6B11A1)),
-            title: const Text('Daily reminder', style: TextStyle(color: Colors.white, fontSize: 14)),
+            title:  Text('Daily reminder', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 12)),
             subtitle: GestureDetector(
               onTap: () {
                 if (widget.isReminderOn) {

@@ -15,7 +15,7 @@ class CustomStepperHeader extends StatelessWidget {
         _buildStepCircle(
           stepNumber: 1,
           label: 'Info',
-          isActive: currentStep >= 0,
+          isActive: currentStep >= 0, context: context,
         ),
 
         _buildLine(isActive: currentStep >= 1),
@@ -23,7 +23,7 @@ class CustomStepperHeader extends StatelessWidget {
         _buildStepCircle(
           stepNumber: 2,
           label: 'Rules',
-          isActive: currentStep >= 1,
+          isActive: currentStep >= 1, context: context,
         ),
 
         _buildLine(isActive: currentStep >= 2),
@@ -31,7 +31,7 @@ class CustomStepperHeader extends StatelessWidget {
         _buildStepCircle(
           stepNumber: 3,
           label: 'Invite',
-          isActive: currentStep >= 2,
+          isActive: currentStep >= 2, context: context,
         ),
       ],
     );
@@ -41,6 +41,7 @@ class CustomStepperHeader extends StatelessWidget {
     required int stepNumber,
     required String label,
     required bool isActive,
+    required BuildContext context
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -51,7 +52,7 @@ class CustomStepperHeader extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
 
-            color: isActive ? const Color(0xFF6B11A1) : const Color(0xFF1C1326),
+            color: isActive ?  Color(0xFF6B11A1) : Theme.of(context).scaffoldBackgroundColor,//const Color(0xFF1C1326),
             border: Border.all(
               color: isActive
                   ? const Color(0xFF6B11A1)
@@ -72,7 +73,7 @@ class CustomStepperHeader extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: isActive ? Colors.white : Colors.grey,
+            color: isActive ? Theme.of(context).textTheme.headlineSmall?.color : Colors.grey,
             fontSize: 12,
           ),
         ),

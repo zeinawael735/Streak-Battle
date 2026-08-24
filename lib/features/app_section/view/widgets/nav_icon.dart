@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:streak_battle/core/theme/theme.dart';
 import '../../../../core/constants/app_color_style.dart';
 
 class NavIcon extends StatelessWidget {
@@ -36,7 +37,7 @@ class NavIcon extends StatelessWidget {
           height: 24,
           width: 24,
           colorFilter: ColorFilter.mode(
-            isActive ? AppColorStyle.primaryViolet : AppColorStyle.inactiveGrey,
+            isActive ? Theme.of(context).colorScheme.primary : AppColors.inactiveGrey,
             BlendMode.srcIn,
           ),
         ),
@@ -45,7 +46,7 @@ class NavIcon extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: isActive ? 15 : 12,
-            color: isActive ? AppColorStyle.primaryViolet : AppColorStyle.inactiveGrey,
+            color: isActive ? Theme.of(context).colorScheme.primary : AppColors.inactiveGrey,
             fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
           ),
         ),

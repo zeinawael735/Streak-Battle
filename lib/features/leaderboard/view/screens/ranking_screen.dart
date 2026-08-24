@@ -17,16 +17,20 @@ class RankingScreen extends StatelessWidget {
           LeaderboardCubit()
             ..fetchLeaderboard(battleId: battleId),
       child: Scaffold(
-        backgroundColor: AppColorStyle.scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
-          title: const Text(
+          title:  Text(
             "LeaderBoard",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            style: Theme.of(context).textTheme.headlineMedium
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: Theme.of(context).textTheme.headlineSmall?.color,
+              size: 23,
             ),
           ),
         ),
@@ -61,13 +65,9 @@ class RankingScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                           Text(
                             "Rankings",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall
                           ),
                           const SizedBox(height: 10),
 

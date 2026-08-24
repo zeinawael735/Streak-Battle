@@ -116,12 +116,12 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
                     ),
                   ),
                   selected: isSelected,
-                  selectedColor: AppColors.primary,
+                  selectedColor: Theme.of(context).colorScheme.primary,
                   backgroundColor: Theme.of(context).cardColor,
                   side: BorderSide(
                     width: 1,
                     color: isSelected
-                        ? AppColors.primary
+                        ? Theme.of(context).colorScheme.primary
                         : const Color(0xFF2D2338),
                   ),
                   shape: RoundedRectangleBorder(
@@ -159,7 +159,7 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
             TextField(
               controller: widget.descriptionController,
               maxLines: 3,
-              style:  TextStyle(color: Theme.of(context).textTheme.headlineSmall?.color),
+              style:  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: .normal),
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.grey.shade600),
                 filled: true,

@@ -200,7 +200,7 @@ final _step2Key=GlobalKey<FormState>();
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               title:  Text(
                 'Create Battle',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: .normal),
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
               leading: IconButton(
                 icon:  Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.headlineSmall?.color),

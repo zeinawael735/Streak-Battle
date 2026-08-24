@@ -231,7 +231,7 @@ class HomeScreen extends StatelessWidget {
                                 minimumSize: Size.zero,
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: Text("join"),
+                              child: Text("join",style: TextStyle(color: Colors.white),),
                             ),
                           ],
                         ),
