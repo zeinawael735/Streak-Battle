@@ -33,13 +33,9 @@ class ParticipantsDialog {
                     icon: const Icon(Icons.close, color: Colors.white),
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 ParticipantCircle(initials: participant.initials, size: 90),
-
                 const SizedBox(height: 16),
-
                 Text(
                   participant.name,
                   style: const TextStyle(
@@ -81,7 +77,6 @@ class ParticipantsDialog {
                     icon: const Icon(Icons.close, color: Colors.white),
                   ),
                 ),
-
                 Flexible(
                   child: ListView.separated(
                     shrinkWrap: true,
@@ -98,9 +93,7 @@ class ParticipantsDialog {
                             initials: participant.initials,
                             size: 48,
                           ),
-
                           const SizedBox(width: 14),
-
                           Expanded(
                             child: Text(
                               participant.name,
@@ -155,8 +148,14 @@ class ParticipantCircle extends StatelessWidget {
     );
   }
 }
-class CheckedInCard extends StatelessWidget{
-  const CheckedInCard({super.key, required this.name, required this.initials, required this.goal, required this.time});
+
+class CheckedInCard extends StatelessWidget {
+  const CheckedInCard(
+      {super.key,
+      required this.name,
+      required this.initials,
+      required this.goal,
+      required this.time});
   final String name;
   final String initials;
   final String goal;
@@ -165,23 +164,31 @@ class CheckedInCard extends StatelessWidget{
   Widget build(BuildContext context) {
     return HomeCard(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 21,horizontal: 16),
-          child: Row(
-            mainAxisAlignment: .spaceBetween,
+      padding: const EdgeInsets.symmetric(vertical: 21, horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ParticipantCircle(
+            initials: initials,
+            size: 50,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ParticipantCircle(initials: initials, size: 50,),
-              Column(
-                crossAxisAlignment: .start,
-                children: [
-                  Text("$name checked in",style: TextStyle(fontWeight: .bold,fontSize: 17),),
-                  Text("$goal • $time ago"),
-                ],
+              Text(
+                "$name checked in",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
-              Icon(Icons.check_circle,color: AppColorStyle.primaryGreen,size: 35,)
+              Text("$goal • $time ago"),
             ],
           ),
-        )
-    );
+          Icon(
+            Icons.check_circle,
+            color: AppColorStyle.primaryGreen,
+            size: 35,
+          )
+        ],
+      ),
+    ));
   }
-
 }

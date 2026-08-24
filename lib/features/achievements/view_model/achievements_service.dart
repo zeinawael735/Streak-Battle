@@ -9,14 +9,31 @@ class AchievementsService {
     if (user == null) return null;
 
     final docSnap = await _firestore.collection('users').doc(user.uid).get();
+
     if (docSnap.exists && docSnap.data() != null) {
       return docSnap.data();
     }
+
     return null;
+  }
+
+  Stream<Map<String, dynamic>?> watchUserData() {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      return Stream.value(null);
+    }
+
+    return _firestore
+        .collection('users')
+        .doc(user.uid)
+        .snapshots()
+        .map((snapshot) => snapshot.data());
   }
 
   Future<void> updateAchievementsInDb(Map<String, dynamic> achievements) async {
     final user = FirebaseAuth.instance.currentUser;
+
     if (user == null) return;
 
     await _firestore.collection('users').doc(user.uid).set({

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 import 'package:streak_battle/features/achievements/view/screens/achievements_screen.dart';
+import 'package:streak_battle/features/achievements/view_model/acheivements_cubit.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../history/view/screens/battles_history_screen.dart';
@@ -16,8 +17,11 @@ class AppSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppSectionCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AppSectionCubit()),
+        BlocProvider(create: (context) => AchievementsCubit()),
+      ],
       child: BlocBuilder<AppSectionCubit, AppSectionState>(
         builder: (context, state) {
           final cubit = context.read<AppSectionCubit>();

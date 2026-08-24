@@ -4,8 +4,15 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/constants/app_color_style.dart';
 import '../../../../core/routes/app_routes.dart';
 import 'home_card.dart';
+
 class ActiveBattlesCard extends StatelessWidget {
-  const ActiveBattlesCard({super.key, required this.icon, required this.title, required this.category, required this.goal, required this.progress});
+  const ActiveBattlesCard(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.category,
+      required this.goal,
+      required this.progress});
   final String icon;
   final String title;
   final String category;
@@ -22,15 +29,14 @@ class ActiveBattlesCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(25),
                 child: Column(
-                  mainAxisAlignment: .spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       spacing: 15,
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: AppColorStyle
-                                .scaffoldBackgroundColor,
+                            color: AppColorStyle.scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: 55,
@@ -76,7 +82,7 @@ class ActiveBattlesCard extends StatelessWidget {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),
                             blurRadius: 10,
-                            offset:  Offset(0, 4),
+                            offset: Offset(0, 4),
                           ),
                         ],
                       ),
@@ -94,12 +100,12 @@ class ActiveBattlesCard extends StatelessWidget {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
                                     child: LinearProgressIndicator(
-                                      value: progress*(1/100),
+                                      value: progress * (1 / 100),
                                       minHeight: 6,
-                                      backgroundColor: AppColorStyle.progressIndicatorBackgroundColor,
-                                      valueColor:  AlwaysStoppedAnimation<Color>(
-                                          AppColorStyle.progressIndicatorColor
-                                      ),
+                                      backgroundColor: AppColorStyle
+                                          .progressIndicatorBackgroundColor,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          AppColorStyle.progressIndicatorColor),
                                     ),
                                   ),
                                 ],

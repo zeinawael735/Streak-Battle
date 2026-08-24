@@ -1,4 +1,4 @@
-import '../../view_model/badge_model.dart';
+import 'badge_model.dart';
 
 abstract class AchievementsState {}
 
@@ -9,3 +9,5 @@ class AchievementsUpdated extends AchievementsState {
 
   AchievementsUpdated(this.badges);
 }
+
+class AchievementsLoading extends AchievementsState {}

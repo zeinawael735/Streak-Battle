@@ -10,13 +10,11 @@ class CheckInRepository {
   }) async {
     final userRef = _firestore.collection('users').doc(userId);
 
-    // 1. تجهيز تاريخ اليوم لصناعة ID مميز يمنع تكرار الـ Check-in لنفس الـ Battle
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final todayString =
         "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
 
-    // الـ ID هيكون عبارة عن (رقم اليوزر + تاريخ اليوم)
     final checkInDocId = "${userId}_$todayString";
 
     final checkInRef = _firestore
@@ -41,8 +39,11 @@ class CheckInRepository {
       DateTime? lastCheckIn;
       if (userData['lastCheckInDate'] != null) {
         lastCheckIn = (userData['lastCheckInDate'] as Timestamp).toDate();
-        lastCheckIn =
-            DateTime(lastCheckIn.year, lastCheckIn.month, lastCheckIn.day);
+        lastCheckIn = DateTime(
+          lastCheckIn.year,
+          lastCheckIn.month,
+          lastCheckIn.day,
+        );
       }
 
       // 2. حساب الـ Streak (بناءً على currentStreak)
