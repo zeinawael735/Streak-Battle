@@ -362,7 +362,7 @@ class _ProfileView extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${profile.achievementsUnlocked} of 7 unlocked',
+                                  '${profile.achievementsUnlocked} of 6 unlocked',
                                   style: TextStyle(
                                     color: secondaryTextColor,
                                     fontSize: r.sp(12),
