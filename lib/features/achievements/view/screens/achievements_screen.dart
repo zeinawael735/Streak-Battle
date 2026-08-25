@@ -1,55 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../view_model/badge_model.dart';
-import '../widgets/badge_card_item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../view_model/acheivements_cubit.dart';
+import '../../view_model/achievement_state.dart';
+import '../widgets/bade_card_item.dart';
 import '../widgets/header_card.dart';
-import '../widgets/next_milestone_card.dart';
 
 class AchievementsScreen extends StatelessWidget {
-  AchievementsScreen({Key? key}) : super(key: key);
-
-  final List<BadgeModel> badges = [
-    BadgeModel(
-      title: 'Starter',
-      isUnlocked: true,
-      progress: 1.0,
-      icon: Icons.local_fire_department,
-    ),
-    BadgeModel(
-      title: 'Podium Pro',
-      isUnlocked: true,
-      progress: 1.0,
-      icon: Icons.emoji_events,
-    ),
-    BadgeModel(
-      title: 'Unbreakable',
-      isUnlocked: false,
-      progress: 0.7,
-      icon: Icons.security,
-    ),
-    BadgeModel(
-      title: 'Ten Wins',
-      isUnlocked: true,
-      progress: 1.0,
-      icon: Icons.military_tech,
-    ),
-    BadgeModel(
-      title: 'Crew Chief',
-      isUnlocked: false,
-      progress: 0.4,
-      icon: Icons.group,
-    ),
-    BadgeModel(
-      title: 'Century',
-      isUnlocked: false,
-      progress: 0.2,
-      icon: Icons.star,
-    ),
-  ];
+  const AchievementsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // الباك جراوند وحدها هي اللي بتتغير حسب الثيم العام
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -57,7 +19,7 @@ class AchievementsScreen extends StatelessWidget {
         title: const Text(
           'Achievements',
           style: TextStyle(
-            color: Colors.white, // ثابت دايماً
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -69,40 +31,46 @@ class AchievementsScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const AchievementsHeaderCard(),
-            const SizedBox(height: 24),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                childAspectRatio: 0.82,
-              ),
-              itemCount: badges.length,
-              itemBuilder: (context, index) {
-                return BadgeCardItem(badge: badges[index]);
-              },
+      body: BlocBuilder<AchievementsCubit, AchievementsState>(
+        builder: (context, state) {
+          final cubit = context.read<AchievementsCubit>();
+
+          if (state is AchievementsLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final currentBadges =
+              state is AchievementsUpdated ? state.badges : cubit.badges;
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AchievementsHeaderCard(
+                  unlockedCount: cubit.unlockedCount,
+                  totalCount: cubit.totalCount,
+                  progress: cubit.overallProgress,
+                ),
+                const SizedBox(height: 24),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    childAspectRatio: 1.3,
+                  ),
+                  itemCount: currentBadges.length,
+                  itemBuilder: (context, index) {
+                    return BadgeCardItem(badge: currentBadges[index]);
+                  },
+                ),
+              ],
             ),
-            const SizedBox(height: 28),
-            const Text(
-              'Next milestone',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
-            const NextMilestoneCard(),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

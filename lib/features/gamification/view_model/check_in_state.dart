@@ -10,11 +10,13 @@ class CheckInSuccess extends CheckInState {
   final int earnedPoints;
   final int streak;
   final int level;
+  final List<String> newlyUnlockedBadges;
 
   CheckInSuccess({
     required this.earnedPoints,
     required this.streak,
     required this.level,
+    this.newlyUnlockedBadges = const [],
   });
 }
 
