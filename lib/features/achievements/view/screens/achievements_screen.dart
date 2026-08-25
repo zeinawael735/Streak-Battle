@@ -13,7 +13,6 @@ class AchievementsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -32,7 +31,6 @@ class AchievementsScreen extends StatelessWidget {
           ),
         ],
       ),
-
       body: BlocBuilder<AchievementsCubit, AchievementsState>(
         builder: (context, state) {
           final cubit = context.read<AchievementsCubit>();
@@ -41,38 +39,30 @@ class AchievementsScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final currentBadges = state is AchievementsUpdated
-              ? state.badges
-              : cubit.badges;
+          final currentBadges =
+              state is AchievementsUpdated ? state.badges : cubit.badges;
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
                 AchievementsHeaderCard(
                   unlockedCount: cubit.unlockedCount,
                   totalCount: cubit.totalCount,
                   progress: cubit.overallProgress,
                 ),
-
                 const SizedBox(height: 24),
-
                 GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
                     childAspectRatio: 1.3,
                   ),
-
                   itemCount: currentBadges.length,
-
                   itemBuilder: (context, index) {
                     return BadgeCardItem(badge: currentBadges[index]);
                   },
