@@ -27,7 +27,9 @@ class _ProfileView extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
     final textColor = theme.colorScheme.onSurface;
     final secondaryTextColor = textColor.withOpacity(0.5);
-    final cardColor = isDark ? const Color(0xFF1C1C1C) : const Color(0xFFF5F5F5);
+    final cardColor = isDark
+        ? const Color(0xFF1C1C1C)
+        : const Color(0xFFF5F5F5);
     final borderColor = textColor.withOpacity(0.08);
     final r = ResponsiveHelper(context);
 
@@ -38,7 +40,9 @@ class _ProfileView extends StatelessWidget {
           builder: (context, state) {
             if (state is ProfileLoading) {
               return Center(
-                child: CircularProgressIndicator(color: theme.colorScheme.secondary),
+                child: CircularProgressIndicator(
+                  color: theme.colorScheme.secondary,
+                ),
               );
             }
 
@@ -75,9 +79,13 @@ class _ProfileView extends StatelessWidget {
                       ),
                       const Spacer(),
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, AppRoutes.settings),
-                        child: Icon(Icons.settings_outlined,
-                            color: secondaryTextColor, size: r.w(22)),
+                        onTap: () =>
+                            Navigator.pushNamed(context, AppRoutes.settings),
+                        child: Icon(
+                          Icons.settings_outlined,
+                          color: secondaryTextColor,
+                          size: r.w(22),
+                        ),
                       ),
                     ],
                   ),
@@ -109,8 +117,11 @@ class _ProfileView extends StatelessWidget {
                               color: theme.colorScheme.primary,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.edit,
-                                size: r.w(12), color: Colors.white),
+                            child: Icon(
+                              Icons.edit,
+                              size: r.w(12),
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
@@ -136,7 +147,9 @@ class _ProfileView extends StatelessWidget {
                   Center(
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: r.w(12), vertical: r.h(4)),
+                        horizontal: r.w(12),
+                        vertical: r.h(4),
+                      ),
                       decoration: BoxDecoration(
                         color: theme.colorScheme.tertiary.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(r.w(20)),
@@ -171,7 +184,8 @@ class _ProfileView extends StatelessWidget {
                       SizedBox(width: r.w(10)),
                       Expanded(
                         child: _statCard(
-                          value: '${profile.wins}', // TODO: confirm final source for wins with team
+                          value:
+                              '${profile.wins}', // TODO: confirm final source for wins with team
                           label: 'WINS',
                           color: theme.colorScheme.tertiary,
                           cardColor: cardColor,
@@ -208,7 +222,10 @@ class _ProfileView extends StatelessWidget {
                   ),
                   Text(
                     'Last 7 days',
-                    style: TextStyle(color: secondaryTextColor, fontSize: r.sp(12)),
+                    style: TextStyle(
+                      color: secondaryTextColor,
+                      fontSize: r.sp(12),
+                    ),
                   ),
 
                   SizedBox(height: r.h(12)),
@@ -224,7 +241,7 @@ class _ProfileView extends StatelessWidget {
                         maxY: 1.2, // check-in days are represented as 0 or 1
                         barGroups: List.generate(
                           profile.activityLastWeek.length,
-                              (index) => BarChartGroupData(
+                          (index) => BarChartGroupData(
                             x: index,
                             barRods: [
                               BarChartRodData(
@@ -263,17 +280,43 @@ class _ProfileView extends StatelessWidget {
                     runSpacing: r.h(8),
                     children: profile.favoriteHabits.isEmpty
                         ? [
-                      _habitChip('Fitness', Icons.fitness_center, theme,
-                          cardColor, borderColor, r),
-                      _habitChip('Learning', Icons.menu_book, theme,
-                          cardColor, borderColor, r),
-                      _habitChip('Wellness', Icons.spa, theme,
-                          cardColor, borderColor, r),
-                    ]
+                            _habitChip(
+                              'Fitness',
+                              Icons.fitness_center,
+                              theme,
+                              cardColor,
+                              borderColor,
+                              r,
+                            ),
+                            _habitChip(
+                              'Learning',
+                              Icons.menu_book,
+                              theme,
+                              cardColor,
+                              borderColor,
+                              r,
+                            ),
+                            _habitChip(
+                              'Wellness',
+                              Icons.spa,
+                              theme,
+                              cardColor,
+                              borderColor,
+                              r,
+                            ),
+                          ]
                         : profile.favoriteHabits
-                        .map((h) => _habitChip(
-                        h, Icons.check, theme, cardColor, borderColor, r))
-                        .toList(),
+                              .map(
+                                (h) => _habitChip(
+                                  h,
+                                  Icons.check,
+                                  theme,
+                                  cardColor,
+                                  borderColor,
+                                  r,
+                                ),
+                              )
+                              .toList(),
                   ),
 
                   SizedBox(height: r.h(24)),
@@ -294,12 +337,16 @@ class _ProfileView extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.all(r.w(8)),
                             decoration: BoxDecoration(
-                              color: theme.colorScheme.secondary
-                                  .withOpacity(0.15),
+                              color: theme.colorScheme.secondary.withOpacity(
+                                0.15,
+                              ),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.emoji_events_outlined,
-                                color: theme.colorScheme.secondary, size: r.w(20)),
+                            child: Icon(
+                              Icons.emoji_events_outlined,
+                              color: theme.colorScheme.secondary,
+                              size: r.w(20),
+                            ),
                           ),
                           SizedBox(width: r.w(12)),
                           Expanded(
@@ -315,7 +362,7 @@ class _ProfileView extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${profile.achievementsUnlocked} of ${profile.achievementsTotal} unlocked',
+                                  '${profile.achievementsUnlocked} of 7 unlocked',
                                   style: TextStyle(
                                     color: secondaryTextColor,
                                     fontSize: r.sp(12),
@@ -324,7 +371,11 @@ class _ProfileView extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Icon(Icons.chevron_right, color: secondaryTextColor, size: r.w(24)),
+                          Icon(
+                            Icons.chevron_right,
+                            color: secondaryTextColor,
+                            size: r.w(24),
+                          ),
                         ],
                       ),
                     ),
@@ -345,7 +396,9 @@ class _ProfileView extends StatelessWidget {
     if (parts.length >= 2) {
       return (parts.first[0] + parts.last[0]).toUpperCase();
     }
-    return parts.first.substring(0, parts.first.length >= 2 ? 2 : 1).toUpperCase();
+    return parts.first
+        .substring(0, parts.first.length >= 2 ? 2 : 1)
+        .toUpperCase();
   }
 
   Widget _statCard({
@@ -388,8 +441,14 @@ class _ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _habitChip(String label, IconData icon, ThemeData theme,
-      Color cardColor, Color borderColor, ResponsiveHelper r) {
+  Widget _habitChip(
+    String label,
+    IconData icon,
+    ThemeData theme,
+    Color cardColor,
+    Color borderColor,
+    ResponsiveHelper r,
+  ) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: r.w(12), vertical: r.h(8)),
       decoration: BoxDecoration(
@@ -402,10 +461,13 @@ class _ProfileView extends StatelessWidget {
         children: [
           Icon(icon, size: r.w(14), color: theme.colorScheme.secondary),
           SizedBox(width: r.w(6)),
-          Text(label,
-              style: TextStyle(
-                  color: theme.colorScheme.onSurface.withOpacity(0.7),
-                  fontSize: r.sp(12))),
+          Text(
+            label,
+            style: TextStyle(
+              color: theme.colorScheme.onSurface.withOpacity(0.7),
+              fontSize: r.sp(12),
+            ),
+          ),
         ],
       ),
     );
