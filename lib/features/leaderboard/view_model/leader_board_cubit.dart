@@ -146,3 +146,57 @@ class LeaderboardCubit extends Cubit<LeaderBoardState> {
     return super.close();
   }
 }
+
+/// Fetches the uid of the top-ranked participant (winner) of a given battle.
+/// Uses a one-time Future (not a Stream) so it can be awaited directly,
+/// e.g. from a button's onPressed. Ranking logic is identical to
+/// LeaderboardCubit.fetchLeaderboard: xp desc -> currentStreak desc -> lastCheckInDate asc.
+Future<String?> getBattleWinnerId(String battleId) async {
+  final firestore = FirebaseFirestore.instance;
+
+  final battleDoc = await firestore.collection('battles').doc(battleId).get();
+  if (!battleDoc.exists) return null;
+
+  final battleData = battleDoc.data();
+  if (battleData == null) return null;
+
+  final List<String> memberIds = List<String>.from(battleData['members'] ?? []);
+  final String creatorId = battleData['creatorId'] ?? '';
+
+  final Set<String> queryUserIds = Set<String>.from(memberIds);
+  if (creatorId.isNotEmpty) queryUserIds.add(creatorId);
+
+  if (queryUserIds.isEmpty) return null;
+
+  final usersSnapshot = await firestore
+      .collection('users')
+      .where(FieldPath.documentId, whereIn: queryUserIds.toList())
+      .get();
+
+  if (usersSnapshot.docs.isEmpty) return null;
+
+  final users = usersSnapshot.docs
+      .map((doc) => UserModel.fromFirestore(doc.data(), doc.id, battleId: battleId))
+      .toList();
+
+  users.sort((a, b) {
+    if (b.xp != a.xp) {
+      return b.xp.compareTo(a.xp);
+    }
+
+    if (b.currentStreak != a.currentStreak) {
+      return b.currentStreak.compareTo(a.currentStreak);
+    }
+
+    if (a.lastCheckInDate != null && b.lastCheckInDate != null) {
+      return a.lastCheckInDate!.compareTo(b.lastCheckInDate!);
+    }
+
+    if (a.lastCheckInDate != null && b.lastCheckInDate == null) return -1;
+    if (a.lastCheckInDate == null && b.lastCheckInDate != null) return 1;
+
+    return 0;
+  });
+
+  return users.isNotEmpty ? users.first.uid : null;
+}
