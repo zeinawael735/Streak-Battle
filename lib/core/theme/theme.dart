@@ -79,6 +79,8 @@ class AppTheme {
         scrim: Color(0xFFEFE2F5),//next up icon background an active battles
         onTertiary: Color(0xFFEFE2F5),//active battles back ground icon an back of progress
         tertiaryContainer: Color(0xFFEFE2F5),//active battles back ground icon
+        ///bottom navigator
+
         /// join battle
         onTertiaryContainer:  Color(0xFFEFE4F5),
         /// battle details screen
@@ -86,7 +88,7 @@ class AppTheme {
         /// check in circle
         tertiaryFixedDim:  Color(0xFFCE99DC),
         ///  settings card
-        onTertiaryFixed: Color(0xFFECD9EC),//0xFFE6C8E6
+        onTertiaryFixed: Color(0xFFEFE2F5),//0xFFE6C8E6
         ///
         primary: AppColors.purple,
         surfaceBright: Colors.black12,
