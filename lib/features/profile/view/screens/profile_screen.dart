@@ -34,7 +34,6 @@ class _ProfileView extends StatelessWidget {
     final r = ResponsiveHelper(context);
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
@@ -66,14 +65,13 @@ class _ProfileView extends StatelessWidget {
 
                   // ================= HEADER =================
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Spacer(),
                       Text(
                         'Profile',
                         style: TextStyle(
                           color: textColor,
-                          fontSize: r.sp(18),
+                          fontSize: r.sp(20),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -83,7 +81,7 @@ class _ProfileView extends StatelessWidget {
                             Navigator.pushNamed(context, AppRoutes.settings),
                         child: Icon(
                           Icons.settings_outlined,
-                          color: secondaryTextColor,
+                          color: Theme.of(context).textTheme.headlineSmall?.color,
                           size: r.w(22),
                         ),
                       ),
