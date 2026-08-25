@@ -20,7 +20,7 @@ class _AppearanceCardState extends State<AppearanceCard> {
         border: Border.all(color: Colors.grey.shade900),
       ),
       child: Column(
-        crossAxisAlignment: .start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -28,7 +28,10 @@ class _AppearanceCardState extends State<AppearanceCard> {
               const SizedBox(width: 8),
               const Text(
                 'Appearance',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
               ),
             ],
           ),
@@ -40,7 +43,6 @@ class _AppearanceCardState extends State<AppearanceCard> {
           const SizedBox(height: 16),
           Row(
             children: [
-
               _buildOption('Light'),
               const SizedBox(width: 8),
               _buildOption('Dark'),
@@ -60,7 +62,8 @@ class _AppearanceCardState extends State<AppearanceCard> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: isSelected ? Colors.purple.shade800 : const Color(0xFF222027),
+            color:
+                isSelected ? Colors.purple.shade800 : const Color(0xFF222027),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
