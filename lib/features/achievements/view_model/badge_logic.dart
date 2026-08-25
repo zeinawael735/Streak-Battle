@@ -1,4 +1,8 @@
 class BadgesLogic {
+  // ================================
+  // STREAK ACHIEVEMENTS
+  // ================================
+
   static Map<String, dynamic> checkBadgeConditions({
     required int currentStreak,
     required bool hasBrokenStreakBefore,
@@ -6,7 +10,9 @@ class BadgesLogic {
   }) {
     List<String> newlyUnlocked = [];
 
-    // First Flame
+    // -------------------------------
+    // FIRST FLAME
+    // -------------------------------
     final firstFlameUnlocked = achievements['first_flame_unlocked'] == true;
 
     if (currentStreak >= 1 && !firstFlameUnlocked) {
@@ -14,7 +20,9 @@ class BadgesLogic {
       newlyUnlocked.add('First Flame');
     }
 
-    // Week Warrior
+    // -------------------------------
+    // WEEK WARRIOR
+    // -------------------------------
     final weekWarriorUnlocked = achievements['week_warrior_unlocked'] == true;
 
     if (currentStreak >= 7 && !weekWarriorUnlocked) {
@@ -22,7 +30,9 @@ class BadgesLogic {
       newlyUnlocked.add('Week Warrior');
     }
 
-    // Unbreakable
+    // -------------------------------
+    // UNBREAKABLE
+    // -------------------------------
     final unbreakableUnlocked = achievements['unbreakable_unlocked'] == true;
 
     if (currentStreak >= 30 && !unbreakableUnlocked) {
@@ -30,7 +40,9 @@ class BadgesLogic {
       newlyUnlocked.add('Unbreakable');
     }
 
-    // Comeback King
+    // -------------------------------
+    // COMEBACK KING
+    // -------------------------------
     final comebackUnlocked = achievements['comeback_king_unlocked'] == true;
 
     if (hasBrokenStreakBefore && currentStreak >= 3 && !comebackUnlocked) {
@@ -41,28 +53,24 @@ class BadgesLogic {
     return {'achievements': achievements, 'newlyUnlocked': newlyUnlocked};
   }
 
+  // ================================
+  // BATTLE ACHIEVEMENTS
+  // ================================
   static Map<String, dynamic> checkBattleAchievements({
-    required bool isWin,
-    required int userRank,
     required int totalWins,
     required Map<String, dynamic> achievements,
   }) {
     List<String> newlyUnlocked = [];
 
+    // Champion - 1 Win
     final championUnlocked = achievements['champion_unlocked'] == true;
 
-    if (isWin && !championUnlocked) {
+    if (totalWins >= 1 && !championUnlocked) {
       achievements['champion_unlocked'] = true;
       newlyUnlocked.add('Champion');
     }
 
-    final podiumUnlocked = achievements['podium_pro_unlocked'] == true;
-
-    if (userRank <= 3 && userRank > 0 && !podiumUnlocked) {
-      achievements['podium_pro_unlocked'] = true;
-      newlyUnlocked.add('Podium Pro');
-    }
-
+    // Battle Master - 5 Wins
     final battleMasterUnlocked = achievements['battle_master_unlocked'] == true;
 
     if (totalWins >= 5 && !battleMasterUnlocked) {

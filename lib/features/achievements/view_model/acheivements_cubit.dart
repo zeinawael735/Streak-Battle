@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
+import 'badge_logic.dart';
 import 'badge_model.dart';
 import 'achievement_state.dart';
 import 'achievements_service.dart';
@@ -42,12 +43,6 @@ class AchievementsCubit extends Cubit<AchievementsState> {
       icon: Icons.workspace_premium,
     ),
     BadgeModel(
-      title: 'Podium Pro',
-      isUnlocked: false,
-      progress: 0.0,
-      icon: Icons.emoji_events,
-    ),
-    BadgeModel(
       title: 'Battle Master',
       isUnlocked: false,
       progress: 0.0,
@@ -67,65 +62,141 @@ class AchievementsCubit extends Cubit<AchievementsState> {
     _userSubscription?.cancel();
 
     _userSubscription = _service.watchUserData().listen(
-      (data) {
+      (data) async {
         if (data == null) {
-          emit(AchievementsUpdated(badges));
+          emit(AchievementsUpdated(List.from(badges)));
           return;
         }
 
-        final Map<String, dynamic> achievements = data['achievements'] is Map
-            ? Map<String, dynamic>.from(data['achievements'])
-            : {};
+        // --------------------------------
+        // Get achievements from Firestore
+        // --------------------------------
 
-        final int currentStreak = data['currentStreak'] ?? 0;
+        Map<String, dynamic> achievements = {};
+
+        if (data['achievements'] is Map) {
+          achievements = Map<String, dynamic>.from(data['achievements']);
+        }
+
+        // --------------------------------
+        // Get current streak
+        // --------------------------------
+
+        final int currentStreak = (data['currentStreak'] as num?)?.toInt() ?? 0;
+
+        // --------------------------------
+        // Get broken streak status
+        // --------------------------------
+
+        final bool hasBrokenStreakBefore =
+            data['hasBrokenStreakbefore'] == true;
+
+        // --------------------------------
+        // Get total wins
+        // --------------------------------
+
+        final int totalWins = (data['wins'] as num?)?.toInt() ?? 0;
+
+        // --------------------------------
+        // Check STREAK achievements
+        // --------------------------------
+
+        final badgeResult = BadgesLogic.checkBadgeConditions(
+          currentStreak: currentStreak,
+          hasBrokenStreakBefore: hasBrokenStreakBefore,
+          achievements: achievements,
+        );
+
+        final Map<String, dynamic> updatedAchievements =
+            Map<String, dynamic>.from(badgeResult['achievements'] as Map);
+
+        final List<String> newlyUnlocked = List<String>.from(
+          badgeResult['newlyUnlocked'] ?? [],
+        );
+
+        // --------------------------------
+        // Check BATTLE achievements
+        // --------------------------------
+
+        final battleResult = BadgesLogic.checkBattleAchievements(
+          totalWins: totalWins,
+          achievements: updatedAchievements,
+        );
+
+        final Map<String, dynamic> finalAchievements =
+            Map<String, dynamic>.from(battleResult['achievements'] as Map);
+
+        newlyUnlocked.addAll(
+          List<String>.from(battleResult['newlyUnlocked'] ?? []),
+        );
+
+        // --------------------------------
+        // Save achievements if changed
+        // --------------------------------
+
+        if (newlyUnlocked.isNotEmpty) {
+          await _service.updateAchievementsInDb(finalAchievements);
+        }
+
+        // --------------------------------
+        // Build UI
+        // --------------------------------
 
         badges = _buildBadges(
-          achievements: achievements,
+          achievements: finalAchievements,
           currentStreak: currentStreak,
         );
 
         emit(AchievementsUpdated(List.from(badges)));
       },
       onError: (error) {
-        emit(AchievementsUpdated(badges));
+        emit(AchievementsUpdated(List.from(badges)));
       },
     );
   }
+
+  // ==========================================
+  // BUILD BADGES
+  // ==========================================
 
   List<BadgeModel> _buildBadges({
     required Map<String, dynamic> achievements,
     required int currentStreak,
   }) {
     final List<BadgeModel> updatedBadges = [
+      // --------------------------------
+      // FIRST FLAME
+      // --------------------------------
       BadgeModel(
         title: 'First Flame',
         isUnlocked: achievements['first_flame_unlocked'] == true,
-        progress: achievements['first_flame_unlocked'] == true
-            ? 1.0
-            : currentStreak >= 1
-            ? 1.0
-            : 0.0,
+        progress: currentStreak >= 1 ? 1.0 : 0.0,
         icon: Icons.local_fire_department,
       ),
 
+      // --------------------------------
+      // WEEK WARRIOR
+      // --------------------------------
       BadgeModel(
         title: 'Week Warrior',
         isUnlocked: achievements['week_warrior_unlocked'] == true,
-        progress: achievements['week_warrior_unlocked'] == true
-            ? 1.0
-            : (currentStreak / 7).clamp(0.0, 1.0),
+        progress: (currentStreak / 7).clamp(0.0, 1.0),
         icon: Icons.bolt,
       ),
 
+      // --------------------------------
+      // UNBREAKABLE
+      // --------------------------------
       BadgeModel(
         title: 'Unbreakable',
         isUnlocked: achievements['unbreakable_unlocked'] == true,
-        progress: achievements['unbreakable_unlocked'] == true
-            ? 1.0
-            : (currentStreak / 30).clamp(0.0, 1.0),
+        progress: (currentStreak / 30).clamp(0.0, 1.0),
         icon: Icons.security,
       ),
 
+      // --------------------------------
+      // CHAMPION
+      // --------------------------------
       BadgeModel(
         title: 'Champion',
         isUnlocked: achievements['champion_unlocked'] == true,
@@ -133,13 +204,9 @@ class AchievementsCubit extends Cubit<AchievementsState> {
         icon: Icons.workspace_premium,
       ),
 
-      BadgeModel(
-        title: 'Podium Pro',
-        isUnlocked: achievements['podium_pro_unlocked'] == true,
-        progress: achievements['podium_pro_unlocked'] == true ? 1.0 : 0.0,
-        icon: Icons.emoji_events,
-      ),
-
+      // --------------------------------
+      // BATTLE MASTER
+      // --------------------------------
       BadgeModel(
         title: 'Battle Master',
         isUnlocked: achievements['battle_master_unlocked'] == true,
@@ -147,6 +214,9 @@ class AchievementsCubit extends Cubit<AchievementsState> {
         icon: Icons.military_tech,
       ),
 
+      // --------------------------------
+      // COMEBACK KING
+      // --------------------------------
       BadgeModel(
         title: 'Comeback King',
         isUnlocked: achievements['comeback_king_unlocked'] == true,
@@ -155,6 +225,10 @@ class AchievementsCubit extends Cubit<AchievementsState> {
       ),
     ];
 
+    // --------------------------------
+    // Unlocked badges first
+    // --------------------------------
+
     updatedBadges.sort(
       (a, b) => (b.isUnlocked ? 1 : 0).compareTo(a.isUnlocked ? 1 : 0),
     );
@@ -162,12 +236,20 @@ class AchievementsCubit extends Cubit<AchievementsState> {
     return updatedBadges;
   }
 
+  // ==========================================
+  // GETTERS
+  // ==========================================
+
   int get unlockedCount => badges.where((badge) => badge.isUnlocked).length;
 
   int get totalCount => badges.length;
 
   double get overallProgress =>
       totalCount == 0 ? 0.0 : unlockedCount / totalCount;
+
+  // ==========================================
+  // CLOSE
+  // ==========================================
 
   @override
   Future<void> close() {
