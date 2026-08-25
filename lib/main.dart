@@ -17,7 +17,6 @@ import 'features/settings/view/screens/setting_screen.dart';
 import 'features/battle/view/screens/join_battle_screen.dart';
 import 'features/notification/view_model/push_notification_service.dart';
 import 'firebase_options.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -49,8 +48,8 @@ class BattleStreakApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
-      home: SettingsScreen(),
-     // initialRoute: initialRoute,
+      //home: SettingsScreen(),
+      initialRoute: initialRoute,
       routes: {
         AppRoutes.appSection: (context) => const AppSection(),
         AppRoutes.createBattle: (context) => const CreateBattleScreen(),
@@ -62,6 +61,7 @@ class BattleStreakApp extends StatelessWidget {
         //AppRoutes.ranking: (context) => const RankingScreen(),
         AppRoutes.battleResult: (context) => const BattleResultScreen(),
         AppRoutes.forgotPassword: (context) => const ForgetPasswordScreen(),
+        AppRoutes.settings:(context)=> const SettingsScreen(),
       },
 
   onGenerateRoute: (settings) {
