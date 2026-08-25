@@ -73,12 +73,13 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                             CircleAvatar(
-                              backgroundColor: AppColors.primary,
+                              backgroundColor: Theme.of(context).primaryColor,
                               radius: 23,
                               child: Text(
                                 state.initials,
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),

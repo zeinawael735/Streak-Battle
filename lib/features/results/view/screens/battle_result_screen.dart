@@ -333,7 +333,7 @@ class _BattleResultViewState extends State<_BattleResultView>
                                       backgroundColor: AppColors
                                           .progressIndicatorBackgroundColor,
                                       valueColor: const AlwaysStoppedAnimation(
-                                          AppColors.progressIndicatorColor),
+                                          AppColors.primaryGreen),
                                     ),
                                   ),
                                   SizedBox(height: r.h(8)),

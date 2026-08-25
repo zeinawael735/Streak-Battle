@@ -71,8 +71,28 @@ class HistoryCubit extends Cubit<HistoryState> {
               'progress': progressPercent,
               'rank': 1,
               'category': data['category'] ?? '',
+              'endDate': endDate,
             });
           }
+
+          // ترتيب الـ Battles
+          processedBattles.sort((a, b) {
+            DateTime now = DateTime.now();
+            DateTime endA = a['endDate'];
+            DateTime endB = b['endDate'];
+
+            bool isAFinished = endA.isBefore(now);
+            bool isBFinished = endB.isBefore(now);
+
+            if (isAFinished && !isBFinished) return 1;
+            if (!isAFinished && isBFinished) return -1;
+
+            if (!isAFinished && !isBFinished) {
+              return endA.compareTo(endB);
+            } else {
+              return endB.compareTo(endA);
+            }
+          });
 
           if (!isClosed) {
             emit(HistorySuccess(processedBattles));

@@ -6,7 +6,6 @@ import '../../../../core/theme/theme.dart';
 import 'custom_button.dart';
 import 'custom_text_form_field.dart';
 
-
 class Step1InfoWidget extends StatefulWidget {
   const Step1InfoWidget({
     super.key,
@@ -47,10 +46,8 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Text(
-              "Battle Basics",
-              style: Theme.of(context).textTheme.headlineMedium
-            ),
+            Text("Battle Basics",
+                style: Theme.of(context).textTheme.headlineMedium),
             const SizedBox(height: 6),
             Text(
               "Give your challenge a clear, motivating identity.",
@@ -61,36 +58,29 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
               ),
             ),
             const SizedBox(height: 6),
-             Text(
-              "Battle name",
-              style: Theme.of(context).textTheme.headlineSmall
-            ),
+            Text("Battle name",
+                style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 10),
             CustomTextFormField(
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: SvgPicture.asset(
-                  AppAssets.swordIconSvg,
-                  width: 20,
-                  height: 20,
-                  color: Theme.of(context).textTheme.bodySmall?.color
-                ),
+                child: SvgPicture.asset(AppAssets.swordIconSvg,
+                    width: 20,
+                    height: 20,
+                    color: Theme.of(context).textTheme.bodySmall?.color),
               ),
               borderRadius: BorderRadius.circular(8),
               controller: widget.titleController,
-              validator: (value){
+              validator: (value) {
                 if (value == null || value.trim().isEmpty) {
                   return 'Please enter battle title';
                 }
                 return null;
-
               },
             ),
             const SizedBox(height: 10),
-             Text(
-              "Categories",
-              style: Theme.of(context).textTheme.headlineSmall
-            ),
+            Text("Categories",
+                style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 10),
             Wrap(
               spacing: 8,
@@ -110,9 +100,14 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
                   label: Text(
                     title,
                     style: TextStyle(
-                      color: isSelected ? Colors.white : Theme.of(context).textTheme.headlineSmall?.color,//Colors.grey.shade300
+                      color: isSelected
+                          ? Colors.white
+                          : Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.color, //Colors.grey.shade300
                       fontWeight:
-                      isSelected ? FontWeight.bold : FontWeight.normal,
+                          isSelected ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),
                   selected: isSelected,
@@ -133,33 +128,37 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
             ),
             const SizedBox(height: 20),
             if (widget.selectedCategory == 'Custom') ...[
-               Text(
-                "Specify your category",
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 14)
-              ),
+              Text("Specify your category",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall
+                      ?.copyWith(fontSize: 14)),
               const SizedBox(height: 8),
               CustomTextFormField(
                 controller: widget.customCategoryController,
                 hintText: "Enter custom category",
-                validator: (value){
-    if (value == null || value.trim().isEmpty) {
-    return 'Please specify your category';
-    }
-    return null;
-    },
-
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please specify your category';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 10),
             ],
             const SizedBox(height: 20),
-             Text('Description (optional)',
-                style: Theme.of(context).textTheme.headlineSmall,
-             ),
+            Text(
+              'Description (optional)',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
             const SizedBox(height: 8),
             TextField(
               controller: widget.descriptionController,
               maxLines: 3,
-              style:  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(fontWeight: FontWeight.normal),
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.grey.shade600),
                 filled: true,
@@ -170,7 +169,7 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
                     color: Colors.grey.shade800,
                   ),
                 ),
-                fillColor: Theme.of(context).cardColor ,//dark Color(0xFF160E21)
+                fillColor: Theme.of(context).cardColor, //dark Color(0xFF160E21)
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

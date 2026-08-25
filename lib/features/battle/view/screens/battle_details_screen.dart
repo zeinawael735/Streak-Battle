@@ -234,7 +234,7 @@ class BattleDetailsScreen extends StatelessWidget {
                             : AppColors.textPrimary.withOpacity(0.3),
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
+                          horizontal: 16,
                           vertical: 9,
                         ),
                         shape: RoundedRectangleBorder(
@@ -249,7 +249,7 @@ class BattleDetailsScreen extends StatelessWidget {
                         minimumSize: Size.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      child: Text("Battle Results"),
+                      child: Text("Battle Results",style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 12),),
                     ),
                     ElevatedButton(
                       onPressed: () {

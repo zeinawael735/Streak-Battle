@@ -16,7 +16,7 @@ class CustomButton extends StatelessWidget {
       height: 55,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF6C22E1),
+          backgroundColor:theme.primaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -24,11 +24,7 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: TextStyle(
-            color: isDark ? Colors.white70 : Colors.black54,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)
         ),
       ),
     );

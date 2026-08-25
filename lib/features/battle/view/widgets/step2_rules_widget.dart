@@ -187,6 +187,8 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
           const SizedBox(height: 20),
           SwitchListTile(
             tileColor: Theme.of(context).cardColor,
+            activeThumbColor: Colors.white,
+            activeTrackColor: Theme.of(context).primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               side: BorderSide(color: Colors.grey,width: 0.2),
@@ -210,7 +212,7 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
               ),
             ),
             value: widget.isReminderOn,
-            activeColor: const Color(0xFF6B11A1),
+            activeColor: Theme.of(context).primaryColor,
             onChanged: (val) {
               widget.onReminderStatusChanged(val);
               if (val) _selectReminderTime(context);

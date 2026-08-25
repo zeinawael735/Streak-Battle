@@ -128,6 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocProvider(
       create: (context) => LoginCubit()..getUserData(),
       child: Builder(
@@ -230,37 +231,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       _buildSectionTitle('PREFERENCES', context),
                       const SizedBox(height: 8),
 
-                      Material(
-                        color: Theme.of(context).colorScheme.onTertiaryFixed,
-                        borderRadius: BorderRadius.circular(12),
-                        clipBehavior: Clip.antiAlias,
-                        child: SwitchListTile(
-                          value: _isNotificationEnabled,
-                          onChanged: _isLoadingNotification
-                              ? null
-                              : _toggleNotification,
-                          activeColor: Theme.of(context).primaryColor,
-                          activeThumbColor: Colors.white,
-                          activeTrackColor: Theme.of(context).primaryColor,
-                          inactiveTrackColor: Colors.grey,
-
-                          title: Text(
-                            'Notifications',
-                            style: Theme.of(context).textTheme.headlineSmall
-                                ?.copyWith(fontWeight: FontWeight.w500),
-                          ),
-                          subtitle: Text(
-                            _isNotificationEnabled
-                                ? 'Daily reminders enabled'
-                                : 'Daily reminders disabled',
-                            style: TextStyle(
-                              color: Colors.grey[700],
-                              fontSize: 12,
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
                             ),
-                          ),
-                          secondary: Icon(
-                            Icons.notifications_none_rounded,
-                            color: Theme.of(context).textTheme.bodySmall?.color,
+                          ],
+                        ),
+                        child: Material(
+                          color: Theme.of(context).colorScheme.onTertiaryFixed,
+                          borderRadius: BorderRadius.circular(12),
+                          clipBehavior: Clip.antiAlias,
+                          child: SwitchListTile(
+                            value: _isNotificationEnabled,
+                            onChanged: _isLoadingNotification
+                                ? null
+                                : _toggleNotification,
+                            activeColor: Theme.of(context).primaryColor,
+                            activeThumbColor: Colors.white,
+                            activeTrackColor: Theme.of(context).primaryColor,
+                            inactiveTrackColor: Colors.grey,
+
+                            title: Text(
+                              'Notifications',
+                              style: Theme.of(context).textTheme.headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.w500),
+                            ),
+                            subtitle: Text(
+                              _isNotificationEnabled
+                                  ? 'Daily reminders enabled'
+                                  : 'Daily reminders disabled',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 12,
+                              ),
+                            ),
+                            secondary: Icon(
+                              Icons.notifications_none_rounded,
+                              color: Theme.of(context).textTheme.bodySmall?.color,
+                            ),
                           ),
                         ),
                       ),

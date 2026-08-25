@@ -27,6 +27,7 @@ class HistoryBattleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark =Theme.of(context).brightness==Brightness.dark;
     return GestureDetector(
       onTap: () async {
         await Navigator.pushNamed(
@@ -54,7 +55,7 @@ class HistoryBattleCard extends StatelessWidget {
                     backgroundColor: Color(0xFF15004B),
                     child: Icon(
                       symbol,
-                      color: Color(0xFF9368D1),
+                      color: isDark?Color(0xFFB999F4):Color(0xFFFFBF00),
                       size: 30,
                     ),
                   ),

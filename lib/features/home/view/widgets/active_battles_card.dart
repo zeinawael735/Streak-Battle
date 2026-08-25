@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:streak_battle/core/theme/theme.dart';
 import '../../../../core/constants/app_color_style.dart';
 import '../../../../core/routes/app_routes.dart';
 import 'home_card.dart';
@@ -27,6 +28,7 @@ class ActiveBattlesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       height: 200,
       child: Row(
@@ -49,7 +51,7 @@ class ActiveBattlesCard extends StatelessWidget {
                           height: 55,
                           width: 55,
                           child: Center(
-                            child: Icon(icon, size: 25,),
+                            child: Icon(icon, size: 25,color: isDark? Color(0xFFFFBF00):Color(0xFF9368D1),),
                           ),
                         ),
                         Column(
@@ -96,8 +98,8 @@ class ActiveBattlesCard extends StatelessWidget {
                                     child: LinearProgressIndicator(
                                       value: progress / 100.0,
                                       minHeight: 6,
-                                      backgroundColor: AppColorStyle.progressIndicatorBackgroundColor,
-                                      valueColor: AlwaysStoppedAnimation<Color>(AppColorStyle.primaryGreen),
+                                      backgroundColor: AppColors.progressIndicatorBackgroundColor,
+                                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryGreen),
                                     ),
                                   ),
                                 ],

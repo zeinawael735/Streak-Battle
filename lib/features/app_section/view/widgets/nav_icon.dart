@@ -19,6 +19,7 @@ class NavIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final Map<int, int> screenToNav = {
       0: 0,
       1: 1,
@@ -36,17 +37,14 @@ class NavIcon extends StatelessWidget {
           path,
           height: 24,
           width: 24,
-          colorFilter: ColorFilter.mode(
-            isActive ? Theme.of(context).colorScheme.primary : AppColors.inactiveGrey,
-            BlendMode.srcIn,
-          ),
+          color: isActive ? Theme.of(context).colorScheme.primary : isDark? AppColors.inactiveGrey:Theme.of(context).textTheme.bodySmall?.color,
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: TextStyle(
             fontSize: isActive ? 15 : 12,
-            color: isActive ? Theme.of(context).colorScheme.primary : AppColors.inactiveGrey,
+            color: isActive ? Theme.of(context).colorScheme.primary : isDark? AppColors.inactiveGrey:Theme.of(context).textTheme.bodySmall?.color,
             fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
           ),
         ),
