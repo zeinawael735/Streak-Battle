@@ -9,6 +9,7 @@ class AppRoutes {
   static const String joinBattle = '/join-battle';
   static const String battleDetails = '/battle-details';
   static const String checkIn = '/check-in';
+  static const String battleResult = '/battle-result';
 
   static const String login = '/login';
   static const String signUp = '/sign-up';

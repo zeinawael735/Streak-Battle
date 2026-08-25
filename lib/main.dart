@@ -1,12 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/theme/theme.dart';
-import 'package:streak_battle/features/achievements/view/screens/achievements_screen.dart';
 import 'package:streak_battle/features/auth/forget_password/view/screens/forget_password_screen.dart';
 import 'package:streak_battle/features/battle/view/screens/battle_details_screen.dart';
 import 'package:streak_battle/features/gamification/view/screens/daily_check_in_screen.dart';
-import 'package:streak_battle/features/history/view/screens/battles_history_screen.dart';
 import 'package:streak_battle/features/leaderboard/view/screens/ranking_screen.dart';
+import 'package:streak_battle/features/results/view/screens/battle_result_screen.dart';
 
 import 'core/helper/auth_helper.dart';
 import 'core/routes/app_routes.dart';
@@ -16,18 +15,19 @@ import 'features/auth/signup/view/screens/signup_screen.dart';
 import 'features/battle/view/screens/create_battle_screen.dart';
 import 'features/settings/view/screens/setting_screen.dart';
 import 'features/battle/view/screens/join_battle_screen.dart';
+import 'features/notification/view_model/push_notification_service.dart';
 import 'firebase_options.dart';
-import 'features/notification/view_model/notification_services.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService.init();
 
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
+
+  PushNotificationService notificationService = PushNotificationService();
+  await notificationService.initialize();
 
   final String initialRoute = await AuthHelper.getInitialRoute();
 
@@ -42,12 +42,13 @@ class BattleStreakApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: PushNotificationService.navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Streak Battle',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
-     // home: SettingsScreen(),
+      //home: SettingsScreen(),
       initialRoute: initialRoute,
       routes: {
         AppRoutes.appSection: (context) => const AppSection(),
@@ -57,7 +58,10 @@ class BattleStreakApp extends StatelessWidget {
         AppRoutes.battleDetails: (context) => const BattleDetailsScreen(),
         AppRoutes.joinBattle: (context) => const JoinBattleScreen(),
         AppRoutes.checkIn: (context) => const DailyCheckInScreen(),
+        //AppRoutes.ranking: (context) => const RankingScreen(),
+        AppRoutes.battleResult: (context) => const BattleResultScreen(),
         AppRoutes.forgotPassword: (context) => const ForgetPasswordScreen(),
+        AppRoutes.settings:(context)=> const SettingsScreen(),
       },
 
   onGenerateRoute: (settings) {
