@@ -5,6 +5,7 @@ import 'package:streak_battle/features/auth/forget_password/view/screens/forget_
 import 'package:streak_battle/features/battle/view/screens/battle_details_screen.dart';
 import 'package:streak_battle/features/gamification/view/screens/daily_check_in_screen.dart';
 import 'package:streak_battle/features/leaderboard/view/screens/ranking_screen.dart';
+import 'package:streak_battle/features/results/view/screens/battle_result_screen.dart';
 
 import 'core/helper/auth_helper.dart';
 import 'core/routes/app_routes.dart';
@@ -57,6 +58,8 @@ class BattleStreakApp extends StatelessWidget {
         AppRoutes.battleDetails: (context) => const BattleDetailsScreen(),
         AppRoutes.joinBattle: (context) => const JoinBattleScreen(),
         AppRoutes.checkIn: (context) => const DailyCheckInScreen(),
+        //AppRoutes.ranking: (context) => const RankingScreen(),
+        AppRoutes.battleResult: (context) => const BattleResultScreen(),
         AppRoutes.forgotPassword: (context) => const ForgetPasswordScreen(),
         AppRoutes.settings:(context)=> const SettingsScreen(),
       },
