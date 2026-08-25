@@ -15,27 +15,26 @@ class _AppearanceCardState extends State<AppearanceCard> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF16151A),
+        color: Theme.of(context).colorScheme.onTertiaryFixed,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade900),
       ),
       child: Column(
         crossAxisAlignment: .start,
         children: [
           Row(
             children: [
-              Icon(Icons.auto_awesome, color: Colors.purple.shade300, size: 20),
+              Icon(Icons.auto_awesome, color: Theme.of(context).textTheme.bodySmall?.color, size: 20),
               const SizedBox(width: 8),
-              const Text(
+               Text(
                 'Appearance',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ],
           ),
           const SizedBox(height: 4),
           Text(
             'Choose how Streak Battle looks',
-            style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+            style: TextStyle(color: Colors.grey[700], fontSize: 12),
           ),
           const SizedBox(height: 16),
           Row(
@@ -60,13 +59,13 @@ class _AppearanceCardState extends State<AppearanceCard> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: isSelected ? Colors.purple.shade800 : const Color(0xFF222027),
+            color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).cardColor,//const Color(0xFF222027),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
             mode,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.grey.shade400,
+              color: isSelected ? Colors.white : Theme.of(context).textTheme.bodySmall?.color,//Colors.grey.shade400,
               fontWeight: FontWeight.w600,
               fontSize: 13,
             ),
