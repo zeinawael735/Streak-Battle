@@ -9,10 +9,10 @@ class HomeCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color(0xFF201F1F),
+        color: Theme.of(context).cardColor,//Color(0xFF201F1F),
         border: Border.all(
-          color: Colors.white.withOpacity(0.05),
-          width: 2,
+          color: Theme.of(context).colorScheme.surfaceBright.withOpacity(0.05),
+          width: 1,
         ),
         boxShadow: [
           BoxShadow(

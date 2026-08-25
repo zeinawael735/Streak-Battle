@@ -41,7 +41,6 @@ class BattleDetailsCubit extends Cubit<BattleDetailsState> {
     final now = DateTime.now();
     final startOfToday = DateTime(now.year, now.month, now.day);
 
-    // 1. Listen to Battle Document
     _battleSub = _firestore.collection('battles').doc(_battleId).snapshots().listen((battleSnap) {
       if (!battleSnap.exists) {
         emit(BattleDetailsError("does not exist"));
@@ -108,7 +107,6 @@ class BattleDetailsCubit extends Cubit<BattleDetailsState> {
     final int durationDays = _battleEntity!.durationDays;
     final List<String> membersIds = _battleEntity!.members;
 
-    // Dates and status
     final DateTime startDate = _battleEntity!.startDate;
     final DateTime endDate = startDate.add(Duration(days: durationDays));
     final bool isFinished = DateTime.now().isAfter(endDate);
@@ -138,17 +136,23 @@ class BattleDetailsCubit extends Cubit<BattleDetailsState> {
       )
     };
 
-    // Today's Check-ins Formatting
     List<CheckInViewData> todayCheckInsView = _todayCheckIns.map((doc) {
       final data = doc.data() as Map<String, dynamic>;
       final String uId = data['userId'] ?? '';
       final participant = userMap[uId] ?? const Participant(initials: 'U', name: 'User');
 
-      String timeAgo = "Just now";
+      String timeAgo = "just now";
       if (data['checkInDate'] != null) {
         final checkInTime = (data['checkInDate'] as Timestamp).toDate();
         final diff = DateTime.now().difference(checkInTime);
-        if (diff.inMinutes > 0) timeAgo = "${diff.inMinutes} min";
+
+        if (diff.inMinutes == 0) {
+          timeAgo = "just now";
+        } else if (diff.inMinutes < 60) {
+          timeAgo = "just ${diff.inMinutes} min ago";
+        } else {
+          timeAgo = "just ${diff.inHours} hours ago";
+        }
       }
 
       return CheckInViewData(

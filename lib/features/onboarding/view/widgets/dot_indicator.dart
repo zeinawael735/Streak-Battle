@@ -12,11 +12,13 @@ class DotsIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
         itemCount,
-        (index) => AnimatedContainer(
+            (index) => AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           margin: const EdgeInsets.symmetric(horizontal: 4),
           height: 8,
@@ -24,7 +26,7 @@ class DotsIndicator extends StatelessWidget {
           decoration: BoxDecoration(
             color: currentIndex == index
                 ? const Color(0xFFFFD700)
-                : Colors.white24,
+                : (isDark ? Colors.white24 : Colors.grey.shade300),
             borderRadius: BorderRadius.circular(4),
           ),
         ),

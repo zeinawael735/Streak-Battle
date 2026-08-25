@@ -28,12 +28,12 @@ class NextUpCard extends StatelessWidget {
             Container(
               width: 50,
               height: 50,
-              decoration: const BoxDecoration(
-                color: Color(0xFF353534),
+              decoration:  BoxDecoration(
+                color: Theme.of(context).colorScheme.scrim,
                 shape: BoxShape.circle,
               ),
               child: Center(
-                child:Icon(icon, size: 22,color: Color(0xFFCCC3D8),),
+                child:Icon(icon, size: 22 ,color: Color(0xFFFF8000),),//dark;
               ),
             ),
             const SizedBox(width: 14),
@@ -48,14 +48,14 @@ class NextUpCard extends StatelessWidget {
                     goal,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                    style:  Theme.of(context).textTheme.headlineSmall
                   ),
                   const SizedBox(height: 4),
                   Text(
                     "Due today • $participantsCount players",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 15, color: AppColorStyle.primaryText),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13)
                   ),
                 ],
               ),
@@ -67,7 +67,7 @@ class NextUpCard extends StatelessWidget {
                 Navigator.pushNamed(context, AppRoutes.checkIn, arguments: battleId);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColorStyle.primaryViolet,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: AppColorStyle.primaryText,
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),

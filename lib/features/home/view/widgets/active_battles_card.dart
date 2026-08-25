@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:streak_battle/core/theme/theme.dart';
 import '../../../../core/constants/app_color_style.dart';
 import '../../../../core/routes/app_routes.dart';
 import 'home_card.dart';
@@ -27,6 +28,7 @@ class ActiveBattlesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       height: 200,
       child: Row(
@@ -43,17 +45,13 @@ class ActiveBattlesCard extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: AppColorStyle.scaffoldBackgroundColor,
+                            color: Theme.of(context).colorScheme.tertiaryContainer,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: 55,
                           width: 55,
                           child: Center(
-                            child: Icon(
-                              icon,
-                              size: 25,
-                              color: Color(0xFFD2BBFF),
-                            ),
+                            child: Icon(icon, size: 25,color: isDark? Color(0xFFFFBF00):Color(0xFF9368D1),),
                           ),
                         ),
                         Column(
@@ -61,17 +59,11 @@ class ActiveBattlesCard extends StatelessWidget {
                           children: [
                             Text(
                               title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
+                              style: Theme.of(context).textTheme.headlineMedium ,
                             ),
                             Text(
                               "$category • Day $currentDay of $durationDays",
-                              style: TextStyle(
-                                color: AppColorStyle.primaryText,
-                                fontSize: 15,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall
                             ),
                           ],
                         ),
@@ -80,11 +72,8 @@ class ActiveBattlesCard extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: AppColorStyle.scaffoldBackgroundColor,
-                        border: Border.all(
-                          color: Colors.white.withOpacity(0.05),
-                          width: 3,
-                        ),
+                        color: Theme.of(context).colorScheme.onTertiary,
+                        border: Border.all(color: Colors.white.withOpacity(0.05), width: 0.5),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),
@@ -102,19 +91,15 @@ class ActiveBattlesCard extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(goal),
+                                  Text(goal,style: Theme.of(context).textTheme.bodySmall,),
                                   const SizedBox(height: 6),
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
                                     child: LinearProgressIndicator(
-                                      value: progress /
-                                          100.0, // تم التصحيح هنا للقسمة صحيحة
+                                      value: progress / 100.0,
                                       minHeight: 6,
-                                      backgroundColor: AppColorStyle
-                                          .progressIndicatorBackgroundColor,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        AppColorStyle.progressIndicatorColor,
-                                      ),
+                                      backgroundColor: AppColors.progressIndicatorBackgroundColor,
+                                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryGreen),
                                     ),
                                   ),
                                 ],
@@ -125,7 +110,7 @@ class ActiveBattlesCard extends StatelessWidget {
                               width: 42,
                               height: 42,
                               decoration: BoxDecoration(
-                                color: AppColorStyle.primaryViolet,
+                                color: Theme.of(context).colorScheme.primary,
                                 shape: BoxShape.circle,
                               ),
                               child: IconButton(
@@ -134,14 +119,10 @@ class ActiveBattlesCard extends StatelessWidget {
                                   Navigator.pushNamed(
                                     context,
                                     AppRoutes.battleDetails,
-                                    arguments: battleId, // نرسل الـ ID
+                                    arguments: battleId,
                                   );
                                 },
-                                icon: const Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
+                                icon: const Icon(Icons.arrow_forward, color: Colors.white, size: 20),
                               ),
                             ),
                           ],

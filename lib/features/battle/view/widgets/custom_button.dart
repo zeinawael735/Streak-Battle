@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:streak_battle/core/theme/theme.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -14,7 +15,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF6B11A1),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       onPressed:

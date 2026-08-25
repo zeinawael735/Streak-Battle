@@ -29,11 +29,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _fetchNotificationState();
   }
 
-
   Future<void> _fetchNotificationState() async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid != null) {
-      final doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
       if (doc.exists && mounted) {
         setState(() {
           _isNotificationEnabled = doc.data()?['isNotificationEnabled'] ?? true;
@@ -42,7 +44,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       }
     }
   }
-
 
   Future<void> _toggleNotification(bool value) async {
     setState(() {
@@ -56,7 +57,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           'isNotificationEnabled': value,
         });
       } catch (e) {
-
         if (mounted) {
           setState(() {
             _isNotificationEnabled = !value;
@@ -77,15 +77,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF16151A),
-        title: const Text(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text(
           'Help & Feedback',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Theme.of(context).textTheme.headlineSmall?.color,
+          ),
         ),
         content: TextField(
           controller: controller,
           maxLines: 3,
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Theme.of(context).textTheme.headlineSmall?.color,
+            fontSize: 20,
+          ),
           decoration: const InputDecoration(
             hintText: 'Write your feedback here...',
             hintStyle: TextStyle(color: Colors.grey),
@@ -97,6 +102,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: const Text('Cancel'),
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(26),
+              ),
+              elevation: 0,
+            ),
             onPressed: () async {
               if (controller.text.isNotEmpty) {
                 await FirebaseFirestore.instance.collection('feedbacks').add({
@@ -116,6 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return BlocProvider(
       create: (context) => LoginCubit()..getUserData(),
       child: Builder(
@@ -133,7 +146,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                      (route) => false,
+                  (route) => false,
                 );
               }
               if (state is LogoutError) {
@@ -156,13 +169,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   AppToast.showToast(
                     context: context,
                     title: "Security Check",
-                    description: "Please log in again before deleting your account for security reasons.",
+                    description:
+                        "Please log in again before deleting your account for security reasons.",
                     type: ToastificationType.error,
                   );
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
-                        (route) => false,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                    (route) => false,
                   );
                 }
               }
@@ -176,28 +192,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                      (route) => false,
+                  (route) => false,
                 );
               }
             },
             builder: (context, state) {
               return Scaffold(
-                backgroundColor: Colors.black,
                 appBar: AppBar(
-                  backgroundColor: Colors.black,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   elevation: 0,
                   leading: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 18,
+                    icon: Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Theme.of(context).textTheme.headlineSmall?.color,
+                      size: 23,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   title: Text(
                     'Settings',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
+                  centerTitle: true,
                 ),
                 body: SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
@@ -215,35 +231,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       _buildSectionTitle('PREFERENCES', context),
                       const SizedBox(height: 8),
 
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Material(
+                          color: Theme.of(context).colorScheme.onTertiaryFixed,
+                          borderRadius: BorderRadius.circular(12),
+                          clipBehavior: Clip.antiAlias,
+                          child: SwitchListTile(
+                            value: _isNotificationEnabled,
+                            onChanged: _isLoadingNotification
+                                ? null
+                                : _toggleNotification,
+                            activeColor: Theme.of(context).primaryColor,
+                            activeThumbColor: Colors.white,
+                            activeTrackColor: Theme.of(context).primaryColor,
+                            inactiveTrackColor: Colors.grey,
 
-                      Material(
-                        color: const Color(0xFF16151A),
-                        borderRadius: BorderRadius.circular(12),
-                        clipBehavior: Clip.antiAlias,
-                        child: SwitchListTile(
-                          value: _isNotificationEnabled,
-                          onChanged: _isLoadingNotification ? null : _toggleNotification,
-                          activeColor: Colors.redAccent,
-                          title: const Text(
-                            'Notifications',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                            title: Text(
+                              'Notifications',
+                              style: Theme.of(context).textTheme.headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.w500),
                             ),
-                          ),
-                          subtitle: Text(
-                            _isNotificationEnabled
-                                ? 'Daily reminders enabled'
-                                : 'Daily reminders disabled',
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
+                            subtitle: Text(
+                              _isNotificationEnabled
+                                  ? 'Daily reminders enabled'
+                                  : 'Daily reminders disabled',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 12,
+                              ),
                             ),
-                          ),
-                          secondary: const Icon(
-                            Icons.notifications_none_rounded,
-                            color: Colors.white,
+                            secondary: Icon(
+                              Icons.notifications_none_rounded,
+                              color: Theme.of(context).textTheme.bodySmall?.color,
+                            ),
                           ),
                         ),
                       ),
@@ -268,6 +297,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         text: 'Log Out',
                         icon: Icons.logout,
+                        borderColor:Color(0xFF7911FF),
+                        iconColor: Color(0xFF7911FF),
                       ),
                       const SizedBox(height: 16),
                       RedButton(
@@ -276,6 +307,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                         text: 'Delete Account',
                         icon: Icons.delete,
+                        borderColor: Colors.redAccent.shade700,
+                        iconColor: Colors.redAccent,
                       ),
                     ],
                   ),
@@ -289,6 +322,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildSectionTitle(String title, BuildContext context) {
-    return Text(title, style: Theme.of(context).textTheme.bodySmall);
+    return Text(title, style: Theme.of(context).textTheme.headlineSmall);
   }
 }

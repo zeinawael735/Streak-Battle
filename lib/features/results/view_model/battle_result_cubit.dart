@@ -53,9 +53,14 @@ class BattleResultCubit extends Cubit<BattleResultState> {
       if (!alreadyProcessed) {
         finalPoints = currentPoints + 50;
 
+        // جلب القيم الحالية (النقاط الإجمالية وعدد مرات الفوز)
+        int currentTotalPoints = (winnerData['totalPoints'] ?? 0) as int;
+        int currentWins = (winnerData['wins'] ?? 0) as int;
+
         await _firestore.collection('users').doc(winnerId).update({
           'battlesXp.$battleId': finalPoints,
-          'wins': FieldValue.increment(1),
+          'totalPoints': currentTotalPoints + 50, // تحديث النقاط الإجمالية
+          'wins': currentWins + 1, // تحديث عدد مرات الفوز بناءً على القيمة السابقة
         });
 
         await _firestore.collection('battles').doc(battleId).update({

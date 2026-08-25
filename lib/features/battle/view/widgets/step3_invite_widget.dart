@@ -57,23 +57,19 @@ class _Step3InviteWidgetState extends State<Step3InviteWidget> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const Align(
+             Align(
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Invite Friends",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 22)
                   ),
                   SizedBox(height: 6),
                   Text(
                     "Share the battle code to challenge your friends.",
-                    style: TextStyle(color: Colors.grey, fontSize: 13),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13),
                   ),
                 ],
               ),
@@ -81,11 +77,7 @@ class _Step3InviteWidgetState extends State<Step3InviteWidget> {
             const SizedBox(height: 24),
             Text(
               "BATTLE CODE",
-              style: TextStyle(
-                color: Colors.grey.shade400,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 12)
             ),
             const SizedBox(height: 10),
             Container(
@@ -101,12 +93,7 @@ class _Step3InviteWidgetState extends State<Step3InviteWidget> {
               ),
               child: Text(
                 widget.battleCode,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2,
-                ),
+                style:  Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 24,letterSpacing: 2,),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -132,10 +119,10 @@ class _Step3InviteWidgetState extends State<Step3InviteWidget> {
                       'Join my battle! Use code: ${widget.battleCode}',
                     );
                   },
-                  icon: const Icon(Icons.share, color: Colors.white, size: 18),
+                  icon:  Icon(Icons.share, color: Theme.of(context).textTheme.headlineSmall?.color, size: 18),
                   label: const Text("Share invite"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF160E21),
+                    backgroundColor: Theme.of(context).cardColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

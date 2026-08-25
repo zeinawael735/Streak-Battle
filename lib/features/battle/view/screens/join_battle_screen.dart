@@ -93,21 +93,18 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
                         children: [
                           IconButton(
                             onPressed: () => Navigator.pop(context),
-                            icon: const Icon(
+                            icon:  Icon(
                               Icons.arrow_back_ios_new_rounded,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).textTheme.headlineSmall?.color,
                               size: 22,
                             ),
+                            padding: EdgeInsets.only(right: 25),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Center(
                               child: Text(
                                 'Join Battle',
-                                style: TextStyle(
-                                  color: AppColors.textPrimary,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 23)
                               ),
                             ),
                           ),
@@ -121,7 +118,7 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
                         height: 120,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1A1525),
+                          color: Theme.of(context).colorScheme.onTertiaryContainer,
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Center(
@@ -200,10 +197,13 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
                       const SizedBox(height: 32),
 
                       // BATTLE CARD
-                      if (state is JoinBattlePreview)
+                      if (state is JoinBattlePreview || state is JoinBattleExpired)
                         BattlePreviewCard(
-                          battle: state.battle,
-                          onJoinPressed: () => _cubit.joinBattle(),
+                          battle: state is JoinBattlePreview
+                              ? (state as JoinBattlePreview).battle
+                              : (state as JoinBattleExpired).battle,
+                          // لو هي منتهية بنبعت null عشان الزرار يبقى Disabled
+                          onJoinPressed: state is JoinBattleExpired ? null : () => _cubit.joinBattle(),
                         ),
 
                       const SizedBox(height: 32),

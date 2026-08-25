@@ -11,7 +11,7 @@ abstract class AppDialogs {
         return PopScope(
           canPop: false,
           child: AlertDialog(
-            backgroundColor: Color(0xFF201F1F),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             content: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -19,11 +19,7 @@ abstract class AppDialogs {
                  SizedBox(width: 16),
                 Text(
                   'Loading...',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColorStyle.primaryText,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)
                 ),
               ],
             ),

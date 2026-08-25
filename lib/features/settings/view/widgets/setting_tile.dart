@@ -16,11 +16,18 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF16151A),
+        color: Theme.of(context).colorScheme.onTertiaryFixed,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade900),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: ListTile(
         onTap: onTap,
@@ -28,18 +35,17 @@ class SettingsTile extends StatelessWidget {
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.purple.shade900.withOpacity(0.3),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(icon, color: Colors.purple.shade300, size: 22),
+          child: Icon(icon, color: Theme.of(context).textTheme.bodySmall?.color, size: 25),
         ),
         title: Text(
           title,
-          style: Theme.of(context).textTheme.labelLarge,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 15),
         ),
         subtitle: Text(
           subtitle,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+          style:  TextStyle(color: Colors.grey[700], fontWeight: FontWeight.normal, fontSize: 14),
         ),
         trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:streak_battle/core/theme/theme.dart';
 import 'package:streak_battle/features/battle/view/widgets/step2_rules_widget.dart';
 import 'package:streak_battle/features/battle/view/widgets/step3_invite_widget.dart';
 import 'package:toastification/toastification.dart';
@@ -195,21 +196,21 @@ final _step2Key=GlobalKey<FormState>();
           final isLoading = state is CreateBattleLoading;
 
           return Scaffold(
-            backgroundColor: AppColorStyle.backgroundColor,
             appBar: AppBar(
-              backgroundColor: AppColorStyle.backgroundColor,
-              title: const Text(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              title:  Text(
                 'Create Battle',
-                style: TextStyle(color: Colors.white),
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon:  Icon(Icons.arrow_back_ios_new, color: Theme.of(context).textTheme.headlineSmall?.color),
                 onPressed: isLoading ? null : _previousPage,
               ),
+              centerTitle: true,
             ),
             body: isLoading
                 ? const Center(
-              child: CircularProgressIndicator(color: Colors.white),
+              child: CircularProgressIndicator(color: AppColors.primary),
             )
                 : Column(
               children: [

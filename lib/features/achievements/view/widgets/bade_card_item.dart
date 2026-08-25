@@ -3,20 +3,27 @@ import '../../view_model/badge_model.dart';
 
 class BadgeCardItem extends StatelessWidget {
   final BadgeModel badge;
-
   const BadgeCardItem({Key? key, required this.badge}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFF191724),
+        color:  Theme.of(context).cardColor,//Color(0xFF191724),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: badge.isUnlocked ? Colors.greenAccent : Colors.white12,
-          width: 1.5,
+          width: isDark?1:1.5,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,7 +38,7 @@ class BadgeCardItem extends StatelessWidget {
           Text(
             badge.title,
             style: TextStyle(
-              color: badge.isUnlocked ? Colors.white : Colors.grey,
+              color: badge.isUnlocked ? Theme.of(context).textTheme.headlineLarge?.color : Colors.grey,
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),

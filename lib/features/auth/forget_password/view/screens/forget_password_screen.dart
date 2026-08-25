@@ -45,12 +45,18 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
     final r = ResponsiveHelper(context);
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: theme.scaffoldBackgroundColor,
-        elevation: 0,
-        leading: BackButton(color: textColor),
-        title: Text('Forgot Password', style: TextStyle(color: textColor, fontSize: r.sp(16))),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Theme.of(context).textTheme.headlineSmall?.color,
+            size: 23,
+          ),
+        ),
+        title: Text('Forgot Password', style: theme.textTheme.headlineMedium),
+        centerTitle: true,
       ),
       body: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
         listener: (context, state) {
@@ -67,7 +73,7 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
           final isSuccess = state is ForgetPasswordSuccess;
 
           return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: r.w(24)),
+            padding: EdgeInsets.only(left: 25,right: 25,top: 35),
             child: Form(
               key: _formKey,
               child: Column(
@@ -95,12 +101,11 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
                   SizedBox(height: r.h(8)),
                   Text(
                     'Enter the email linked to your account. We will send a secure reset link.',
-                    style: TextStyle(color: secondaryTextColor, fontSize: r.sp(14)),
+                    style: theme.textTheme.bodySmall?.copyWith(fontSize: 13,fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: r.h(24)),
                   CustomTextFormField(
                     controller: _emailController,
-                    labelText: 'Email address',
                     hintText: 'alex@email.com',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {

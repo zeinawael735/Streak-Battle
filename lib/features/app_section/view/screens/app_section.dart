@@ -33,7 +33,6 @@ class AppSection extends StatelessWidget {
           }
 
           return Scaffold(
-            backgroundColor: AppColorStyle.backgroundColor,
             body: IndexedStack(
               index: currentScreenIndex,
               children: [
@@ -48,7 +47,7 @@ class AppSection extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               children: [
                 BottomNavigationBar(
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   type: BottomNavigationBarType.fixed,
                   currentIndex: cubit.getNavIndex(currentScreenIndex),
                   onTap: (value) => cubit.changeTab(value),
@@ -112,13 +111,13 @@ class AppSection extends StatelessWidget {
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        color: AppColorStyle.primaryViolet,
+                        color: Theme.of(context).colorScheme.primary,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColorStyle.primaryViolet.withOpacity(0.4),
-                            blurRadius: 12,
-                            spreadRadius: 4,
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                            blurRadius: 10,
+                            spreadRadius: 1,
                           ),
                         ],
                       ),

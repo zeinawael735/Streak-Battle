@@ -48,7 +48,7 @@ class PodiumWidget extends StatelessWidget {
             rank: "3",
             user: third,
             height: 70,
-            color: const Color(0XFF000000),
+            color:  Color(0XFF0E0D12),
           )
         else
           const SizedBox(width: 100),

@@ -14,6 +14,7 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     String getInitials(String name) {
       if (name.trim().isEmpty) return "";
       final parts = name.trim().split(' ');
@@ -24,15 +25,22 @@ class ProfileCard extends StatelessWidget {
     }
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF16151A),
+        color:  Theme.of(context).colorScheme.onTertiaryFixed,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: ListTile(
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
           radius: 24,
-          backgroundColor: Colors.purple.shade800,
+          backgroundColor: Theme.of(context).primaryColor,
           child: Text(
             name.isNotEmpty ? getInitials(name) : '',
             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -40,13 +48,12 @@ class ProfileCard extends StatelessWidget {
         ),
         title: Text(
           name,
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         subtitle: Text(
           email,
-          style: Theme.of(context).textTheme.bodySmall,
+          style: TextStyle(color: Colors.grey[700],fontSize: 17),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
       ),
     );
   }

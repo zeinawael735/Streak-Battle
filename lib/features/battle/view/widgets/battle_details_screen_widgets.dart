@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 
+import '../../../../core/theme/theme.dart';
 import '../../../home/view/widgets/home_card.dart';
 
 class Participant {
@@ -17,7 +18,7 @@ class ParticipantsDialog {
       barrierDismissible: true,
       builder: (dialogContext) {
         return Dialog(
-          backgroundColor: AppColorStyle.scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -30,19 +31,19 @@ class ParticipantsDialog {
                   alignment: Alignment.topRight,
                   child: IconButton(
                     onPressed: () => Navigator.pop(dialogContext),
-                    icon: const Icon(Icons.close, color: Colors.white),
+                    icon:  Icon(Icons.close, color: Theme.of(context).textTheme.headlineSmall?.color),
                   ),
                 ),
+
                 const SizedBox(height: 10),
+
                 ParticipantCircle(initials: participant.initials, size: 90),
+
                 const SizedBox(height: 16),
+
                 Text(
                   participant.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.headlineMedium//.w600 18
                 ),
               ],
             ),
@@ -61,7 +62,6 @@ class ParticipantsDialog {
       barrierDismissible: true,
       builder: (dialogContext) {
         return Dialog(
-          backgroundColor: AppColorStyle.scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -74,9 +74,10 @@ class ParticipantsDialog {
                   alignment: Alignment.topRight,
                   child: IconButton(
                     onPressed: () => Navigator.pop(dialogContext),
-                    icon: const Icon(Icons.close, color: Colors.white),
+                    icon:  Icon(Icons.close, color:Theme.of(context).textTheme.headlineSmall?.color),
                   ),
                 ),
+
                 Flexible(
                   child: ListView.separated(
                     shrinkWrap: true,
@@ -93,14 +94,13 @@ class ParticipantsDialog {
                             initials: participant.initials,
                             size: 48,
                           ),
+
                           const SizedBox(width: 14),
+
                           Expanded(
                             child: Text(
                               participant.name,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
+                              style:  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal)
                             ),
                           ),
                         ],
@@ -148,47 +148,47 @@ class ParticipantCircle extends StatelessWidget {
     );
   }
 }
+class CheckedInCard extends StatelessWidget{
+  const CheckedInCard({super.key, required this.name, required this.initials, required this.goal, required this.time});
 
-class CheckedInCard extends StatelessWidget {
-  const CheckedInCard(
-      {super.key,
-      required this.name,
-      required this.initials,
-      required this.goal,
-      required this.time});
   final String name;
   final String initials;
   final String goal;
   final String time;
+
   @override
   Widget build(BuildContext context) {
     return HomeCard(
         child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 21, horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ParticipantCircle(
-            initials: initials,
-            size: 50,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.symmetric(vertical: 21,horizontal: 16),
+          child: Row(
             children: [
-              Text(
-                "$name checked in",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              ParticipantCircle(initials: initials, size: 50,),
+              const SizedBox(width: 16,),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$name checked in",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "$goal • $time",
+                      style: Theme.of(context).textTheme.bodySmall,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-              Text("$goal • $time ago"),
+              const Icon(Icons.check_circle, color: AppColors.primaryGreen, size: 35,)
             ],
           ),
-          Icon(
-            Icons.check_circle,
-            color: AppColorStyle.primaryGreen,
-            size: 35,
-          )
-        ],
-      ),
-    ));
+        )
+    );
   }
 }

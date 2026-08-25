@@ -69,13 +69,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: TextStyle(
         fontSize: 16,
-        // color: AppColor.primary,
-        fontWeight: FontWeight.w500,
+         color: Theme.of(context).textTheme.headlineLarge?.color,
+        fontWeight: FontWeight.w400,
       ),
 
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
-        fillColor: Color(0xFF201F1F),
+        fillColor: Theme.of(context).cardColor,
         filled: true,
         hintText: widget.hintText,
         labelText: widget.labelText,
@@ -93,7 +93,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 onTap: _toggleObscureText,
                 child: Icon(
                   obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: AppColorStyle.primaryText,
+                  color: Theme.of(context).textTheme.bodySmall?.color,
                   size: 27,
                 ),
               )
@@ -103,8 +103,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           vertical: 18,
         ),
         border: outlineInputBorder(color: Colors.white, width: 1),
-        enabledBorder: outlineInputBorder(color: Colors.black, width: 1),
-        focusedBorder: outlineInputBorder(color: Colors.black, width: 1),
+        enabledBorder: outlineInputBorder(color: Theme.of(context).cardColor, width: 1),
+        focusedBorder: outlineInputBorder(color: Theme.of(context).textTheme.bodySmall?.color??Colors.black, width: 1),
         errorBorder: outlineInputBorder(color: Colors.red, width: 1),
         focusedErrorBorder: outlineInputBorder(color: Colors.red, width: 1),
       ),

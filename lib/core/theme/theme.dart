@@ -7,6 +7,7 @@ class AppColors {
   static const Color circleAvatarIconBackground = Color(0xFF2E263F);
   static const Color deepPurple = Color(0xFF3F0071);
   static const Color purple = Color(0xFF610094);
+  static const Color secondPurple = Color(0xFF7911FF);
   static const Color violetFocus = Color(0xFFC77DFF);
   static const Color success = Color(0xFF32D583);
   static const Color warning = Color(0xFFFDB022);
@@ -21,14 +22,16 @@ class AppColors {
   static const Color progressIndicatorColor = Color(0xFFD3BBFF);
   static const Color progressIndicatorBackgroundColor = Color(0xFF39304A);
   static const Color inactiveGrey = Color(0xFFCCC3D8);
-  static const Color cardColor = Color(0xFF1A1A1A);
+  static const Color cardColor = Color(0xFF0E0D12);
 }
 
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       brightness: Brightness.light,
+      iconTheme: IconThemeData(color: Color(0xFF9368D1)),
       primaryColor: AppColors.purple,
+      cardColor: Color(0xFFF8F6FB),
       scaffoldBackgroundColor: AppColors.white,
       fontFamily: 'Manrope',
       textTheme: const TextTheme(
@@ -37,26 +40,59 @@ class AppTheme {
           fontWeight: FontWeight.bold,
           color: AppColors.black,
         ),
+        headlineSmall: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
         headlineMedium: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: AppColors.black,
+          color: Colors.black,
+        ),
+        headlineLarge: TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 16,
+          color: Color(0xFF9368D1),
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 20,
+          color: Color(0xFF9368D1),
         ),
         bodyLarge: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 20,
-          color: AppColors.black,
-          fontWeight: FontWeight.bold,
+          fontSize: 28,
+          color: Color(0xFF9368D1),
         ),
         labelLarge: TextStyle(
           fontFamily: 'Inter',
           fontSize: 14,
           fontWeight: FontWeight.w600,
+          color: Colors.black
         ),
       ),
-      colorScheme: const ColorScheme.light(
+      colorScheme:  ColorScheme.light(
+        ///home
+        scrim: Color(0xFFEFE2F5),//next up icon background an active battles
+        onTertiary: Color(0xFFEFE2F5),//active battles back ground icon an back of progress
+        tertiaryContainer: Color(0xFFEFE2F5),//active battles back ground icon
+        ///bottom navigator
+
+        /// join battle
+        onTertiaryContainer:  Color(0xFFEFE4F5),
+        /// battle details screen
+        tertiaryFixed: Color(0xFFD8CBEA),
+        /// check in circle
+        tertiaryFixedDim:  Color(0xFFCE99DC),
+        ///  settings card
+        onTertiaryFixed: Color(0xFFEFE2F5),//0xFFE6C8E6
+        ///
         primary: AppColors.purple,
-        secondary: AppColors.violetFocus,
+        surfaceBright: Colors.black12,
+        secondary: AppColors.secondPurple,
         tertiary: AppColors.success,
         error: AppColors.error,
         surface: AppColors.white,
@@ -67,7 +103,9 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
+      iconTheme: IconThemeData(color: Color(0xFFD2BBFF)),
       primaryColor: AppColors.purple,
+      cardColor: AppColors.cardColor,
       scaffoldBackgroundColor: AppColors.black,
       fontFamily: 'Manrope',
       textTheme: const TextTheme(
@@ -76,15 +114,32 @@ class AppTheme {
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
+        headlineSmall: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
         headlineMedium: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        headlineLarge: TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
-        bodyLarge: TextStyle(
-          fontFamily: 'Inter',
+        bodySmall: TextStyle(
           fontSize: 16,
-          color: Colors.white,
+          color: AppColors.textPrimary,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 20,
+          color: AppColors.textPrimary,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 28,
+          color:AppColors.textPrimary,
         ),
         labelLarge: TextStyle(
           fontFamily: 'Inter',
@@ -92,9 +147,23 @@ class AppTheme {
           fontWeight: FontWeight.w600,
         ),
       ),
-      colorScheme: const ColorScheme.dark(
+      colorScheme: ColorScheme.dark(
+        ///home
+        scrim: Color(0xFF353534),//next up icon background
+        onTertiary: Color(0xFF131313),//active battles back of progress
+        tertiaryContainer: Color(0xFF15004B),//active battles back ground icon
+        ///join battle
+        onTertiaryContainer:  Color(0xFF1A1525),
+        ///battle details screen
+        tertiaryFixed: Color(0xFF150050),
+        ///daily check in circle
+        tertiaryFixedDim:  Color(0xFF150050),
+        ///  settings card
+        onTertiaryFixed: Color(0xFF16151A),
+        ///
         primary: AppColors.purple,
-        secondary: AppColors.violetFocus,
+        secondary: AppColors.secondPurple,
+        surfaceBright: Colors.white,
         tertiary: AppColors.success,
         error: AppColors.error,
         surface: AppColors.indigo,

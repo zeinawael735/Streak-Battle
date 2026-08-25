@@ -27,14 +27,11 @@ class _ProfileView extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
     final textColor = theme.colorScheme.onSurface;
     final secondaryTextColor = textColor.withOpacity(0.5);
-    final cardColor = isDark
-        ? const Color(0xFF1C1C1C)
-        : const Color(0xFFF5F5F5);
+    final cardColor = Theme.of(context).cardColor;
     final borderColor = textColor.withOpacity(0.08);
     final r = ResponsiveHelper(context);
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
@@ -66,14 +63,13 @@ class _ProfileView extends StatelessWidget {
 
                   // ================= HEADER =================
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Spacer(),
                       Text(
                         'Profile',
                         style: TextStyle(
                           color: textColor,
-                          fontSize: r.sp(18),
+                          fontSize: r.sp(20),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -83,8 +79,8 @@ class _ProfileView extends StatelessWidget {
                             Navigator.pushNamed(context, AppRoutes.settings),
                         child: Icon(
                           Icons.settings_outlined,
-                          color: secondaryTextColor,
-                          size: r.w(22),
+                          color: Theme.of(context).textTheme.headlineSmall?.color,
+                          size: 24,
                         ),
                       ),
                     ],
@@ -185,7 +181,7 @@ class _ProfileView extends StatelessWidget {
                       Expanded(
                         child: _statCard(
                           value:
-                              '${profile.wins}', // TODO: confirm final source for wins with team
+                              '${profile.wins}',
                           label: 'WINS',
                           color: theme.colorScheme.tertiary,
                           cardColor: cardColor,
@@ -322,10 +318,7 @@ class _ProfileView extends StatelessWidget {
                   SizedBox(height: r.h(24)),
 
                   // ================= ACHIEVEMENTS CARD =================
-                  GestureDetector(
-                    onTap: () =>
-                        Navigator.pushNamed(context, AppRoutes.achievements),
-                    child: Container(
+                   Container(
                       padding: EdgeInsets.all(r.w(14)),
                       decoration: BoxDecoration(
                         color: cardColor,
@@ -371,16 +364,9 @@ class _ProfileView extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Icon(
-                            Icons.chevron_right,
-                            color: secondaryTextColor,
-                            size: r.w(24),
-                          ),
                         ],
                       ),
                     ),
-                  ),
-
                   SizedBox(height: r.h(24)),
                 ],
               ),
@@ -415,17 +401,30 @@ class _ProfileView extends StatelessWidget {
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(r.w(12)),
-        border: Border.all(color: borderColor),
+        border: Border.all(color: borderColor,width: 0.7),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         children: [
-          Text(
-            value,
-            style: TextStyle(
-              color: color,
-              fontSize: r.sp(18),
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //Icon(Icons)
+              Text(
+                value,
+                style: TextStyle(
+                  color: color,
+                  fontSize: r.sp(18),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
           SizedBox(height: r.h(4)),
           Text(

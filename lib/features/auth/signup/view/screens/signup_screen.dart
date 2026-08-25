@@ -58,23 +58,18 @@ class _SignupScreenState extends State<SignupScreen> {
     return BlocProvider(
       create: (context) => SignUpCubit(),
       child: Scaffold(
-        backgroundColor: AppColorStyle.scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           title: Text(
             "Create Account",
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: AppColorStyle.primaryText,
-            ),
+            style: Theme.of(context).textTheme.headlineMedium
           ),
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
               Icons.arrow_back_ios_new,
-              color: AppColorStyle.primaryText,
+              color: Theme.of(context).textTheme.headlineSmall?.color,
               size: 23,
             ),
           ),
@@ -122,19 +117,12 @@ class _SignupScreenState extends State<SignupScreen> {
                      SizedBox(height: 25),
                      Text(
                       "Join the arena",
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.headlineLarge
                     ),
                      SizedBox(height: 8),
                     Text(
                       "Build better habits with people you trust.",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: AppColorStyle.primaryText,
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 15,fontWeight: FontWeight.w500)
                     ),
                      SizedBox(height: 30),
 
@@ -144,7 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(12),
                       prefixIcon: Icon(
                         Icons.person_outline,
-                        color: AppColorStyle.primaryText,
+                        color: Theme.of(context).textTheme.bodySmall?.color,
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -162,7 +150,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(12),
                       prefixIcon: Icon(
                         Icons.email_outlined,
-                        color: AppColorStyle.primaryText,
+                        color: Theme.of(context).textTheme.bodySmall?.color,
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -185,7 +173,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderRadius: BorderRadius.circular(12),
                       prefixIcon: Icon(
                         Icons.lock_outline,
-                        color: AppColorStyle.primaryText,
+                        color: Theme.of(context).textTheme.bodySmall?.color,
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -224,15 +212,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: RichText(
                             text: TextSpan(
                               text: "I agree to the ",
-                              style: TextStyle(
-                                color: AppColorStyle.primaryText,
-                                fontSize: 13,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 12,fontWeight: FontWeight.w500),
                               children: [
                                 TextSpan(
                                   text: "Terms of Service ",
                                   style: TextStyle(
-                                    color: AppColorStyle.primaryViolet,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -240,7 +225,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 TextSpan(
                                   text: "Privacy Policy.",
                                   style: TextStyle(
-                                    color: AppColorStyle.primaryViolet,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -258,7 +243,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: ElevatedButton(
                         onPressed: () => submitForm(context),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColorStyle.primaryViolet,
+                          backgroundColor: Theme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(26),
                           ),
@@ -289,18 +274,18 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Text.rich(
             TextSpan(
               text: "Already have an account? ",
-              style: TextStyle(color: AppColorStyle.primaryText, fontSize: 14),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,fontWeight: FontWeight.w500),
               children: [
                 TextSpan(
                   text: "Log in",
                   style: TextStyle(
-                    color: AppColorStyle.primaryViolet,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.login);
                     },
                 ),
               ],
