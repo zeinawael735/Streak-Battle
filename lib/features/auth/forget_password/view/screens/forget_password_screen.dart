@@ -101,7 +101,7 @@ class _ForgetPasswordViewState extends State<_ForgetPasswordView> {
                   SizedBox(height: r.h(8)),
                   Text(
                     'Enter the email linked to your account. We will send a secure reset link.',
-                    style: theme.textTheme.bodySmall?.copyWith(fontSize: 13,fontWeight: .w500),
+                    style: theme.textTheme.bodySmall?.copyWith(fontSize: 13,fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: r.h(24)),
                   CustomTextFormField(

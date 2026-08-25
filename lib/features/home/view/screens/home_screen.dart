@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   state.userName,
-                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: .bold,fontSize: 22)
+                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold,fontSize: 22)
                                 ),
                               ],
                             ),
@@ -101,7 +101,7 @@ class HomeScreen extends StatelessWidget {
                                       top: 25,
                                     ),
                                     child: Column(
-                                      crossAxisAlignment: .start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       spacing: 4,
                                       children: [
                                         SvgPicture.asset(
@@ -132,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     child: Column(
                                       spacing: 3,
-                                      crossAxisAlignment: .start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         const Text(
                                           "⭐",
@@ -175,7 +175,7 @@ class HomeScreen extends StatelessWidget {
                                           children: [
                                              Text(
                                               "This week",
-                                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: .normal),
+                                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
                                             ),
                                             Text(
                                               "$completedCount/7 Days",

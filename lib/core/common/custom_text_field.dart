@@ -70,7 +70,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       style: TextStyle(
         fontSize: 16,
          color: Theme.of(context).textTheme.headlineLarge?.color,
-        fontWeight: .w400,
+        fontWeight: FontWeight.w400,
       ),
 
       textAlignVertical: TextAlignVertical.center,

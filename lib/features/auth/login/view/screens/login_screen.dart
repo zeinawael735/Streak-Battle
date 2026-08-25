@@ -109,13 +109,13 @@ class _LoginScreenState extends State<LoginScreen> {
                          SizedBox(height: 8),
                         Text(
                           "Log in and keep your streak alive.",
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 15,fontWeight: .w500)
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 15,fontWeight: FontWeight.w500)
                         ),
                          SizedBox(height: 28),
                 
                          Text(
                           "Email",
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 14,fontWeight: .normal),
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 14,fontWeight: FontWeight.normal),
                         ),
                          SizedBox(height: 8),
                         CustomTextFormField(
@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 
                          Text(
                           "Password",
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 14,fontWeight: .normal),
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 14,fontWeight: FontWeight.normal),
                         ),
                          SizedBox(height: 8),
                         CustomTextFormField(
@@ -273,7 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
             textAlign: TextAlign.center,
             TextSpan(
               text: "New to Streak Battle? ",
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,fontWeight: .w500),//TextStyle(color: AppColorStyle.primaryText, ),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,fontWeight: FontWeight.w500),//TextStyle(color: AppColorStyle.primaryText, ),
               children: [
                 TextSpan(
                   text: "Create an account",

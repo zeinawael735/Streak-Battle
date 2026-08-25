@@ -122,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                      SizedBox(height: 8),
                     Text(
                       "Build better habits with people you trust.",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 15,fontWeight: .w500)
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 15,fontWeight: FontWeight.w500)
                     ),
                      SizedBox(height: 30),
 
@@ -212,7 +212,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: RichText(
                             text: TextSpan(
                               text: "I agree to the ",
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 12,fontWeight: .w500),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 12,fontWeight: FontWeight.w500),
                               children: [
                                 TextSpan(
                                   text: "Terms of Service ",
@@ -274,7 +274,7 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Text.rich(
             TextSpan(
               text: "Already have an account? ",
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,fontWeight: .w500),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,fontWeight: FontWeight.w500),
               children: [
                 TextSpan(
                   text: "Log in",

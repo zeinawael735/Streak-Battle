@@ -159,7 +159,7 @@ class _Step1InfoWidgetState extends State<Step1InfoWidget> {
             TextField(
               controller: widget.descriptionController,
               maxLines: 3,
-              style:  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: .normal),
+              style:  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal),
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.grey.shade600),
                 filled: true,

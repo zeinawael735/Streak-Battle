@@ -97,7 +97,7 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
           const SizedBox(height: 6),
           Text(
             'Fair, simple rules keep everyone focused.',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13,fontWeight: .w500),//TextStyle(color: Colors.grey, fontSize: 13),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13,fontWeight: FontWeight.w500),//TextStyle(color: Colors.grey, fontSize: 13),
           ),
           const SizedBox(height: 24),
            Text('START DATE', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 13),),
@@ -120,7 +120,7 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
                     widget.startDate == null
                         ? 'Select start date'
                         : '${widget.startDate!.day}/${widget.startDate!.month}/${widget.startDate!.year}',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: .w400),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w400),
                   ),
                   const Spacer(),
                   const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 14),
@@ -165,7 +165,7 @@ class _Step2RulesWidgetState extends State<Step2RulesWidget> {
               return null;
             },
             controller: widget.goalController,
-            style:  Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: .normal),
+            style:  Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.normal),
             decoration: InputDecoration(
               hintText: 'e.g. Run 3 km / Read 10 pages',
               hintStyle: TextStyle(color: Colors.grey),

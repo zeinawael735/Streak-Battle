@@ -100,7 +100,7 @@ class ParticipantsDialog {
                           Expanded(
                             child: Text(
                               participant.name,
-                              style:  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: .normal)
+                              style:  Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.normal)
                             ),
                           ),
                         ],
