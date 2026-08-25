@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import 'battle_entity.dart';
 
 abstract class JoinBattleState extends Equatable {
@@ -9,16 +8,17 @@ abstract class JoinBattleState extends Equatable {
 }
 
 class JoinBattleEmpty extends JoinBattleState {}
-
 class JoinBattlePartial extends JoinBattleState {}
-
 class JoinBattleInvalid extends JoinBattleState {}
-
-class JoinBattleExpired extends JoinBattleState {}
-
 class JoinBattleAlreadyJoined extends JoinBattleState {}
-
 class JoinBattleLoading extends JoinBattleState {}
+
+class JoinBattleExpired extends JoinBattleState {
+  final BattleEntity battle;
+  const JoinBattleExpired(this.battle);
+  @override
+  List<Object?> get props => [battle];
+}
 
 class JoinBattlePreview extends JoinBattleState {
   final BattleEntity battle;

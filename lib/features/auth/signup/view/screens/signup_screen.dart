@@ -285,7 +285,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.login);
                     },
                 ),
               ],

@@ -54,7 +54,14 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
       }
 
       _foundBattle = battle;
-      emit(JoinBattlePreview(battle));
+
+      // هنا بنتشيك لو منتهية ولا لأ
+      if (battle.isExpired) {
+        emit(JoinBattleExpired(battle));
+      } else {
+        emit(JoinBattlePreview(battle));
+      }
+
     } catch (e) {
       log(e.toString());
       emit(JoinBattleInvalid());
@@ -64,7 +71,9 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
   Future<void> joinBattle() async {
     final battle = _foundBattle;
     final userId = _auth.currentUser?.uid;
-    if (battle == null || userId == null) return;
+
+    // ضفت حماية هنا إن لو الـ Battle خلصت ميقدرش يبعت ريكويست الجوين أساساً
+    if (battle == null || userId == null || battle.isExpired) return;
 
     emit(JoinBattleLoading());
     try {
@@ -81,8 +90,4 @@ class JoinBattleCubit extends Cubit<JoinBattleState> {
       emit(JoinBattleInvalid());
     }
   }
-  
-
-
-
 }

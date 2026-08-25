@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../view_model/onboarding_model.dart';
+import '../../view_model/onboarding_prefs.dart'; // <--- استدعاء OnboardingPrefs
 import '../widgets/custom_button.dart';
 import '../widgets/dot_indicator.dart';
 import '../widgets/onboarding_page.dart';
@@ -19,16 +19,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentIndex = 0;
 
   Future<void> _navigateToSignUp() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstTime', false);
+    await OnboardingPrefs.setNotFirstTime();
 
     if (!mounted) return;
     Navigator.pushReplacementNamed(context, AppRoutes.signUp);
   }
 
   Future<void> _completeOnboarding() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isFirstTime', false);
+    await OnboardingPrefs.setNotFirstTime();
 
     if (!mounted) return;
     Navigator.pushReplacementNamed(context, AppRoutes.login);
@@ -38,11 +36,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         children: [
-          // ================= الخلفية المتوهجة الناعمة (مغلفة بـ IgnorePointer لعدم منع اللمس) =================
+          // ================= الخلفية المتوهجة الناعمة =================
           IgnorePointer(
             child: Stack(
               children: [
@@ -93,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ],
             ),
           ),
-          // =========================================================================================
+          // =========================================================================
 
           SafeArea(
             child: Column(

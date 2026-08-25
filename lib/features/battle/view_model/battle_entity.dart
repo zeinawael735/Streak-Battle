@@ -31,6 +31,11 @@ class BattleEntity {
     required this.createdAt,
   });
 
+  bool get isExpired {
+    final endDate = startDate.add(Duration(days: durationDays));
+    return DateTime.now().isAfter(endDate);
+  }
+
   factory BattleEntity.fromFirestore(String docId, Map<String, dynamic> data) {
     return BattleEntity(
       id: docId,

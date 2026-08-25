@@ -33,7 +33,7 @@ class NextUpCard extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Center(
-                child:Icon(icon, size: 22 /**/,),//dark;
+                child:Icon(icon, size: 22 ,color: Color(0xFFFF8000),),//dark;
               ),
             ),
             const SizedBox(width: 14),

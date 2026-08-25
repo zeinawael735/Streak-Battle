@@ -197,10 +197,13 @@ class _JoinBattleScreenState extends State<JoinBattleScreen> {
                       const SizedBox(height: 32),
 
                       // BATTLE CARD
-                      if (state is JoinBattlePreview)
+                      if (state is JoinBattlePreview || state is JoinBattleExpired)
                         BattlePreviewCard(
-                          battle: state.battle,
-                          onJoinPressed: () => _cubit.joinBattle(),
+                          battle: state is JoinBattlePreview
+                              ? (state as JoinBattlePreview).battle
+                              : (state as JoinBattleExpired).battle,
+                          // لو هي منتهية بنبعت null عشان الزرار يبقى Disabled
+                          onJoinPressed: state is JoinBattleExpired ? null : () => _cubit.joinBattle(),
                         ),
 
                       const SizedBox(height: 32),

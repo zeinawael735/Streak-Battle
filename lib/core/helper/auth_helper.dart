@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:streak_battle/core/routes/app_routes.dart';
 
+// ضيف مسار ملف الـ OnboardingPrefs هنا بناءً على مكانه في مشروعك
+import '../../features/onboarding/view_model/onboarding_prefs.dart';
+
 class AuthHelper {
   static const FlutterSecureStorage storage = FlutterSecureStorage();
 
@@ -21,6 +24,13 @@ class AuthHelper {
   }
 
   static Future<String> getInitialRoute() async {
+    bool isFirstTime = await OnboardingPrefs.isFirstTime();
+
+    if (isFirstTime) {
+      return AppRoutes.onboarding;
+    }
+
+    // 2. باقي الكود زي ما هو بالظبط
     String? token = await storage.read(key: 'auth_token');
     User? currentUser = FirebaseAuth.instance.currentUser;
 

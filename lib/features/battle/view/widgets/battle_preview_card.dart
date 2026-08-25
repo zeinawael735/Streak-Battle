@@ -6,7 +6,7 @@ import '../../view_model/battle_entity.dart';
 
 class BattlePreviewCard extends StatelessWidget {
   final BattleEntity battle;
-  final VoidCallback onJoinPressed;
+  final VoidCallback? onJoinPressed;
 
   const BattlePreviewCard({
     super.key,
@@ -150,9 +150,9 @@ class BattlePreviewCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(26),
                       ),
                     ),
-                    child: const Text(
-                      'JOIN',
-                      style: TextStyle(
+                    child: Text(
+                      onJoinPressed == null ? 'Battle Finished' : 'Join Battle',
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.0,

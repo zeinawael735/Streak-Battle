@@ -150,10 +150,12 @@ class ParticipantCircle extends StatelessWidget {
 }
 class CheckedInCard extends StatelessWidget{
   const CheckedInCard({super.key, required this.name, required this.initials, required this.goal, required this.time});
+
   final String name;
   final String initials;
   final String goal;
   final String time;
+
   @override
   Widget build(BuildContext context) {
     return HomeCard(
@@ -162,7 +164,7 @@ class CheckedInCard extends StatelessWidget{
           child: Row(
             children: [
               ParticipantCircle(initials: initials, size: 50,),
-              SizedBox(width: 16,),
+              const SizedBox(width: 16,),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,7 +177,7 @@ class CheckedInCard extends StatelessWidget{
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "$goal • $time ago",
+                      "$goal • $time",
                       style: Theme.of(context).textTheme.bodySmall,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -183,11 +185,10 @@ class CheckedInCard extends StatelessWidget{
                   ],
                 ),
               ),
-              Icon(Icons.check_circle,color: AppColors.primaryGreen,size: 35,)
+              const Icon(Icons.check_circle, color: AppColors.primaryGreen, size: 35,)
             ],
           ),
         )
     );
   }
-
 }

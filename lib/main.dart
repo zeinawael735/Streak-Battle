@@ -46,7 +46,7 @@ void main() async {
 class BattleStreakApp extends StatelessWidget {
   final String initialRoute;
 
-  BattleStreakApp({super.key, required this.initialRoute});
+  const BattleStreakApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +58,10 @@ class BattleStreakApp extends StatelessWidget {
           title: 'Streak Battle',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          themeMode: ThemeMode.light,//themeMode,
-          //home: OnboardingScreen(),
+          themeMode: themeMode,
           initialRoute: initialRoute,
           routes: {
+            AppRoutes.onboarding: (context) => const OnboardingScreen(),
             AppRoutes.appSection: (context) => const AppSection(),
             AppRoutes.createBattle: (context) => const CreateBattleScreen(),
             AppRoutes.signUp: (context) => const SignupScreen(),
