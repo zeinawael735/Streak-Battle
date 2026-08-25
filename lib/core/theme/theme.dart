@@ -46,7 +46,7 @@ class AppTheme {
           fontFamily: 'Inter',
           fontSize: 20,
           color: AppColors.black,
-          fontWeight: .bold,
+          fontWeight: FontWeight.bold,
         ),
         labelLarge: TextStyle(
           fontFamily: 'Inter',

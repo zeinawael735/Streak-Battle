@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AchievementsHeaderCard extends StatelessWidget {
-  const AchievementsHeaderCard({Key? key}) : super(key: key);
+  final int unlockedCount;
+  final int totalCount;
+  final double progress;
+
+  const AchievementsHeaderCard({
+    Key? key,
+    required this.unlockedCount,
+    required this.totalCount,
+    required this.progress,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +22,6 @@ class AchievementsHeaderCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Colors.white.withOpacity(0.1)),
       ),
@@ -25,7 +33,7 @@ class AchievementsHeaderCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: Colors.amber.withOpacity(0.15),
+                  color: Colors.blueAccent.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -36,7 +44,7 @@ class AchievementsHeaderCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Text(
-                '12 of 24 unlocked',
+                '$unlockedCount of $totalCount unlocked',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -54,11 +62,9 @@ class AchievementsHeaderCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: LinearProgressIndicator(
-              value: 1.5,
-              backgroundColor: Colors.white10,
-              valueColor: const AlwaysStoppedAnimation<Color>(
-                Colors.purpleAccent,
-              ),
+              value: progress,
+              backgroundColor: Colors.white.withOpacity(0.1),
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
               minHeight: 8,
             ),
           ),

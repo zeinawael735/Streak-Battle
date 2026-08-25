@@ -24,6 +24,7 @@ class CheckInRepository {
 
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
+
     final todayString =
         "${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
 
@@ -37,9 +38,13 @@ class CheckInRepository {
 
     return await _firestore.runTransaction((transaction) async {
       final userSnapshot = await transaction.get(userRef);
-      if (!userSnapshot.exists) throw Exception("User not found");
+
+      if (!userSnapshot.exists) {
+        throw Exception("User not found");
+      }
 
       final checkInSnapshot = await transaction.get(checkInRef);
+
       if (checkInSnapshot.exists) {
         throw Exception("You have already checked in for this battle today!");
       }
@@ -47,14 +52,22 @@ class CheckInRepository {
       final userData = userSnapshot.data()!;
 
       DateTime? lastCheckIn;
-      if (userData['lastCheckInDate'] != null) {
+
+      if (userData['lastCheckInDate'] != null &&
+          userData['lastCheckInDate'] is Timestamp) {
         lastCheckIn = (userData['lastCheckInDate'] as Timestamp).toDate();
-        lastCheckIn =
-            DateTime(lastCheckIn.year, lastCheckIn.month, lastCheckIn.day);
+
+        lastCheckIn = DateTime(
+          lastCheckIn.year,
+          lastCheckIn.month,
+          lastCheckIn.day,
+        );
       }
 
       int currentStreak = userData['currentStreak'] ?? 0;
       bool isFirstCheckInToday = false;
+
+      bool hasBrokenStreakBefore = userData['hasBrokenStreakBefore'] ?? false;
 
       if (lastCheckIn == null) {
         currentStreak = 1;
@@ -63,12 +76,15 @@ class CheckInRepository {
         currentStreak += 1;
         isFirstCheckInToday = true;
       } else if (lastCheckIn.isAtSameMomentAs(today)) {
+        // Already checked in today.
+        // Streak stays the same.
       } else {
         currentStreak = 1;
         isFirstCheckInToday = true;
+        hasBrokenStreakBefore = true;
       }
 
-      int pointsEarned = 10; // Base Points
+      int pointsEarned = 10;
 
       if (isFirstCheckInToday && currentStreak > 0 && currentStreak % 3 == 0) {
         pointsEarned += 5;
@@ -76,7 +92,19 @@ class CheckInRepository {
 
       int totalPoints = (userData['totalPoints'] ?? 0) + pointsEarned;
 
-      int currentLevel = (totalPoints ~/ 200) + 1;
+      int xp = (userData['xp'] ?? 0) + pointsEarned;
+
+      int currentLevel = (xp ~/ 200) + 1;
+
+      Map<String, dynamic> battlesXp = {};
+
+      if (userData['battlesXp'] is Map) {
+        battlesXp = Map<String, dynamic>.from(userData['battlesXp']);
+      }
+
+      final int oldBattleXp = (battlesXp[battleId] ?? 0) as int;
+
+      battlesXp[battleId] = oldBattleXp + pointsEarned;
 
       transaction.update(userRef, {
         'currentStreak': currentStreak,
@@ -86,6 +114,7 @@ class CheckInRepository {
         'battlesXp.$battleId': FieldValue.increment(pointsEarned),
         'battlesCheckInsCount.$battleId': FieldValue.increment(1),
         'weeklyCheckIns': FieldValue.arrayUnion([todayString]),
+        'hasBrokenStreakBefore': hasBrokenStreakBefore,
       });
 
       transaction.set(checkInRef, {

@@ -49,7 +49,11 @@ class ActiveBattlesCard extends StatelessWidget {
                           height: 55,
                           width: 55,
                           child: Center(
-                            child: Icon(icon, size: 25,color: Color(0xFFD2BBFF),),
+                            child: Icon(
+                              icon,
+                              size: 25,
+                              color: Color(0xFFD2BBFF),
+                            ),
                           ),
                         ),
                         Column(
@@ -57,11 +61,17 @@ class ActiveBattlesCard extends StatelessWidget {
                           children: [
                             Text(
                               title,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
                             ),
                             Text(
                               "$category • Day $currentDay of $durationDays",
-                              style: TextStyle(color: AppColorStyle.primaryText, fontSize: 15),
+                              style: TextStyle(
+                                color: AppColorStyle.primaryText,
+                                fontSize: 15,
+                              ),
                             ),
                           ],
                         ),
@@ -71,7 +81,10 @@ class ActiveBattlesCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: AppColorStyle.scaffoldBackgroundColor,
-                        border: Border.all(color: Colors.white.withOpacity(0.05), width: 3),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.05),
+                          width: 3,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),
@@ -94,10 +107,14 @@ class ActiveBattlesCard extends StatelessWidget {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
                                     child: LinearProgressIndicator(
-                                      value: progress / 100.0, // تم التصحيح هنا للقسمة صحيحة
+                                      value: progress /
+                                          100.0, // تم التصحيح هنا للقسمة صحيحة
                                       minHeight: 6,
-                                      backgroundColor: AppColorStyle.progressIndicatorBackgroundColor,
-                                      valueColor: AlwaysStoppedAnimation<Color>(AppColorStyle.progressIndicatorColor),
+                                      backgroundColor: AppColorStyle
+                                          .progressIndicatorBackgroundColor,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        AppColorStyle.progressIndicatorColor,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -120,7 +137,11 @@ class ActiveBattlesCard extends StatelessWidget {
                                     arguments: battleId, // نرسل الـ ID
                                   );
                                 },
-                                icon: const Icon(Icons.arrow_forward, color: Colors.white, size: 20),
+                                icon: const Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
                               ),
                             ),
                           ],
