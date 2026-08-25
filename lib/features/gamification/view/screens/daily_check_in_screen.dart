@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:streak_battle/features/achievements/view_model/acheivements_cubit.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../../core/theme/theme.dart';
@@ -80,9 +81,70 @@ class _DailyCheckInContentState extends State<DailyCheckInContent> {
             type: ToastificationType.success,
           );
 
-          Future.delayed(const Duration(seconds: 1), () {
-            if (mounted) Navigator.pop(context);
-          });
+          if (state.newlyUnlockedBadges.isNotEmpty) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  backgroundColor: const Color(0xFF191724),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.emoji_events,
+                        color: Colors.amber,
+                        size: 60,
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Congratulations! 🎉',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'You unlocked: "${state.newlyUnlockedBadges.first}" 🏆',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.amberAccent,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purpleAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(dialogContext).pop();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text(
+                          'Awesome',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          } else {
+            Future.delayed(const Duration(seconds: 1), () {
+              if (mounted) Navigator.pop(context);
+            });
+          }
         }
       },
       builder: (context, state) {
