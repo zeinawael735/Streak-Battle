@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
 import '../../../../core/constants/app_color_style.dart';
 import '../../../../core/routes/app_routes.dart';
 import 'home_card.dart';
 
 class ActiveBattlesCard extends StatelessWidget {
-  const ActiveBattlesCard(
-      {super.key,
-      required this.icon,
-      required this.title,
-      required this.category,
-      required this.goal,
-      required this.progress});
-  final String icon;
+  const ActiveBattlesCard({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.category,
+    required this.goal,
+    required this.progress,
+    required this.battleId,
+    required this.currentDay,
+    required this.durationDays,
+  });
+
+  final IconData icon;
   final String title;
   final String category;
   final String goal;
   final int progress;
+  final String battleId;
+  final int currentDay;
+  final int durationDays;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -42,10 +49,10 @@ class ActiveBattlesCard extends StatelessWidget {
                           height: 55,
                           width: 55,
                           child: Center(
-                            child: SvgPicture.asset(
+                            child: Icon(
                               icon,
-                              width: 25,
-                              height: 25,
+                              size: 25,
+                              color: Color(0xFFD2BBFF),
                             ),
                           ),
                         ),
@@ -54,13 +61,13 @@ class ActiveBattlesCard extends StatelessWidget {
                           children: [
                             Text(
                               title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,
                               ),
                             ),
                             Text(
-                              "$category • Day 8 of 21",
+                              "$category • Day $currentDay of $durationDays",
                               style: TextStyle(
                                 color: AppColorStyle.primaryText,
                                 fontSize: 15,
@@ -82,7 +89,7 @@ class ActiveBattlesCard extends StatelessWidget {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.2),
                             blurRadius: 10,
-                            offset: Offset(0, 4),
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
@@ -96,22 +103,24 @@ class ActiveBattlesCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(goal),
-                                  SizedBox(height: 6),
+                                  const SizedBox(height: 6),
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(4),
                                     child: LinearProgressIndicator(
-                                      value: progress * (1 / 100),
+                                      value: progress /
+                                          100.0, // تم التصحيح هنا للقسمة صحيحة
                                       minHeight: 6,
                                       backgroundColor: AppColorStyle
                                           .progressIndicatorBackgroundColor,
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                          AppColorStyle.progressIndicatorColor),
+                                        AppColorStyle.progressIndicatorColor,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Container(
                               width: 42,
                               height: 42,
@@ -125,6 +134,7 @@ class ActiveBattlesCard extends StatelessWidget {
                                   Navigator.pushNamed(
                                     context,
                                     AppRoutes.battleDetails,
+                                    arguments: battleId, // نرسل الـ ID
                                   );
                                 },
                                 icon: const Icon(

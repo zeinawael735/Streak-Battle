@@ -5,22 +5,15 @@ import 'package:share_plus/share_plus.dart';
 import 'package:streak_battle/core/constants/app_assets.dart';
 import 'package:streak_battle/core/constants/app_color_style.dart';
 import 'package:streak_battle/features/home/view/widgets/home_card.dart';
-
+import '../../../../core/helper/get_category_icon_helper.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../core/theme/theme.dart';
+import '../../../leaderboard/view_model/leader_board_cubit.dart';
 import '../../view_model/battle_details_cubit.dart';
 import '../widgets/battle_details_screen_widgets.dart';
 
 class BattleDetailsScreen extends StatelessWidget {
   const BattleDetailsScreen({super.key});
-  static const Map<String, Icon> categories = {
-    'Fitness': Icon(Icons.directions_run,size: 30) ,
-    'Learning': Icon(Icons.menu_book,size: 30) ,
-    'Wellness': Icon(Icons.self_improvement,size: 30) ,
-    'Nutrition': Icon(Icons.apple,size: 30) ,
-    'Coding': Icon(Icons.code,size: 30) ,
-    'Custom': Icon(Icons.edit,size: 30) ,
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +87,8 @@ class BattleDetailsScreen extends StatelessWidget {
                         ),
                         height: 55,
                         width: 55,
-                        child:  Center(
-                          child: categories[state.category] ?? Icon(Icons.workspace_premium_outlined) ,
+                        child:  Center(//
+                          child: Icon(getCategoryIcon(state.category),size: 33,),
                         ),
                       ),
                       Container(
@@ -226,8 +219,49 @@ class BattleDetailsScreen extends StatelessWidget {
                   children: [
                     Text("Participants", style: TextStyle(fontWeight: FontWeight.bold, color: AppColorStyle.primaryText, fontSize: 20)),
                     ElevatedButton(
+                      onPressed: state.isFinished
+                          ? () async {
+                        final winnerId = await getBattleWinnerId(battleId);
+                        if (winnerId == null) return;
+
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.battleResult,
+                          arguments: {'battleId': battleId, 'winnerId': winnerId},
+                        );
+                      }
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: state.isFinished
+                            ? AppColors.textPrimary
+                            : AppColors.textPrimary.withOpacity(0.3),
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 9,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(
+                            color: state.isFinished
+                                ? const Color(0xFF4B4456)
+                                : const Color(0xFF4B4456).withOpacity(0.3),
+                            width: 1.5,
+                          ),
+                        ),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text("Battle Results"),
+                    ),
+                    ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.ranking);
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.ranking,
+                          arguments: battleId,
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,

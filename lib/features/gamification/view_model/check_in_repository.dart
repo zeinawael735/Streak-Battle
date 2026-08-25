@@ -3,6 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CheckInRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<Map<String, dynamic>> getBattleInfo(String battleId) async {
+    final doc = await _firestore.collection('battles').doc(battleId).get();
+    if (doc.exists && doc.data() != null) {
+      final data = doc.data()!;
+      return {
+        'title': data['title'] ?? 'Unknown Battle',
+        'goal': data['dailyGoal'] ?? data['goal'] ?? 'No Goal Set',
+      };
+    }
+    return {'title': 'Unknown', 'goal': 'No Goal'};
+  }
+
   Future<Map<String, dynamic>> submitDailyCheckIn({
     required String userId,
     required String battleId,
@@ -52,8 +64,7 @@ class CheckInRepository {
         );
       }
 
-      int currentStreak = (userData['currentStreak'] ?? 0) as int;
-
+      int currentStreak = userData['currentStreak'] ?? 0;
       bool isFirstCheckInToday = false;
 
       bool hasBrokenStreakBefore = userData['hasBrokenStreakBefore'] ?? false;
@@ -68,7 +79,6 @@ class CheckInRepository {
         // Already checked in today.
         // Streak stays the same.
       } else {
-        // Streak was broken.
         currentStreak = 1;
         isFirstCheckInToday = true;
         hasBrokenStreakBefore = true;
@@ -100,9 +110,10 @@ class CheckInRepository {
         'currentStreak': currentStreak,
         'lastCheckInDate': FieldValue.serverTimestamp(),
         'totalPoints': totalPoints,
-        'xp': xp,
         'level': currentLevel,
-        'battlesXp': battlesXp,
+        'battlesXp.$battleId': FieldValue.increment(pointsEarned),
+        'battlesCheckInsCount.$battleId': FieldValue.increment(1),
+        'weeklyCheckIns': FieldValue.arrayUnion([todayString]),
         'hasBrokenStreakBefore': hasBrokenStreakBefore,
       });
 

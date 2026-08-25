@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:streak_battle/features/battle/view/widgets/step2_rules_widget.dart';
 import 'package:streak_battle/features/battle/view/widgets/step3_invite_widget.dart';
+import 'package:toastification/toastification.dart';
 import '../../../../core/constants/app_color_style.dart';
 import '../../../../core/helper/code_generator.dart';
+import '../../../../core/utils/app_toast.dart';
 import '../../view_model/battle_entity.dart';
 import '../../view_model/create_battle_cubit.dart';
 import '../../view_model/create_battle_state.dart';
@@ -47,8 +49,11 @@ final _step2Key=GlobalKey<FormState>();
 
 
       if (selectedCategory == null || selectedCategory!.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select a battle category')),
+        AppToast.showToast(
+          context: context,
+          title: "Error You can't create a battle without a category",
+          description: "Please Select A Battle Category",
+          type: ToastificationType.error,
         );
         return;
       }
@@ -61,16 +66,22 @@ final _step2Key=GlobalKey<FormState>();
 
 
       if (startDate == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select a start date')),
+        AppToast.showToast(
+          context: context,
+          title: "Error You can't create a battle without a start date",
+          description: "Please Select A Start Date",
+          type: ToastificationType.error,
         );
         return;
       }
 
 
       if (durationDays == null || durationDays! <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select battle duration')),
+        AppToast.showToast(
+          context: context,
+          title: "Error You can't create a battle without a duration",
+          description: "Please Select A Battle Duration",
+          type: ToastificationType.error,
         );
         return;
       }
@@ -162,15 +173,21 @@ final _step2Key=GlobalKey<FormState>();
       child: BlocConsumer<CreateBattleCubit, CreateBattleState>(
         listener: (context, state) {
           if (state is CreateBattleSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Battle Created Successfully!')),
+            AppToast.showToast(
+              context: context,
+              title: "Battle Created Successfully!",
+              description: "Let's Begin The Challenge...",
+              type: ToastificationType.success,
             );
             if (Navigator.canPop(context)) {
               Navigator.pop(context);
             }
           } else if (state is CreateBattleError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
+            AppToast.showToast(
+              context: context,
+              title: "Battle Creation Failed",
+              description: state.message,
+              type: ToastificationType.error,
             );
           }
         },

@@ -5,6 +5,7 @@ import 'package:streak_battle/features/achievements/view/screens/achievements_sc
 import 'package:streak_battle/features/achievements/view_model/acheivements_cubit.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../../achievements/view/screens/achievements_screen.dart';
 import '../../../history/view/screens/battles_history_screen.dart';
 import '../../../home/view/screens/home_screen.dart';
 import '../../../profile/view/screens/profile_screen.dart';
@@ -35,7 +36,7 @@ class AppSection extends StatelessWidget {
             backgroundColor: AppColorStyle.backgroundColor,
             body: IndexedStack(
               index: currentScreenIndex,
-              children: const [
+              children: [
                 HomeScreen(),
                 BattlesScreen(),
                 AchievementsScreen(),

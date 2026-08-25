@@ -14,7 +14,21 @@ class CheckInCubit extends Cubit<CheckInState> {
 
   final AchievementsService _achievementsService = AchievementsService();
 
+  String battleTitle = '';
+  String battleGoal = '';
+
   CheckInCubit(this._repository) : super(CheckInInitial());
+
+  Future<void> loadBattleData(String battleId) async {
+    try {
+      final data = await _repository.getBattleInfo(battleId);
+      battleTitle = data['title'] ?? '';
+      battleGoal = data['goal'] ?? '';
+      emit(CheckInInfoLoaded());
+    } catch (e) {
+      //
+    }
+  }
 
   Future<void> confirmCheckIn({
     required String battleId,
