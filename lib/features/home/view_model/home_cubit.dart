@@ -50,11 +50,23 @@ class HomeCubit extends Cubit<HomeState> {
 
       final String name = userData['name'] ?? 'User';
       final String initials = name.isNotEmpty ? name.trim().split(' ').map((e) => e[0].toUpperCase()).take(2).join() : 'U';
-      final int currentStreak = userData['currentStreak'] ?? 0;
+      int currentStreak = userData['currentStreak'] ?? 0;
       final int totalPoints = userData['totalPoints'] ?? 0;
 
       List<String> weeklyCheckIns = List<String>.from(userData['weeklyCheckIns'] ?? []);
       DateTime now = DateTime.now();
+
+      // التعديل الخاص بظبط الـ Streak عشان يرجع لصفر لو عدى يوم
+      final lastCheckInTimestamp = userData['lastCheckInDate'] as Timestamp?;
+      if (lastCheckInTimestamp != null) {
+        DateTime today = DateTime(now.year, now.month, now.day);
+        DateTime lastCheckInDate = lastCheckInTimestamp.toDate();
+        DateTime lastCheckInDay = DateTime(lastCheckInDate.year, lastCheckInDate.month, lastCheckInDate.day);
+
+        if (today.difference(lastCheckInDay).inDays > 1) {
+          currentStreak = 0;
+        }
+      }
 
       int daysToSubtract = (now.weekday == DateTime.saturday)
           ? 0
